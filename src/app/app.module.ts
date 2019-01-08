@@ -9,13 +9,27 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCheckboxModule, MatMenuModule, MatToolbarModule, MatDividerModule,
   MatSelectModule, MatTabsModule, MatIconModule, MatCardModule, MatSidenavModule,
   MatAutocompleteModule, MatInputModule, MatRadioModule, MatTableModule, MatDialogModule,
-  MatProgressBarModule } from '@angular/material';
+  MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
-import { ToastrModule } from 'ngx-toastr'
+import { ToastrModule } from 'ngx-toastr';
+import { SidenavComponent } from './components/home/sidenav/sidenav/sidenav.component';
+import { LogoComponent } from './components/home/sidenav/header/logo/logo.component';
+import { ToolbarComponent } from './components/home/toolbar/toolbar/toolbar.component';
+import { ProfileComponent } from './components/home/toolbar/profile/profile.component';
+import { HeaderComponent } from './components/home/sidenav/header/header/header.component';
+import { NewAnalisysComponent } from './components/new-analisys/new-analisys.component';
+import { FooterComponent } from './components/home/footer/footer.component'
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SidenavComponent,
+    LogoComponent,
+    ToolbarComponent,
+    ProfileComponent,
+    HeaderComponent,
+    NewAnalisysComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +53,7 @@ import { ToastrModule } from 'ngx-toastr'
     MatTableModule,
     MatDialogModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     HttpModule,
     ToastrModule.forRoot({
       timeOut: 3000,

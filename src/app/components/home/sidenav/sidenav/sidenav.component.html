@@ -1,0 +1,19 @@
+<mat-sidenav-container class="econtainer">
+  <mat-sidenav class="padding-content backgroud-color" #sidenav mode="side" [(opened)]="opened">
+    <div class="container-fluid">
+      <app-header></app-header><br>
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-success btn-lg" routerLink="newanalisys">Nuevo Análisis +</button>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-toolbar></app-toolbar>
+    <router-outlet></router-outlet>
+    <div class="footer">
+      <app-footer></app-footer>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
