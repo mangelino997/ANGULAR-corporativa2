@@ -9,16 +9,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCheckboxModule, MatMenuModule, MatToolbarModule, MatDividerModule,
   MatSelectModule, MatTabsModule, MatIconModule, MatCardModule, MatSidenavModule,
   MatAutocompleteModule, MatInputModule, MatRadioModule, MatTableModule, MatDialogModule,
-  MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
+  MatProgressBarModule, MatProgressSpinnerModule, MatListModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
 import { ToastrModule } from 'ngx-toastr';
+
+//Componentes
 import { SidenavComponent } from './components/home/sidenav/sidenav/sidenav.component';
 import { LogoComponent } from './components/home/sidenav/header/logo/logo.component';
 import { ToolbarComponent } from './components/home/toolbar/toolbar/toolbar.component';
-import { ProfileComponent } from './components/home/toolbar/profile/profile.component';
+import { ToolbarProfileComponent } from './components/home/toolbar/toolbar-profile/toolbar-profile.component';
 import { HeaderComponent } from './components/home/sidenav/header/header/header.component';
 import { NewAnalisysComponent } from './components/new-analisys/new-analisys.component';
 import { FooterComponent } from './components/home/footer/footer.component'
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -26,10 +29,11 @@ import { FooterComponent } from './components/home/footer/footer.component'
     SidenavComponent,
     LogoComponent,
     ToolbarComponent,
-    ProfileComponent,
+    ToolbarProfileComponent,
     HeaderComponent,
     NewAnalisysComponent,
-    FooterComponent
+    FooterComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +58,7 @@ import { FooterComponent } from './components/home/footer/footer.component'
     MatDialogModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatListModule,
     HttpModule,
     ToastrModule.forRoot({
       timeOut: 3000,

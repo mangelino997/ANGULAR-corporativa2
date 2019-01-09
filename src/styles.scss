@@ -9,3 +9,21 @@ $green-theme-theme:   mat-light-theme($green-theme-primary, $green-theme-accent)
     background-color: #85CE36 !important;
     border-color: #85CE36 !important;
 }
+.padding-content {
+    padding: 20px;
+}
+.margin-top-5 {
+    margin-top: 5px;
+}
+.margin-top-10 {
+    margin-top: 10px;
+}
+.padding-top-5 {
+    margin-top: 5px;
+}
+.padding-top-10 {
+    margin-top: 10px;
+}
+.space {
+    flex: 1 1 auto;
+}

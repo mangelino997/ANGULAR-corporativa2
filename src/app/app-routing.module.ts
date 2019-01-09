@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NewAnalisysComponent } from './components/new-analisys/new-analisys.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const routes: Routes = [
-  {path: 'newanalisys', component: NewAnalisysComponent}
+  {path: 'newanalisys', component: NewAnalisysComponent},
+  {path: 'profile', component: ProfileComponent}
 ];
 
 @NgModule({
