@@ -27,3 +27,7 @@ $green-theme-theme:   mat-light-theme($green-theme-primary, $green-theme-accent)
 .space {
     flex: 1 1 auto;
 }
+.mat-raised-button {
+    min-width: 83px !important;
+    line-height: 30px !important;
+}

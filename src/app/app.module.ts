@@ -9,9 +9,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCheckboxModule, MatMenuModule, MatToolbarModule, MatDividerModule,
   MatSelectModule, MatTabsModule, MatIconModule, MatCardModule, MatSidenavModule,
   MatAutocompleteModule, MatInputModule, MatRadioModule, MatTableModule, MatDialogModule,
-  MatProgressBarModule, MatProgressSpinnerModule, MatListModule } from '@angular/material';
+  MatProgressBarModule, MatProgressSpinnerModule, MatListModule, MatStepperModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
 import { ToastrModule } from 'ngx-toastr';
+import { StompConfig, StompService } from '@stomp/ng2-stompjs';
+
+//Servicios
+import { TypeRehabilitationService } from './services/type-rehabilitation.service';
+
+//Modelos
+import { Analysis } from './modules/analysis';
+import { Patient } from './modules/patient';
+import { TypeRehabilitation } from './modules/type-rehabilitation';
 
 //Componentes
 import { SidenavComponent } from './components/home/sidenav/sidenav/sidenav.component';
@@ -19,9 +28,19 @@ import { LogoComponent } from './components/home/sidenav/header/logo/logo.compon
 import { ToolbarComponent } from './components/home/toolbar/toolbar/toolbar.component';
 import { ToolbarProfileComponent } from './components/home/toolbar/toolbar-profile/toolbar-profile.component';
 import { HeaderComponent } from './components/home/sidenav/header/header/header.component';
-import { NewAnalisysComponent } from './components/new-analisys/new-analisys.component';
+import { NewAnalysisComponent } from './components/new-analysis/new-analysis.component';
 import { FooterComponent } from './components/home/footer/footer.component'
 import { ProfileComponent } from './components/profile/profile.component';
+import { FooterSidenavComponent } from './components/home/sidenav/footer-sidenav/footer-sidenav.component';
+
+const stompConfig: StompConfig = {
+  url: 'ws://localhost:8084/meserws/socket',
+  headers: {},
+  heartbeat_in: 0,
+  heartbeat_out: 20000,
+  reconnect_delay: 5000,
+  debug: true
+};
 
 @NgModule({
   declarations: [
@@ -31,9 +50,10 @@ import { ProfileComponent } from './components/profile/profile.component';
     ToolbarComponent,
     ToolbarProfileComponent,
     HeaderComponent,
-    NewAnalisysComponent,
+    NewAnalysisComponent,
     FooterComponent,
-    ProfileComponent
+    ProfileComponent,
+    FooterSidenavComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +79,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatListModule,
+    MatStepperModule,
     HttpModule,
     ToastrModule.forRoot({
       timeOut: 3000,
@@ -66,7 +87,17 @@ import { ProfileComponent } from './components/profile/profile.component';
       preventDuplicates: true,
     })
   ],
-  providers: [],
+  providers: [
+    Analysis,
+    Patient,
+    TypeRehabilitation,
+    TypeRehabilitationService,
+    StompService,
+    {
+      provide: StompConfig,
+      useValue: stompConfig
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
