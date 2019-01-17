@@ -130,43 +130,38 @@
     <mat-step [stepControl]="analysisForm">
         <ng-template matStepLabel>Foto del Paciente</ng-template>
         <form [formGroup]="analysisForm">
+            <ng-template matStepLabel>Foto del Paciente</ng-template>
             <div class="title-block">
                 <h4 class="title">
                     Foto del Paciente
                 </h4>
             </div>
             <hr style="margin-top: 0px;">
-            <h5>Por favor, seleccione el sexo del paciente</h5>
             <div class="row" formGroupName="patient">
                 <div class="col-md-6">
                     <mat-card>
+                        <h5>Por favor, seleccione el sexo del paciente</h5><br>
                         <div class="row">
                             <div class="col-md-6 text-center">
-                                <mat-card id="card-male">
-                                    <mat-card-header>
-                                        <mat-card-title>Masculino</mat-card-title>
-                                    </mat-card-header>
+                                <mat-card id="card-female">
                                     <mat-card-content>
-                                        <img src="assets/male.png" alt="male" class="img-patient">
+                                        <img src="assets/female.png" alt="mujer" width="100%" height="100%" class="img-patient" (click)="sexSelected('card-female')">
                                     </mat-card-content>
                                     <mat-card-actions>
-                                        <mat-checkbox formControlName="male" (change)="selected('card-male')">
-                                            Seleccionar
+                                        <mat-checkbox formControlName="female" (change)="sexSelected('card-female')">
+                                            Femenino
                                         </mat-checkbox>
                                     </mat-card-actions>
                                 </mat-card>
                             </div>
                             <div class="col-md-6 text-center">
-                                <mat-card id="card-female">
-                                    <mat-card-header>
-                                        <mat-card-title>Femenino</mat-card-title>
-                                    </mat-card-header>
+                                <mat-card id="card-male">
                                     <mat-card-content>
-                                        <img src="assets/female.png" alt="female" class="img-patient">
+                                        <img src="assets/male.png" alt="hombre" width="100%" height="100%" class="img-patient" (click)="sexSelected('card-male')">
                                     </mat-card-content>
                                     <mat-card-actions>
-                                        <mat-checkbox formControlName="female" (change)="selected('card-female')">
-                                            Seleccionar
+                                        <mat-checkbox formControlName="male" (change)="sexSelected('card-male')">
+                                            Masculino
                                         </mat-checkbox>
                                     </mat-card-actions>
                                 </mat-card>
@@ -174,28 +169,33 @@
                         </div>
                     </mat-card>
                 </div>
-                <!-- <div class="col-md-6">
-                    <mat-card class="mat-card-2-3">
-                      <div class="row">
-                        <div class="col-md-6 text-center">
-                          <h6 class="mat-card-title">Foto real del paciente</h6>
-                          <img width="75%" height="75%" [src]="imageSrc || 'assets/mujer_real.jpg'" alt="female" />
-                          <input type='file' (change)="readURL($event);" />
+                <div class="col-md-6">
+                    <mat-card>
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <h5>Foto real del paciente</h5><br>
+                                <div>
+                                    <img width="100%" height="100%" [src]="imageSrc || sexSelectedImage"/>
+                                    <input style="display: none;" type="file" (change)="readURL($event)" #fileInput/>
+                                    <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="fileInput.click()">Subir Foto</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Características de la foto:</h5>
+                                <ul>
+                                    <li>Cabeza completa incluyendo los hombros.</li>
+                                    <li>Paciente parado con fondo claro.</li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                          <h5>Características de la foto:</h5>
-                          <ul>
-                            <li>Cabeza completa incluyendo los hombros.</li>
-                            <li>Paciente parado con fondo claro.</li>
-                          </ul>
-                        </div>
-                      </div>
                     </mat-card>
-                  </div> -->
+                </div>
             </div>
             <br>
-            <button mat-raised-button matStepperPrevious>Atrás</button>
-            <button class="btn-left-5" mat-raised-button color="primary" matStepperNext>Siguiente</button>
+            <div>
+                <button mat-raised-button matStepperPrevious>Atrás</button>
+                <button mat-raised-button matStepperNext>Siguiente</button>
+            </div>
         </form>
     </mat-step>
     <!-- FIN FOTO DEL PACIENTE -->

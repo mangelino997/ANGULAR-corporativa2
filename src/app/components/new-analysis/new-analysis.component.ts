@@ -10,14 +10,14 @@ import { TypeRehabilitationService } from 'src/app/services/type-rehabilitation.
   styleUrls: ['./new-analysis.component.scss']
 })
 export class NewAnalysisComponent implements OnInit {
-  //Define el componente PatientData
-  // @ViewChild(PatientDataComponent) patientDataComponent;
   //Define el formulario para la seccion Datos del Paciente
   public analysisForm: FormGroup;
   //Define la lista de tipos de rehabilitaciones
   public typesRehabilitations:Array<any> = [];
   //Define la fuente de la imagen que cargamos
   public imageSrc: any;
+  //Define la imagen del sexo por defecto
+  public sexSelectedImage:string = 'assets/female.png';
   //Constructor
   constructor(private appComponent: AppComponent, private analysisModule: Analysis,
     private typeRehabilitationService: TypeRehabilitationService) { }
@@ -40,6 +40,11 @@ export class NewAnalysisComponent implements OnInit {
   //Determina que analisis se va a procesar
   public stepChange(event) {
     switch (event.selectedIndex) {
+      //Foto del paciente
+      case 1:
+        //Inicializa el sexo femenino por defecto
+        this.sexSelected('card-female');
+        break;
       //Analisis Fotografico
       case 2:
         
@@ -58,27 +63,23 @@ export class NewAnalysisComponent implements OnInit {
         break;
     }
   }
-  //Metodo controlador del formulario2 (seleccion del Sexo del Paciente y carga de imagen)
-  public selected(n) {
-    var cardSelected = document.getElementById(n);
-    switch (n) {
+  //Metodo controlador del formulario2 (seleccion del Sexo del Paciente y carga de imagen). Primer parametro es la tarjeta que se activa, el segundo y el tercero boolean
+  public sexSelected(card) {
+    var cardSelected = document.getElementById(card);
+    switch (card) {
       case 'card-male':
-        if (this.analysisForm.get('patient').get('male').value == true) {
-          this.analysisForm.get('patient').get('female').setValue(false);
-          cardSelected.className = "checkBoxCardSelected";
-          document.getElementById('card-female').className = "checkBoxCardNotSelected";
-        } else {
-          cardSelected.className = "checkBoxCardNotSelected";
-        }
+        this.analysisForm.get('patient').get('male').setValue(true);
+        this.analysisForm.get('patient').get('female').setValue(false);
+        cardSelected.className = "checkBoxCardSelected";
+        document.getElementById('card-female').className = "mat-card";
+        this.sexSelectedImage = 'assets/male.png';
         break;
       case 'card-female':
-        if (this.analysisForm.get('patient').get('female').value == true) {
-          this.analysisForm.get('patient').get('male').setValue(false);
-          cardSelected.className = "checkBoxCardSelected";
-          document.getElementById('card-male').className = "checkBoxCardNotSelected";
-        } else {
-          cardSelected.className = "checkBoxCardNotSelected";
-        }
+        this.analysisForm.get('patient').get('female').setValue(true);
+        this.analysisForm.get('patient').get('male').setValue(false);
+        cardSelected.className = "checkBoxCardSelected";
+        document.getElementById('card-male').className = "mat-card";
+        this.sexSelectedImage = 'assets/female.png';
         break;
       default:
         cardSelected.className = "checkBoxCardNotSelected";
