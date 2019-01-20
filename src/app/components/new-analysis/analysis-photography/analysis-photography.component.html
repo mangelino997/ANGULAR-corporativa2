@@ -1,0 +1,69 @@
+<form [formGroup]="apForm">
+  <ng-template matStepLabel>Análisis Fotográfico</ng-template>
+  <div class="title-block">
+    <h4 class="title">
+      Análisis Fotográfico
+    </h4>
+  </div>
+  <hr style="margin-top: 0px;">
+  <h5>Estimado Doctor/a: siga los pasos para marcar los puntos del análisis fotográfico.</h5>
+  <br>
+  <!-- seccion de prueba de canvas para "Análisis Fotográfico-->
+  <!-- <div class="row">
+    <div class="col-md-4">
+      <canvas #canvas style="border: 1px solid black" width="300px" height="300px"></canvas>
+    </div>
+    <div class="col-md-4">
+      <img id="canvasimgAF" width="300px" height="300px" style="display:none;">
+    </div>
+  </div> -->
+  <!-- fin prueba canvas -->
+  <div class="row">
+    <div class="col-md-6">
+      <mat-card>
+        <div class="row">
+          <div class="col-md-6 text-center">
+            <h6>Imagen Indicativa</h6>
+            <img src="{{indicativeImage.image}}" alt="mujer" width="300">
+            <h5 style="margin-top: 10px;">{{indicativeImage.pointName}}</h5>
+            <h6>{{indicativeImage.pointDescription}}</h6>
+          </div>
+          <div class="col-md-6 text-center">
+            <h6>Imagen Real</h6>
+            <canvas #canvas style="border: 1px solid black" width="300px" height="300px"></canvas>
+            <div class="row justify-content-center" style="margin-top: 10px;">
+              <button mat-raised-button color="accent" (click)="clearCanva()">Reset</button>
+              <button style="margin-left: 10px;" mat-raised-button color="primary" (click)="nextPoints(cx1, 2)">Listo</button>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <!-- <div class="col-md-6">
+      <mat-card class="mat-card-2-3">
+        <div class="row">
+          <div class="col-md-8 text-center">
+            <h6>Imagen con Unión de Puntos</h6>
+            <img src="assets/mujer_puntos.png" alt="mujer_real" width="350">
+          </div>
+          <div class="col-md-4">
+            <h6 class="text-center">Planos del Análisis</h6>
+            <div class="row">
+              <div class="col">
+                <div class="li-green">Plano Medio: Unión de punto frontal con mentoniano.</div>
+                <div class="li-red">Plano Bipupilar: Unión de los puntos pupilares.</div>
+                <div class="li-yellow">Plano Bicomisural: Unión de los puntos comisurales.</div>
+                <div class="li-lightblue">Planos H: Unión de los puntos H y el punto mentoniano.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </div> -->
+  </div>
+  <br>
+  <div>
+    <button mat-raised-button matStepperPrevious>Atrás</button>
+    <button mat-raised-button matStepperNext>Siguiente</button>
+  </div>
+</form>

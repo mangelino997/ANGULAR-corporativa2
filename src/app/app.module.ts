@@ -16,6 +16,7 @@ import { StompConfig, StompService } from '@stomp/ng2-stompjs';
 
 //Servicios
 import { TypeRehabilitationService } from './services/type-rehabilitation.service';
+import { AfImageGifService } from './services/af-image-gif.service';
 
 //Modelos
 import { Analysis } from './modules/analysis';
@@ -32,6 +33,9 @@ import { NewAnalysisComponent } from './components/new-analysis/new-analysis.com
 import { FooterComponent } from './components/home/footer/footer.component'
 import { ProfileComponent } from './components/profile/profile.component';
 import { FooterSidenavComponent } from './components/home/sidenav/footer-sidenav/footer-sidenav.component';
+import { PatientDataComponent } from './components/new-analysis/patient-data/patient-data.component';
+import { PatientPhotoComponent } from './components/new-analysis/patient-photo/patient-photo.component';
+import { AnalysisPhotographyComponent } from './components/new-analysis/analysis-photography/analysis-photography.component';
 
 const stompConfig: StompConfig = {
   url: 'ws://localhost:8084/meserws/socket',
@@ -53,7 +57,10 @@ const stompConfig: StompConfig = {
     NewAnalysisComponent,
     FooterComponent,
     ProfileComponent,
-    FooterSidenavComponent
+    FooterSidenavComponent,
+    PatientDataComponent,
+    PatientPhotoComponent,
+    AnalysisPhotographyComponent
   ],
   imports: [
     BrowserModule,
@@ -92,6 +99,7 @@ const stompConfig: StompConfig = {
     Patient,
     TypeRehabilitation,
     TypeRehabilitationService,
+    AfImageGifService,
     StompService,
     {
       provide: StompConfig,

@@ -1,202 +1,24 @@
+<!-- NUEVO ANALISIS -->
 <mat-horizontal-stepper labelPosition="bottom" (selectionChange)="stepChange($event)" #stepper>
     <!-- DATOS DEL PACIENTE -->
     <mat-step [stepControl]="analysisForm">
         <ng-template matStepLabel>Datos del Paciente</ng-template>
-        <form [formGroup]="analysisForm">
-            <div class="title-block">
-                <h4 class="title">
-                    Datos del Paciente
-                </h4>
-            </div>
-            <hr style="margin-top: 0px;">
-            <div formGroupName="patient">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="idNombre">Nombres</label>
-                            <input type="text" class="form-control form-control-sm" id="idNombre" placeholder="Nombres"
-                                formControlName="firstname" autocomplete="off" required>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="idApellido">Apellidos</label>
-                            <input type="text" class="form-control form-control-sm" id="idApellido" placeholder="Apellidos"
-                                formControlName="lastname" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="idDNI">Número de Documento de Identidad</label>
-                            <input type="text" class="form-control form-control-sm" id="idDNI" placeholder="Número de Documento de Identidad"
-                                formControlName="documentNumber" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="col-md-1">
-                        <div class="form-group">
-                            <label for="idEdad">Edad</label>
-                            <input type="text" class="form-control form-control-sm" id="idEdad" placeholder="Edad"
-                                formControlName="age" autocomplete="off">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="idFechaNacimiento">Fecha de Nacimiento</label>
-                            <input type="date" class="form-control form-control-sm" id="idFechaNacimiento" placeholder="Fecha de Nacimiento"
-                                formControlName="birthdate" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="idLugarNacimiento">Lugar de Nacimiento</label>
-                            <input type="text" class="form-control form-control-sm" id="idLugarNacimiento" placeholder="Lugar de Nacimiento"
-                                formControlName="placeBirth" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="idDireccionActual">Dirección Actual</label>
-                            <input type="text" class="form-control form-control-sm" id="idDireccionActual" placeholder="Dirección Actual"
-                                formControlName="address" autocomplete="off">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="idCorreoElectronico">Correo Electrónico</label>
-                            <input type="email" class="form-control form-control-sm" id="idCorreoElectronico"
-                                placeholder="Correo Electrónico" formControlName="email" autocomplete="off">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="idProfesionalTratante">Profesional Tratante: Dr./Dra.</label>
-                        <input type="text" class="form-control form-control-sm" id="idProfesionalTratante" placeholder="Dr./Dra."
-                            formControlName="nameUser" readonly autocomplete="off">
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="idMatriculaProfesional">Matrícula Profesional</label>
-                        <input type="text" class="form-control form-control-sm" id="idMatriculaProfesional" placeholder="Matrícula Profesional"
-                            formControlName="enrollmentUser" readonly autocomplete="off">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="idDiagnostico">Diagnóstico Clínico</label>
-                        <textarea type="text" class="form-control form-control-sm" id="idDiagnostico" placeholder="Diagnóstico Clínico"
-                            rows="2" formControlName="diagnostic" autocomplete="off"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-5">
-                    <div class="form-group">
-                        <label for="idTipoRehabilitacion">Tipo de Rehabilitación</label>
-                        <mat-select id="idTipoRehabilitacion" class="form-control form-control-sm" formControlName="typeRehabilitation"
-                            placeholder="Tipo de Rehabilitación" [compareWith]="compareFn">
-                            <mat-option *ngFor="let itemTypeRehabilitation of typesRehabilitations" [value]="itemTypeRehabilitation">
-                                {{itemTypeRehabilitation.name}}
-                            </mat-option>
-                        </mat-select>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="idTipo">Tipo</label>
-                        <mat-select id="idTipo" class="form-control form-control-sm" formControlName="type" placeholder="Superior/Inferior">
-                            <mat-option [value]="false">Inferior</mat-option>
-                            <mat-option [value]="true">Superior</mat-option>
-                        </mat-select>
-                    </div>
-                </div>
-            </div>
-            <button mat-raised-button>Historia Clínica</button>
-            <button class="btn-left-5" mat-raised-button color="primary" matStepperNext>Siguiente</button>
-        </form>
+        <app-patient-data (dataEvent)="receivePatientData($event)"></app-patient-data>
     </mat-step>
     <!-- FIN DATOS DEL PACIENTE -->
     <!-- --- -->
     <!-- FOTO DEL PACIENTE -->
-    <mat-step [stepControl]="analysisForm">
+    <mat-step [stepControl]="patientPhotoForm">
         <ng-template matStepLabel>Foto del Paciente</ng-template>
-        <form [formGroup]="analysisForm">
-            <ng-template matStepLabel>Foto del Paciente</ng-template>
-            <div class="title-block">
-                <h4 class="title">
-                    Foto del Paciente
-                </h4>
-            </div>
-            <hr style="margin-top: 0px;">
-            <div class="row" formGroupName="patient">
-                <div class="col-md-6">
-                    <mat-card>
-                        <h5>Por favor, seleccione el sexo del paciente</h5><br>
-                        <div class="row">
-                            <div class="col-md-6 text-center">
-                                <mat-card id="card-female">
-                                    <mat-card-content>
-                                        <img src="assets/female.png" alt="mujer" width="100%" height="100%" class="img-patient" (click)="sexSelected('card-female')">
-                                    </mat-card-content>
-                                    <mat-card-actions>
-                                        <mat-checkbox formControlName="female" (change)="sexSelected('card-female')">
-                                            Femenino
-                                        </mat-checkbox>
-                                    </mat-card-actions>
-                                </mat-card>
-                            </div>
-                            <div class="col-md-6 text-center">
-                                <mat-card id="card-male">
-                                    <mat-card-content>
-                                        <img src="assets/male.png" alt="hombre" width="100%" height="100%" class="img-patient" (click)="sexSelected('card-male')">
-                                    </mat-card-content>
-                                    <mat-card-actions>
-                                        <mat-checkbox formControlName="male" (change)="sexSelected('card-male')">
-                                            Masculino
-                                        </mat-checkbox>
-                                    </mat-card-actions>
-                                </mat-card>
-                            </div>
-                        </div>
-                    </mat-card>
-                </div>
-                <div class="col-md-6">
-                    <mat-card>
-                        <div class="row">
-                            <div class="col-md-6 text-center">
-                                <h5>Foto real del paciente</h5><br>
-                                <div>
-                                    <img width="100%" height="100%" [src]="imageSrc || sexSelectedImage"/>
-                                    <input style="display: none;" type="file" (change)="readURL($event)" #fileInput/>
-                                    <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="fileInput.click()">Subir Foto</button>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <h5>Características de la foto:</h5>
-                                <ul>
-                                    <li>Cabeza completa incluyendo los hombros.</li>
-                                    <li>Paciente parado con fondo claro.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </mat-card>
-                </div>
-            </div>
-            <br>
-            <div>
-                <button mat-raised-button matStepperPrevious>Atrás</button>
-                <button mat-raised-button matStepperNext>Siguiente</button>
-            </div>
-        </form>
+        <app-patient-photo (dataEvent)="receivePatientPhoto($event)"></app-patient-photo>
     </mat-step>
     <!-- FIN FOTO DEL PACIENTE -->
+    <!-- --- -->
+    <!-- ANALISIS DE LA FOTOGRAFIA -->
+    <mat-step [stepControl]="patientPhotoForm">
+        <ng-template matStepLabel>Análisis Fotográfico</ng-template>
+        <app-analysis-photography (dataEvent)="receiveAP($event)"></app-analysis-photography>
+    </mat-step>
+    <!-- FIN DEL ANALISIS DE LA FOTOGRAFIA -->
 </mat-horizontal-stepper>
+<!-- FIN NUEVO ANALISIS -->
