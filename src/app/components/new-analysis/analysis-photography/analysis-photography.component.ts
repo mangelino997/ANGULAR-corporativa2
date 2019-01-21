@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, HostListener } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 import { AfImageGifService } from 'src/app/services/af-image-gif.service';
@@ -10,6 +10,11 @@ import { AppService } from 'src/app/services/app.service';
   styleUrls: ['./analysis-photography.component.scss']
 })
 export class AnalysisPhotographyComponent implements OnInit {
+  //Define un evento escuchador de redimension de pantalla
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.clearCanva();
+  }
   //Define el formulario
   public apForm:FormGroup;
   //Define el elemento canvas html
@@ -23,6 +28,8 @@ export class AnalysisPhotographyComponent implements OnInit {
   //Define cx
   private cx: CanvasRenderingContext2D;
   //Difine la lista de puntos que se van marcando
+  private pointsGlobal: Array<any> = [];
+  //Difine la lista de puntos que se van marcando
   private points: Array<any> = [];
   //Define un contador que se incrementara en 1
   public count: number = 0;
@@ -32,6 +39,8 @@ export class AnalysisPhotographyComponent implements OnInit {
   public totalCount: number = 0;
   //Define la imagen gif indicativa
   public indicativeImage:any = {};
+  //Define la imagen real del paciente
+  public imageReal:any;
   //Constructor
   constructor(private appService: AppService, private afImageGifService: AfImageGifService) { }
   //Al inicializarse el componente
@@ -60,9 +69,10 @@ export class AnalysisPhotographyComponent implements OnInit {
   }
   // Carga imagenes en los Canvas
   public initCanvas(img) {
+    this.imageReal = img;
     var image = new Image();
     this.canvasEl= this.canvas.nativeElement;
-    image.src = img;   
+    image.src = this.imageReal;   
     image.onload = () => {
       this.cx.drawImage(image, 0, 0, this.width, this.height);
     }
@@ -87,8 +97,8 @@ export class AnalysisPhotographyComponent implements OnInit {
         point.y = y;
         point.color = color;
         //Controla si permite marcar mas puntos, segun si se hizo click en el boton "listo"
-        if (this.points.length < this.points[this.count].cantidad) {
-          this.points.push(point)
+        if (this.pointsGlobal.length < this.points[this.count].cantidad) {
+          this.pointsGlobal.push(point);
           this.drawOnCanvas(x, y, color, cx);
           console.log("entra");
         } else {
@@ -115,7 +125,7 @@ export class AnalysisPhotographyComponent implements OnInit {
     //Borra los trazos y el fondo
     var image = new Image();
     this.canvasEl= this.canvas.nativeElement;
-    image.src = 'assets/mujer_real.jpg';
+    image.src = this.imageReal;
     this.cx.clearRect(0, 0, this.width, this.height);
     //Carga el fondo
     this.cx.drawImage(image, 0, 0, this.width, this.height);
@@ -127,15 +137,19 @@ export class AnalysisPhotographyComponent implements OnInit {
   }
   //Limpia el canva completo
   public clearCanva() {
+    let canvas = document.getElementById('idCanvas');
+    let width = canvas.clientWidth;
+    let height = canvas.clientHeight;
     //Borra los trazos y el fondo
-    this.cx.clearRect(0, 0, this.width, this.height);
+    //this.cx.clearRect(0, 0, width, height);
+    this.cx.canvas.width = width;
+    this.cx.canvas.height = height;
     var image = new Image();
-    image.src = 'assets/mujer_real.jpg'
+    image.src = this.imageReal;
     //Carga el fondo
-    this.cx.drawImage(image, 0, 0, this.width, this.height);
-    this.points.splice(0, this.points.length);
+    this.cx.drawImage(image, 0, 0, width, height);
+    this.pointsGlobal.splice(0, this.pointsGlobal.length);
     this.count=0;
-    // this.stepChange(this.selectedIndex);
   }
   //Traza las lineas con sus colores correspondientes a partir de los puntos marcados
   public drawPointsWithLines() {
