@@ -12,6 +12,9 @@ img {
 .mat-card {
     padding: 10px;
 }
+mat-card.mat-card-general {
+    height: 470px;
+}
 mat-card#card-female.mat-card {
     box-shadow: none;
 }

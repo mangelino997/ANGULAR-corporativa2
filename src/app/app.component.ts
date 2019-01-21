@@ -7,6 +7,7 @@ import 'rxjs/Rx';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  
   //Constructor
   constructor() {}
 }

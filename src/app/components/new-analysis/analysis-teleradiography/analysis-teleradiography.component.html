@@ -1,0 +1,64 @@
+<form [formGroup]="atForm">
+    <ng-template matStepLabel>Análisis Telerradiografía</ng-template>
+    <div class="title-block">
+      <h4 class="title">
+      Análisis de la Telerradiografía
+      </h4>
+    </div>
+    <hr style="margin-top: 0px;">
+    <h5>Estimado Doctor/a: Siga los pasos para marcar los puntos del análisis de la Telerradiografía.</h5>
+    <br>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <mat-card class="mat-card-5">
+          <div class="row">
+          <div class="col-md-6 text-center">
+            <h6>Imagen Indicativa</h6>
+            <img src="assets/tele-puntos.png" alt="tele-puntos" width="350">
+            <h5 style="margin-top: 10px;">C:Punto Cóndilo</h5>
+            <h6>Punto más superior de la Cabeza Condilar.</h6>
+          </div>
+          <div class="col-md-6 text-center">
+            <h6>Imagen Real</h6>
+            <img src="assets/tele-real.png" alt="tele-real" width="350">
+              <div class="row justify-content-center" style="margin-top: 10px;">
+                <button mat-raised-button color="accent">Reset</button>
+                <button style="margin-left: 10px;" mat-raised-button color="primary">Listo</button>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+      <div class="col-md-6">
+        <mat-card class="mat-card-5">
+          <div class="row">
+          <div class="col-md-7 text-center">
+            <h6>Imagen con Unión de Puntos</h6>
+            <img src="assets/tele-todos-puntos.png" alt="tele-todos-puntos" width="400">
+          </div>
+          <div class="col-md-5 text-center">
+            <h6 class="text-center">Planos del Análisis</h6>
+            <div class="row">
+              <div class="col" style="height: 340px; overflow-y: scroll;">
+              <div class="li-blue">Plano de Frankfort: Unión de Porion-Sub-orbitario.</div>
+              <div class="li-lightgreen">Plano Basion-Nasión: Unión de ambos puntos.</div>
+              <div class="li-board">Plano XI: unión del punto condilar con el punto XI.</div>
+              <div class="li-violet">Plano ENA-XI: unión de dichos puntos.</div>
+              <div class="li-green">Plano XI-mentoniano: Unión de dichos puntos.</div>
+              <div class="li-lightblue">Vertical Pterigoidea: Plano perpendicular al plano de Frackfort, que parte del punto Pterigoideo.</div>
+              <div class="li-cyan">Altura facial inferior: Ángulo formado entre los planos ENA-XI y Mentoniano-XI.</div>
+              <div class="li-black">Plano ENA- Mentoniano: Unión de ambos puntos.</div>
+              <div class="li-pink">Plano Articular Funcional: Unión de Porion con Mentoniano.</div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+    <br>
+    <div>
+    <button mat-raised-button matStepperPrevious>Atrás</button>
+    <button mat-raised-button matStepperNext>Siguiente</button>
+    </div>
+  </form>

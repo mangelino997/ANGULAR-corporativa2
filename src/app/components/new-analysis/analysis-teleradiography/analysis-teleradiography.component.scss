@@ -1,0 +1,274 @@
+.btn-left-5 {
+    margin-left: 5px;
+}
+mat-card {
+    height: 440px;
+}
+.li-green {
+    background-color: green;
+    border-radius: 10px;
+    padding: 5px;
+    color: white;
+    margin-bottom: 10px;
+}
+.li-red {
+    background-color: red;
+    border-radius: 10px;
+    padding: 5px;
+    color: white;
+    margin-bottom: 10px;
+}
+.li-yellow {
+    background-color: yellow;
+    border-radius: 10px;
+    padding: 5px;
+    color: black;
+    margin-bottom: 10px;
+}
+.li-lightblue {
+    background-color: lightblue;
+    border-radius: 10px;
+    padding: 5px;
+    color: black;
+    margin-bottom: 10px;
+}
+.li-blue {
+    background-color: blue;
+    border-radius: 10px;
+    padding: 5px;
+    color: white;
+    margin-bottom: 10px;
+}
+.li-lightgreen {
+    background-color: lightgreen;
+    border-radius: 10px;
+    padding: 5px;
+    color: black;
+    margin-bottom: 10px;
+}
+.li-board {
+    background-color: #770505;
+    border-radius: 10px;
+    padding: 5px;
+    color: white;
+    margin-bottom: 10px;
+}
+.li-black {
+    background-color: black;
+    border-radius: 10px;
+    padding: 5px;
+    color: white;
+    margin-bottom: 10px;
+}
+.li-violet {
+    background-color: violet;
+    border-radius: 10px;
+    padding: 5px;
+    color: black;
+    margin-bottom: 10px;
+}
+.li-cyan {
+    background-color: cyan;
+    border-radius: 10px;
+    padding: 5px;
+    color: black;
+    margin-bottom: 10px;
+}
+.li-pink {
+    background-color: pink;
+    border-radius: 10px;
+    padding: 5px;
+    color: black;
+    margin-bottom: 10px;
+}
+.mat-card-2-3 {
+    background: #FCFCFC;
+    color: rgba(0, 0, 0, 0.87);
+    height: 450px;
+}
+@media only screen and (max-width: 1300px) {
+    .mat-card-2-3 {
+        background: #FCFCFC;
+        color: rgba(0, 0, 0, 0.87);
+        height: 320px;
+    }
+}
+@media only screen and (max-width: 1200px) {
+    .mat-card-2-3 {
+        background: #FCFCFC;
+        color: rgba(0, 0, 0, 0.87);
+        height: auto;
+    }
+}
+.mat-card-4 {
+    background: #FCFCFC;
+    color: rgba(0, 0, 0, 0.87);
+    height: 320px !important;
+}
+
+@media only screen and (max-width: 1200px) {
+    .mat-card-4 {
+        background: #FCFCFC;
+        color: rgba(0, 0, 0, 0.87);
+        height: 280px !important;
+    }
+}
+.mat-card-5 {
+    background: #FCFCFC;
+    color: rgba(0, 0, 0, 0.87);
+    height: 390px;
+}
+.mat-card-6 {
+    background: #FCFCFC;
+    color: rgba(0, 0, 0, 0.87);
+    height: 350px;
+}
+.mat-card-dynamic {
+    background: #FCFCFC;
+    color: rgba(0, 0, 0, 0.87);
+}
+img {
+    cursor: pointer;
+}
+.img-patient:hover {
+    padding: 1px;
+    // box-shadow: 5px 10px 8px #81C157;
+    box-shadow: 0 6px 59px rgb(133, 206, 54)
+}
+.mat-card {
+    padding: 0px;
+}
+mat-card#card-female.mat-card {
+    box-shadow: none;
+}
+mat-card#card-male.mat-card {
+    box-shadow: none;
+}
+.mat-card-header {
+    display: contents;
+    flex-direction: row;
+}
+.checkBoxCardSelected {
+    .img-patient{
+        padding: 1px;
+        box-shadow: 0 6px 59px rgb(133, 206, 54)
+    }
+}
+.checkBoxCardNotSelected {
+    .img-patient{
+        // padding: 0px;
+        box-shadow: 0px 0px 0px #ffffff;
+        padding: 1px;
+        // box-shadow: 0 6px 59px rgb(133, 206, 54);
+    }
+}
+.mat-card-title {
+    font-size: 20px;
+    font-weight: 0;
+}
+.btn-primary{
+    background-color: #81C157;
+    color: black;
+}
+// // Pantallas de hasta 2000px 
+// @media only screen and (max-width: 2000px) {
+//     img{
+//         height: 220px !important;
+//         width: auto !important;
+//     }
+// }
+// // Pantallas de 1000px para arriba
+// @media only screen and (max-width: 1000px) {
+//     img{
+//         height: 200px !important;
+//         width: auto !important;
+//     }
+// }
+
+// //Pantallas entre 700px y 800 
+// @media only screen and (max-width: 800px) {
+//     img{
+//         height: 170px !important;
+//         width: auto !important;
+//     }
+// }
+// //Pantallas entre 768px y 1000px 
+// @media only screen and (max-width: 700px) {
+//     img{
+//         height: 100px !important;
+//         width: auto !important;
+//     }
+// }
+
+
+//Pantallas de hasta 3000px 
+@media only screen and (max-width: 3000px) {
+    img {
+        height: 300px !important;
+        width: 300px !important;
+    }
+}
+//Pantallas de hasta 1980px 
+@media only screen and (max-width: 1980px) {
+    img {
+        height: 300px !important;
+        width: 300px !important;
+    }
+}
+//Pantallas de hasta 1880px
+@media only screen and (max-width: 1880px) {
+    img {
+        height: 300px !important;
+        width: 300px !important;
+    }
+}
+//Pantallas de hasta 1780px
+@media only screen and (max-width: 1780px) {
+    img {
+        height: 300px !important;
+        width: 300px !important;
+    }
+}
+//Pantallas de hasta 1680px
+@media only screen and (max-width: 1680px) {
+    img {
+        height: 300px !important;
+        width: 300px !important;
+    }
+}
+//Pantallas de hasta 1580px
+@media only screen and (max-width: 1580px) {
+    img {
+        height: 300px !important;
+        width: 300px !important;
+    }
+}
+//Pantallas de hasta 1480px
+@media only screen and (max-width: 1480px) {
+    img {
+        height: 300px !important;
+        width: 300px !important;
+    }
+}
+//Pantallas de hasta 1380px
+@media only screen and (max-width: 1380px) {
+    img {
+        height: 230px !important;
+        width: 230px !important;
+    }
+    
+}
+//Pantallas de hasta 1280px
+@media only screen and (max-width: 1280px) {
+    img {
+        height: 210px !important;
+        width: 210px !important;
+    }
+}
+//Pantallas de hasta 1180px
+@media only screen and (max-width: 1180px) {
+    img {
+        height: 190px !important;
+        width: 190px !important;
+    }
+}

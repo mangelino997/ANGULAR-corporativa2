@@ -8,18 +8,8 @@
   <hr style="margin-top: 0px;">
   <h5>Estimado Doctor/a: siga los pasos para marcar los puntos del análisis fotográfico.</h5>
   <br>
-  <!-- seccion de prueba de canvas para "Análisis Fotográfico-->
-  <!-- <div class="row">
-    <div class="col-md-4">
-      <canvas #canvas style="border: 1px solid black" width="300px" height="300px"></canvas>
-    </div>
-    <div class="col-md-4">
-      <img id="canvasimgAF" width="300px" height="300px" style="display:none;">
-    </div>
-  </div> -->
-  <!-- fin prueba canvas -->
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-7">
       <mat-card>
         <div class="row">
           <div class="col-md-6 text-center">
@@ -33,10 +23,16 @@
             <canvas id="idCanvas" #canvas style="border: 1px solid black" width="300px" height="300px"></canvas>
             <div class="row justify-content-center" style="margin-top: 10px;">
               <button mat-raised-button color="accent" (click)="clearCanva()">Reset</button>
-              <button style="margin-left: 10px;" mat-raised-button color="primary" (click)="nextPoints(cx1, 2)">Listo</button>
+              <button style="margin-left: 10px;" mat-raised-button color="primary" (click)="nextPoints()">Listo</button>
             </div>
           </div>
         </div>
+      </mat-card>
+    </div>
+    <div class="col-md-5 text-center">
+      <mat-card>
+        <h6>Análisis Fotográfico</h6>
+          <img id="canvasimgAT" width="300px" height="300px" style="display:none;">
       </mat-card>
     </div>
     <!-- <div class="col-md-6">

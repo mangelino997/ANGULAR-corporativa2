@@ -16,9 +16,11 @@ export class AnalysisPhotographyComponent implements OnInit {
     this.clearCanva();
   }
   //Define el formulario
-  public apForm:FormGroup;
+  public apForm: FormGroup;
   //Define el elemento canvas html
   public canvasEl: HTMLCanvasElement;
+  //Define si ejecuta el metodo nextPoints
+  public passNextPoints: boolean = false;
   //Define el ancho del canvas
   @Input() public width = 300;
   //Define la altura del canvas
@@ -38,9 +40,9 @@ export class AnalysisPhotographyComponent implements OnInit {
   //Define la cantidad de puntos segun el analisis que se procesa
   public totalCount: number = 0;
   //Define la imagen gif indicativa
-  public indicativeImage:any = {};
+  public indicativeImage: any = {};
   //Define la imagen real del paciente
-  public imageReal:any;
+  public imageReal: any;
   //Constructor
   constructor(private appService: AppService, private afImageGifService: AfImageGifService) { }
   //Al inicializarse el componente
@@ -71,20 +73,22 @@ export class AnalysisPhotographyComponent implements OnInit {
   public initCanvas(img) {
     this.imageReal = img;
     var image = new Image();
-    this.canvasEl= this.canvas.nativeElement;
-    image.src = this.imageReal;   
+    this.canvasEl = this.canvas.nativeElement;
+    image.src = this.imageReal;
     image.onload = () => {
       this.cx.drawImage(image, 0, 0, this.width, this.height);
     }
+    image.src = this.imageReal;
     this.cx = this.canvasEl.getContext('2d');
     this.canvasEl.width = this.width;
     this.canvasEl.height = this.height;
     this.cx.lineWidth = 1;
     this.cx.lineCap = 'square';
-    this.captureEvents(this.canvasEl, this.cx);
+
+    this.captureEvents(this.canvasEl);
   }
   //Captura el evento cuando el usuario hace click en el canvas de Analisis Fotografico
-  private captureEvents(canvasEl: HTMLCanvasElement, cx) {
+  private captureEvents(canvasEl: HTMLCanvasElement) {
     fromEvent(canvasEl, 'click')
       .subscribe(res => {
         let r = <MouseEvent>res;
@@ -92,47 +96,56 @@ export class AnalysisPhotographyComponent implements OnInit {
         let point = { x: null, y: null, color: null };
         let x = r.clientX - rect.left;
         let y = r.clientY - rect.top;
-        let color = this.points[this.count].color
+        let color = this.pointsGlobal[this.count].color
         point.x = x;
         point.y = y;
         point.color = color;
         //Controla si permite marcar mas puntos, segun si se hizo click en el boton "listo"
         if (this.pointsGlobal.length < this.points[this.count].cantidad) {
           this.pointsGlobal.push(point);
-          this.drawOnCanvas(x, y, color, cx);
-          console.log("entra");
-        } else {
+          this.drawOnCanvas(x, y, color);
+          if (this.points.length == this.pointsGlobal[this.count].cantidad) {
+            this.passNextPoints = true;
+          }
+        }
+        else {
           console.log("Debe presionar Listo para marcar mas puntos");
         }
       });
   }
   //Dibuja un punto en el canvas
-  private drawOnCanvas(x: number, y: number, color: string, cx) {
-    if (!cx) { return; }
+  private drawOnCanvas(x: number, y: number, color: string) {
+    if (!this.cx) { return; }
     //Define el color
-    cx.fillStyle = color;
+    this.cx.fillStyle = color;
     //Inicializa el marcado en Canvas
-    cx.beginPath();
+    this.cx.beginPath();
     //Dibuja el punto marcado
-    cx.arc(x, y, 3, 0, Math.PI * 2, true);
+    this.cx.arc(x, y, 3, 0, Math.PI * 2, true);
     //Rellena con el color definido el punto marcado
-    cx.fill();
+    this.cx.fill();
   }
   //Captura el evento click en el boton Listo y permite continuar con el marcado de puntos
   public nextPoints() {
-    //Aumenta en 1 el contador
-    this.count++;
-    //Borra los trazos y el fondo
-    var image = new Image();
-    this.canvasEl= this.canvas.nativeElement;
-    image.src = this.imageReal;
-    this.cx.clearRect(0, 0, this.width, this.height);
-    //Carga el fondo
-    this.cx.drawImage(image, 0, 0, this.width, this.height);
-    //Verifica si ya se marcaron todos los puntos
-    if (this.count == this.totalCount) {
-      //Dibuja las lineas a partir de los puntos marcados por el usuario
-      this.drawPointsWithLines();
+    if (this.passNextPoints == true) {
+      //Aumenta en 1 el contador
+      this.count++;
+      //Borra los trazos y el fondo
+      var image = new Image();
+      this.canvasEl = this.canvas.nativeElement;
+      image.src = this.imageReal;
+      this.cx.clearRect(0, 0, this.width, this.height);
+      //Carga el fondo
+      this.cx.drawImage(image, 0, 0, this.width, this.height);
+      //Vuelve a false para controlar en el siguiente grupo de puntos
+      this.passNextPoints = false;
+      //Verifica si ya se marcaron todos los puntos
+      if (this.count == this.totalCount) {
+        //Dibuja las lineas a partir de los puntos marcados por el usuario
+        this.drawPointsWithLines();
+      }
+    } else {
+      console.log("Debe marcar todos los puntos solicitados");
     }
   }
   //Limpia el canva completo
@@ -149,7 +162,7 @@ export class AnalysisPhotographyComponent implements OnInit {
     //Carga el fondo
     this.cx.drawImage(image, 0, 0, width, height);
     this.pointsGlobal.splice(0, this.pointsGlobal.length);
-    this.count=0;
+    this.count = 0;
   }
   //Traza las lineas con sus colores correspondientes a partir de los puntos marcados
   public drawPointsWithLines() {
@@ -186,7 +199,7 @@ export class AnalysisPhotographyComponent implements OnInit {
       this.cx.stroke();
       this.cx.closePath();
       //Muestra los trazos en formato de imagen 
-      // this.saveCanvas();
+      this.saveCanvas();
     }
   }
   //Dibuja y pinta el punto enviado como parametro
@@ -199,5 +212,15 @@ export class AnalysisPhotographyComponent implements OnInit {
     //Pinta los puntos, los rellena con color
     this.cx.fill();
     this.cx.closePath();
+  }
+  //Muestra los trazos del análisis en formato de imagen
+  public saveCanvas() {
+    let canvas: HTMLCanvasElement;
+    canvas = this.canvas.nativeElement;
+    (<HTMLElement>document.getElementById('canvasimgAT')).style.border = "1px solid";
+    (<HTMLElement>document.getElementById('canvasimgAT')).style.height = "300px";
+    var dataURL = canvas.toDataURL();
+    (<HTMLImageElement>document.getElementById('canvasimgAT')).src = dataURL;
+    (<HTMLElement>document.getElementById('canvasimgAT')).style.display = "inline";
   }
 }

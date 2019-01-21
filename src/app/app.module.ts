@@ -36,9 +36,11 @@ import { FooterSidenavComponent } from './components/home/sidenav/footer-sidenav
 import { PatientDataComponent } from './components/new-analysis/patient-data/patient-data.component';
 import { PatientPhotoComponent } from './components/new-analysis/patient-photo/patient-photo.component';
 import { AnalysisPhotographyComponent } from './components/new-analysis/analysis-photography/analysis-photography.component';
+import { PatientRadiographyComponent } from './components/new-analysis/patient-radiography/patient-radiography.component';
+import { AnalysisTeleradiographyComponent } from './components/new-analysis/analysis-teleradiography/analysis-teleradiography.component';
 
 const stompConfig: StompConfig = {
-  url: 'ws://localhost:8084/meserws/socket',
+  url: 'ws://192.168.0.32:8084/meserws/socket',
   headers: {},
   heartbeat_in: 0,
   heartbeat_out: 20000,
@@ -60,7 +62,9 @@ const stompConfig: StompConfig = {
     FooterSidenavComponent,
     PatientDataComponent,
     PatientPhotoComponent,
-    AnalysisPhotographyComponent
+    AnalysisPhotographyComponent,
+    PatientRadiographyComponent,
+    AnalysisTeleradiographyComponent
   ],
   imports: [
     BrowserModule,

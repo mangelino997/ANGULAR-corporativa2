@@ -1,82 +1,56 @@
 .btn-left-5 {
     margin-left: 5px;
 }
-img {
-    cursor: pointer;
-}
-.img-patient:hover {
-    padding: 1px;
-    // box-shadow: 5px 10px 8px #81C157;
-    box-shadow: 0 6px 59px rgb(133, 206, 54)
-}
-.mat-card {
-    padding: 10px;
-}
-mat-card#card-female.mat-card {
-    box-shadow: none;
-}
-mat-card#card-male.mat-card {
-    box-shadow: none;
-}
-.checkBoxCardSelected {
-    .img-patient {
-        padding: 1px;
-        box-shadow: 0 6px 59px rgb(133, 206, 54)
-    }
-}
-.checkBoxCardNotSelected {
-    .img-patient{
-        box-shadow: 0px 0px 0px #ffffff;
-        padding: 1px;
-    }
+mat-card {
+    height: 440px;
 }
 //Pantallas de hasta 3000px 
 @media only screen and (max-width: 3000px) {
     img {
-        height: 400px !important;
-        width: 400px !important;
+        height: 300px !important;
+        width: 300px !important;
     }
 }
 //Pantallas de hasta 1980px 
 @media only screen and (max-width: 1980px) {
     img {
-        height: 350px !important;
-        width: 350px !important;
+        height: 300px !important;
+        width: 300px !important;
     }
 }
 //Pantallas de hasta 1880px
 @media only screen and (max-width: 1880px) {
     img {
-        height: 330px !important;
-        width: 330px !important;
+        height: 300px !important;
+        width: 300px !important;
     }
 }
 //Pantallas de hasta 1780px
 @media only screen and (max-width: 1780px) {
     img {
-        height: 310px !important;
-        width: 310px !important;
+        height: 300px !important;
+        width: 300px !important;
     }
 }
 //Pantallas de hasta 1680px
 @media only screen and (max-width: 1680px) {
     img {
-        height: 290px !important;
-        width: 290px !important;
+        height: 300px !important;
+        width: 300px !important;
     }
 }
 //Pantallas de hasta 1580px
 @media only screen and (max-width: 1580px) {
     img {
-        height: 270px !important;
-        width: 270px !important;
+        height: 300px !important;
+        width: 300px !important;
     }
 }
 //Pantallas de hasta 1480px
 @media only screen and (max-width: 1480px) {
     img {
-        height: 250px !important;
-        width: 250px !important;
+        height: 300px !important;
+        width: 300px !important;
     }
 }
 //Pantallas de hasta 1380px
@@ -85,6 +59,7 @@ mat-card#card-male.mat-card {
         height: 230px !important;
         width: 230px !important;
     }
+    
 }
 //Pantallas de hasta 1280px
 @media only screen and (max-width: 1280px) {
