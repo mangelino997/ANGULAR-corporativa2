@@ -1,0 +1,48 @@
+<form [formGroup]="rpForm">
+    <ng-template matStepLabel>Radiografías del Paciente</ng-template>
+    <div class="title-block">
+        <h4 class="title">
+          Radiografías del Paciente
+        </h4>
+      </div>
+      <hr style="margin-top: 0px;">
+      <h5>Estimado Doctor/a: Cargue cada una de las radiografías del paciente.</h5>
+      <br>
+      <div class="row justify-content-center">
+        <div class="col-md-12">
+          <mat-card class="mat-card-4">
+            <div class="row">
+              <div class="col-md-3 text-center">
+                <h6>Cráneo</h6>
+                <img id="b" width="80%" height="80%" [src]="imageSrcCraneo || 'assets/craneo.png'" alt="your image" /><br>
+                <label for="imgCraneo" color="primary" class="btn btn-primary">Subir Foto</label>
+                <input id="imgCraneo" type='file' (change)="readURL($event, 'imageSrcCraneo')" style="display: none"/>
+              </div>
+              <div class="col-md-3 text-center">
+                <h6>Ortopantomografía</h6>
+                <img id="c" width="80%" height="80%" [src]="imageSrcOrthopantomography || 'assets/ortopantomografia.png'" alt="your image" /><br>
+                <label for="imgOrthopantomography" color="primary" class="btn btn-primary">Subir Foto</label>
+                <input id="imgOrthopantomography" type='file' (change)="readURL($event, 'imageSrcOrthopantomography')" style="display: none"/>
+              </div>
+              <div class="col-md-3 text-center">
+                <h6>Telerradiografía</h6>
+                <img id="d" width="80%" height="80%" [src]="imageSrcTeleradiography || 'assets/telerradiografia.png'" alt="your image" /><br>
+                <label for="imgTeleradiography" color="primary" class="btn btn-primary">Subir Foto</label>
+                <input id="imgTeleradiography" type='file' (change)="readURL($event, 'imageSrcTeleradiography');" style="display: none"/>
+              </div>
+              <div class="col-md-3 text-center">
+                <h6>Condilografía</h6>
+                <img id="e" width="80%" height="80%" [src]="imageSrcCondilography || 'assets/condilografia.png'" alt="your image" /><br>
+                <label for="imgCondilography" color="primary" class="btn btn-primary">Subir Foto</label>
+                <input id="imgCondilography" type='file' (change)="readURL($event, 'imageSrcCondilography');" style="display: none"/>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+      <br>
+      <div>
+          <button mat-raised-button matStepperPrevious>Atrás</button>
+          <button mat-raised-button matStepperNext>Siguiente</button>
+      </div>
+  </form>

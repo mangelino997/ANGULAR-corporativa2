@@ -20,5 +20,19 @@
         <app-analysis-photography (dataEvent)="receiveAP($event)"></app-analysis-photography>
     </mat-step>
     <!-- FIN DEL ANALISIS DE LA FOTOGRAFIA -->
+    <!-- --- -->
+    <!-- FOTOS DE LAS RADIOGRAFÍAS -->
+    <mat-step [stepControl]="patientPhotoForm">
+        <ng-template matStepLabel>Radiografías del Paciente</ng-template>
+        <app-patient-radiography (dataEvent)="receiveRP($event)"></app-patient-radiography>
+    </mat-step>
+    <!-- FIN DEL RADIOGRAFÍAS -->
+    <!-- --- -->
+    <!-- ANALISIS DE LA TELERADIOGRAFÍAS -->
+    <mat-step [stepControl]="patientPhotoForm">
+        <ng-template matStepLabel>Análisis Telerradiografía</ng-template>
+        <app-analysis-teleradiography (dataEvent)="receiveAT($event)"></app-analysis-teleradiography>
+    </mat-step>
+    <!-- FIN DEL ANALISIS DE LA TELERADIOGRAFÍAS -->
 </mat-horizontal-stepper>
 <!-- FIN NUEVO ANALISIS -->
