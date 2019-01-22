@@ -8,13 +8,13 @@
   <hr style="margin-top: 0px;">
   <h5>Estimado Doctor/a: siga los pasos para marcar los puntos del análisis fotográfico.</h5>
   <br>
-  <div class="row">
-    <div class="col-md-7">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
       <mat-card>
         <div class="row">
           <div class="col-md-6 text-center">
             <h6>Imagen Indicativa</h6>
-            <img src="{{indicativeImage.image}}" alt="mujer" width="300">
+            <img src="{{indicativeImage.image}}" alt="mujer">
             <h5 style="margin-top: 10px;">{{indicativeImage.pointName}}</h5>
             <h6>{{indicativeImage.pointDescription}}</h6>
           </div>
@@ -29,20 +29,14 @@
         </div>
       </mat-card>
     </div>
-    <div class="col-md-5 text-center">
+    <div id="idFinalImage" class="col-md-6 display-none">
       <mat-card>
-        <h6>Análisis Fotográfico</h6>
-          <img id="canvasimgAT" width="300px" height="300px" style="display:none;">
-      </mat-card>
-    </div>
-    <!-- <div class="col-md-6">
-      <mat-card class="mat-card-2-3">
         <div class="row">
-          <div class="col-md-8 text-center">
+          <div class="col-md-7 text-center">
             <h6>Imagen con Unión de Puntos</h6>
-            <img src="assets/mujer_puntos.png" alt="mujer_real" width="350">
+            <img id="canvasimgAT">
           </div>
-          <div class="col-md-4">
+          <div class="col-md-5">
             <h6 class="text-center">Planos del Análisis</h6>
             <div class="row">
               <div class="col">
@@ -55,11 +49,11 @@
           </div>
         </div>
       </mat-card>
-    </div> -->
+    </div>
   </div>
   <br>
   <div>
     <button mat-raised-button matStepperPrevious>Atrás</button>
-    <button mat-raised-button matStepperNext>Siguiente</button>
+    <button class="btn-left-5" mat-raised-button color="primary" matStepperNext>Siguiente</button>
   </div>
 </form>

@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { AppService } from 'src/app/services/app.service';
 
 @Component({
   selector: 'app-patient-photo',
@@ -12,20 +13,32 @@ export class PatientPhotoComponent implements OnInit {
   //Define el formulario
   public patientPhotoForm:FormGroup;
   //Define la imagen del sexo por defecto
-  public sexSelectedImage:string = 'assets/female.png';
+  public sexSelectedImage:string;
+  //Define la imagen para mujer
+  public femaleImage:string;
+  //Define la imagen para hombre
+  public maleImage:string;
   //Constructor
-  constructor() { }
+  constructor(private appService: AppService) { }
   //Al inicializarse el componente
   ngOnInit() {
+    //Establece la imagen de mujer
+    this.femaleImage = this.appService.getUrlBase() + '/indicativeImage/getById/1';
+    //Establece la imagen de hombre
+    this.maleImage = this.appService.getUrlBase() + '/indicativeImage/getById/2';
+    //Establece la imagen por defecto en imagen real del paciente
+    this.sexSelectedImage = this.femaleImage;
     //Crea el formulario
     this.patientPhotoForm = new FormGroup({
       female: new FormControl(),
       male: new FormControl(),
-      image: new FormControl()
+      image: new FormControl(),
+      indicativeImage: new FormControl()
     });
   }
   //Envia el formulario a Nuevo Analisis
   public sendData(): void {
+    this.patientPhotoForm.get('indicativeImage').setValue(this.sexSelectedImage);
     this.dataEvent.emit(this.patientPhotoForm.value);
   }
   //Determina la seleccion del sexo del paciente
@@ -37,14 +50,14 @@ export class PatientPhotoComponent implements OnInit {
         this.patientPhotoForm.get('female').setValue(false);
         cardSelected.className = "checkBoxCardSelected";
         document.getElementById('card-female').className = "mat-card";
-        this.sexSelectedImage = 'assets/male.png';
+        this.sexSelectedImage = this.maleImage;
         break;
       case 'card-female':
         this.patientPhotoForm.get('female').setValue(true);
         this.patientPhotoForm.get('male').setValue(false);
         cardSelected.className = "checkBoxCardSelected";
         document.getElementById('card-male').className = "mat-card";
-        this.sexSelectedImage = 'assets/female.png';
+        this.sexSelectedImage = this.femaleImage;
         break;
       default:
         cardSelected.className = "checkBoxCardNotSelected";

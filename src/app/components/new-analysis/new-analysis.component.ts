@@ -46,6 +46,7 @@ export class NewAnalysisComponent implements OnInit {
     this.analysisForm.get('patient').get('sex').setValue(sex);
     this.analysisForm.get('patient').get('image').setValue(patientPhotoForm.image);
     this.apComponent.initCanvas(patientPhotoForm.image);
+    this.apComponent.setIndicativeImage(patientPhotoForm.indicativeImage);
   }
   //
   //Determina que analisis se va a procesar

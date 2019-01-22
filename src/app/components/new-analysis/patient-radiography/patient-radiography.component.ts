@@ -11,7 +11,7 @@ import { AppService } from 'src/app/services/app.service';
 })
 export class PatientRadiographyComponent implements OnInit {
   //Define el formulario
-  public rpForm:FormGroup;
+  public radiographyForm:FormGroup;
   //Define si el segundo <img> en subir imagen se muestra o no
   public muestraImagenPc: boolean = true;
   //Definimos la variable donde guardaremos la foto
@@ -29,7 +29,7 @@ export class PatientRadiographyComponent implements OnInit {
 
   ngOnInit() {
     //Establece el formulario
-    this.rpForm = new FormGroup({});
+    this.radiographyForm = new FormGroup({});
   }
 
   //Metodo cargar imagen

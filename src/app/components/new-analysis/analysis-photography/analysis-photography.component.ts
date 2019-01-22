@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 import { AfImageGifService } from 'src/app/services/af-image-gif.service';
 import { AppService } from 'src/app/services/app.service';
+import { IndicativeImageService } from 'src/app/services/indicative-image.service';
 
 @Component({
   selector: 'app-analysis-photography',
@@ -15,8 +16,12 @@ export class AnalysisPhotographyComponent implements OnInit {
   onResize(event) {
     this.clearCanva();
   }
-  //Define el formulario
+  //Define el formulario Analisis de la fotografia
   public apForm: FormGroup;
+  //Define el formulario Analisis de la telerradiografia
+  public atForm: FormGroup;
+  //Define el formulario Radiografias
+  public radiographyForm: FormGroup;
   //Define el elemento canvas html
   public canvasEl: HTMLCanvasElement;
   //Define si ejecuta el metodo nextPoints
@@ -43,6 +48,8 @@ export class AnalysisPhotographyComponent implements OnInit {
   public indicativeImage: any = {};
   //Define la imagen real del paciente
   public imageReal: any;
+  //Define la imagen indicative segun el sexo elegido
+  public indicativeImageSex: any;
   //Constructor
   constructor(private appService: AppService, private afImageGifService: AfImageGifService) { }
   //Al inicializarse el componente
@@ -53,38 +60,42 @@ export class AnalysisPhotographyComponent implements OnInit {
       pointName: null,
       pointDescription: null
     }
-    //Establece el formulario
+    //Establece el formulario Analisis de la Fotografia
     this.apForm = new FormGroup({});
+    //Establece el formulario radiografias
+    this.radiographyForm = new FormGroup({});
+    //Establece el formulario Analisis de la Telerradiografia
+    this.atForm = new FormGroup({});
     //Establece el gif por defecto
-    this.afImageGifService.getByPositionAndSex(1, 1).subscribe(res => {
+    this.nextGif();
+    //Define los puntos y colores para el analisis fotografico
+    this.lines = [{ x: 0, y: 1, stretch: true }, { x: 2, y: 3, stretch: true }, { x: 4, y: 5, stretch: false }, 
+      { x: 4, y: 6, stretch: false }, { x: 4, y: 7, stretch: false }];
+    this.pointsGlobal = [{cantidad: 2, color: '#FF001D'}, {cantidad: 4, color: '#FEFE47'}, 
+      {cantidad: 5, color: '#007F21'}, {cantidad: 6, color: '#007F21'}, {cantidad: 8, color: '#A7D7E4'}]
+    this.totalCount = 5;
+  }
+  //Establece el gif correspondiente
+  private nextGif(): void {
+    this.afImageGifService.getByPositionAndSex(this.count+1, 1).subscribe(res => {
       let data = res.json();
       this.indicativeImage.image = this.appService.getUrlBase() + '/afImageGif/getImageByPositionAndSex/' + data.position + '/' + data.sex.id;
       this.indicativeImage.pointName = data.pointName;
       this.indicativeImage.pointDescription = data.pointDescription;
     });
-    //Define los puntos y colores para el analisis fotografico
-    this.lines = [{ x: 0, y: 1, stretch: true }, { x: 2, y: 3, stretch: true }, { x: 4, y: 5, stretch: false }, 
-      { x: 4, y: 6, stretch: false }, { x: 4, y: 7, stretch: false }];
-    this.points = [{cantidad: 2, color: '#FF001D'}, {cantidad: 4, color: '#FEFE47'}, 
-      {cantidad: 5, color: '#007F21'}, {cantidad: 6, color: '#007F21'}, {cantidad: 8, color: '#A7D7E4'}]
-    this.totalCount = 5;
   }
-  // Carga imagenes en los Canvas
+  //Establece la imagen indicativa
+  public setIndicativeImage(indicativeImage): void {
+    this.indicativeImageSex = indicativeImage;
+  }
+  //Inicializa el Canvas
   public initCanvas(img) {
     this.imageReal = img;
-    var image = new Image();
     this.canvasEl = this.canvas.nativeElement;
-    image.src = this.imageReal;
-    image.onload = () => {
-      this.cx.drawImage(image, 0, 0, this.width, this.height);
-    }
-    image.src = this.imageReal;
     this.cx = this.canvasEl.getContext('2d');
-    this.canvasEl.width = this.width;
-    this.canvasEl.height = this.height;
     this.cx.lineWidth = 1;
     this.cx.lineCap = 'square';
-
+    this.clearCanva();
     this.captureEvents(this.canvasEl);
   }
   //Captura el evento cuando el usuario hace click en el canvas de Analisis Fotografico
@@ -101,8 +112,8 @@ export class AnalysisPhotographyComponent implements OnInit {
         point.y = y;
         point.color = color;
         //Controla si permite marcar mas puntos, segun si se hizo click en el boton "listo"
-        if (this.pointsGlobal.length < this.points[this.count].cantidad) {
-          this.pointsGlobal.push(point);
+        if (this.points.length < this.pointsGlobal[this.count].cantidad) {
+          this.points.push(point);
           this.drawOnCanvas(x, y, color);
           if (this.points.length == this.pointsGlobal[this.count].cantidad) {
             this.passNextPoints = true;
@@ -130,19 +141,22 @@ export class AnalysisPhotographyComponent implements OnInit {
     if (this.passNextPoints == true) {
       //Aumenta en 1 el contador
       this.count++;
-      //Borra los trazos y el fondo
-      var image = new Image();
-      this.canvasEl = this.canvas.nativeElement;
-      image.src = this.imageReal;
-      this.cx.clearRect(0, 0, this.width, this.height);
-      //Carga el fondo
-      this.cx.drawImage(image, 0, 0, this.width, this.height);
+      this.clearCanva();
       //Vuelve a false para controlar en el siguiente grupo de puntos
       this.passNextPoints = false;
       //Verifica si ya se marcaron todos los puntos
       if (this.count == this.totalCount) {
+        //Muestra la imagen indicativa por defecto
+        this.indicativeImage.image = this.indicativeImageSex;
+        this.indicativeImage.pointName = null;
+        this.indicativeImage.pointDescription = null;
+        //Muestra la imagen final con puntos y lineas
+        let card = document.getElementById('idFinalImage');
+        card.classList.remove("display-none");
         //Dibuja las lineas a partir de los puntos marcados por el usuario
         this.drawPointsWithLines();
+      } else {
+        this.nextGif();
       }
     } else {
       console.log("Debe marcar todos los puntos solicitados");
@@ -153,16 +167,13 @@ export class AnalysisPhotographyComponent implements OnInit {
     let canvas = document.getElementById('idCanvas');
     let width = canvas.clientWidth;
     let height = canvas.clientHeight;
-    //Borra los trazos y el fondo
-    //this.cx.clearRect(0, 0, width, height);
     this.cx.canvas.width = width;
     this.cx.canvas.height = height;
     var image = new Image();
     image.src = this.imageReal;
-    //Carga el fondo
     this.cx.drawImage(image, 0, 0, width, height);
-    this.pointsGlobal.splice(0, this.pointsGlobal.length);
-    this.count = 0;
+    // this.points.splice(0, this.points.length);
+    // this.count = 0;
   }
   //Traza las lineas con sus colores correspondientes a partir de los puntos marcados
   public drawPointsWithLines() {
@@ -201,6 +212,7 @@ export class AnalysisPhotographyComponent implements OnInit {
       //Muestra los trazos en formato de imagen 
       this.saveCanvas();
     }
+    this.clearCanva();
   }
   //Dibuja y pinta el punto enviado como parametro
   public fillPoint(p) {
@@ -218,7 +230,8 @@ export class AnalysisPhotographyComponent implements OnInit {
     let canvas: HTMLCanvasElement;
     canvas = this.canvas.nativeElement;
     (<HTMLElement>document.getElementById('canvasimgAT')).style.border = "1px solid";
-    (<HTMLElement>document.getElementById('canvasimgAT')).style.height = "300px";
+    (<HTMLElement>document.getElementById('canvasimgAT')).style.width = "100%";
+    (<HTMLElement>document.getElementById('canvasimgAT')).style.height = "auto";
     var dataURL = canvas.toDataURL();
     (<HTMLImageElement>document.getElementById('canvasimgAT')).src = dataURL;
     (<HTMLElement>document.getElementById('canvasimgAT')).style.display = "inline";

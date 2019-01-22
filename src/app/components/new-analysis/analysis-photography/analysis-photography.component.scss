@@ -2,80 +2,21 @@
     margin-left: 5px;
 }
 mat-card {
-    height: 440px;
+    width: 100%;
+    height: auto;
 }
 canvas {
-    height: auto;
     width: 100%;
+    height: auto;
 }
-//Pantallas de hasta 3000px 
-@media only screen and (max-width: 3000px) {
-    img {
-        height: 300px !important;
-        width: 300px !important;
-    }
+img {
+    cursor: pointer;
+    width: 100%;
+    height: auto;
 }
-//Pantallas de hasta 1980px 
-@media only screen and (max-width: 1980px) {
-    img {
-        height: 300px !important;
-        width: 300px !important;
-    }
+.display-none {
+    display: none;
 }
-//Pantallas de hasta 1880px
-@media only screen and (max-width: 1880px) {
-    img {
-        height: 300px !important;
-        width: 300px !important;
-    }
-}
-//Pantallas de hasta 1780px
-@media only screen and (max-width: 1780px) {
-    img {
-        height: 300px !important;
-        width: 300px !important;
-    }
-}
-//Pantallas de hasta 1680px
-@media only screen and (max-width: 1680px) {
-    img {
-        height: 300px !important;
-        width: 300px !important;
-    }
-}
-//Pantallas de hasta 1580px
-@media only screen and (max-width: 1580px) {
-    img {
-        height: 300px !important;
-        width: 300px !important;
-    }
-}
-//Pantallas de hasta 1480px
-@media only screen and (max-width: 1480px) {
-    img {
-        height: 300px !important;
-        width: 300px !important;
-    }
-}
-//Pantallas de hasta 1380px
-@media only screen and (max-width: 1380px) {
-    img {
-        height: 230px !important;
-        width: 230px !important;
-    }
-    
-}
-//Pantallas de hasta 1280px
-@media only screen and (max-width: 1280px) {
-    img {
-        height: 210px !important;
-        width: 210px !important;
-    }
-}
-//Pantallas de hasta 1180px
-@media only screen and (max-width: 1180px) {
-    img {
-        height: 190px !important;
-        width: 190px !important;
-    }
+.display-inline {
+    display: inline;
 }

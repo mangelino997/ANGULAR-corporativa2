@@ -17,6 +17,7 @@ import { StompConfig, StompService } from '@stomp/ng2-stompjs';
 //Servicios
 import { TypeRehabilitationService } from './services/type-rehabilitation.service';
 import { AfImageGifService } from './services/af-image-gif.service';
+import { IndicativeImageService } from './services/indicative-image.service';
 
 //Modelos
 import { Analysis } from './modules/analysis';
@@ -104,6 +105,7 @@ const stompConfig: StompConfig = {
     TypeRehabilitation,
     TypeRehabilitationService,
     AfImageGifService,
+    IndicativeImageService,
     StompService,
     {
       provide: StompConfig,
