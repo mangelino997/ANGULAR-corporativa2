@@ -23,7 +23,7 @@
             <canvas id="idCanvas" #canvas style="border: 1px solid black" width="300px" height="300px"></canvas>
             <div class="row justify-content-center" style="margin-top: 10px;">
               <button mat-raised-button color="accent" (click)="clearCanva()">Reset</button>
-              <button style="margin-left: 10px;" mat-raised-button color="primary" (click)="nextPoints()">Listo</button>
+              <button style="margin-left: 10px;" mat-raised-button color="primary" (click)="nextPoints()" [disabled]="!bandera">Listo</button>
             </div>
           </div>
         </div>
@@ -34,7 +34,7 @@
         <div class="row">
           <div class="col-md-7 text-center">
             <h6>Imagen con Unión de Puntos</h6>
-            <img id="canvasimgAT">
+            <img id="canvasimgAP">
           </div>
           <div class="col-md-5">
             <h6 class="text-center">Planos del Análisis</h6>

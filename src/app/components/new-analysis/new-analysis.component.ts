@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { AnalysisPhotographyComponent } from './analysis-photography/analysis-photography.component';
 import { PatientPhotoComponent } from './patient-photo/patient-photo.component';
+import { AnalysisTeleradiographyComponent } from './analysis-teleradiography/analysis-teleradiography.component';
 
 @Component({
   selector: 'app-new-analysis',
@@ -13,14 +14,17 @@ export class NewAnalysisComponent implements OnInit {
   @ViewChild(AnalysisPhotographyComponent) apComponent;
   //Define el componente Foto del Paciente
   @ViewChild(PatientPhotoComponent) ppComponent;
+  //Define el componente Radiografias del Paciente
+  @ViewChild(AnalysisTeleradiographyComponent) arComponent;
   //Define el formulario para la seccion Datos del Paciente
   public analysisForm: FormGroup;
   //Define el formulario para la seccion Foto del Paciente
   public patientPhotoForm: FormGroup;
-  //Define el formulario para la seccion Analisis Fotografico
-  public apForm:FormGroup;
   //Define el formulario para la seccion Radiografías del Paciente
-  public rpForm:FormGroup;
+  public teleradiographyForm: FormGroup;
+  
+  //Define el formulario para la seccion Analisis Telerradiografia
+  public atForm:FormGroup;
   //Constructor
   constructor() { }
   //Al inicializarse el componente
@@ -30,9 +34,9 @@ export class NewAnalysisComponent implements OnInit {
     //Inicializa el formulario de foto del paciente
     this.patientPhotoForm = new FormGroup({});
     //Inicializa el formulario del analisis fotografico
-    this.apForm = new FormGroup({});
+    this.teleradiographyForm = new FormGroup({});
     //Inicializa el formulario para radiografías del paciente
-    this.apForm = new FormGroup({});
+    this.atForm = new FormGroup({});
   }
   //Recibe el formulario del paciente
   public receivePatientData($event): void {
@@ -47,6 +51,14 @@ export class NewAnalysisComponent implements OnInit {
     this.analysisForm.get('patient').get('image').setValue(patientPhotoForm.image);
     this.apComponent.initCanvas(patientPhotoForm.image);
     this.apComponent.setIndicativeImage(patientPhotoForm.indicativeImage);
+  }
+  //Recibe el formulario de Radiografias
+  public receiveRadiography($event): void {
+    let radiographyPhotos= $event;
+    console.log(radiographyPhotos);
+    // this.atForm.get('patient').get('image').setValue(radiographyPhotos.imageTeleradiography);
+    this.arComponent.initCanvas(radiographyPhotos.imageTeleradiography);
+    this.arComponent.setIndicativeImage(radiographyPhotos.indicativeImage);
   }
   //
   //Determina que analisis se va a procesar

@@ -1,7 +1,5 @@
-import { Component, OnInit, Input, ElementRef, ViewChild, HostListener } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { fromEvent } from 'rxjs';
-import { AfImageGifService } from 'src/app/services/af-image-gif.service';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { AppService } from 'src/app/services/app.service';
 
 @Component({
@@ -10,26 +8,40 @@ import { AppService } from 'src/app/services/app.service';
   styleUrls: ['./patient-radiography.component.scss']
 })
 export class PatientRadiographyComponent implements OnInit {
+  //Define el evento que envia el formulario
+  @Output() dataEvent = new EventEmitter<any>();
   //Define el formulario
   public radiographyForm:FormGroup;
-  //Define si el segundo <img> en subir imagen se muestra o no
-  public muestraImagenPc: boolean = true;
-  //Definimos la variable donde guardaremos la foto
-  public archivo: File = null;
-  //id del indice seleccionado
-  public selectedIndex: number = null;
-  //Define las fuentes de la imagens que cargamos 
-  public imageSrcProfile: any;
-  public imageSrcCraneo: any;
-  public imageSrcOrthopantomography: any;
-  public imageSrcTeleradiography: any;
-  public imageSrcCondilography: any;
+  //Define la imagen de orthopantomography
+  public orthopantomographyImage:string;
+  //Define la imagen de teleradiography
+  public teleradiographyImage:string;
+  //Define la imagen de condilography
+  public condilographyImage:string;
+  //Constructor
+  constructor(private appService: AppService) {
 
-  constructor() { }
-
+   }
+  //Al inicializarse el componente
   ngOnInit() {
+    //Establece la imagen de mujer
+    this.orthopantomographyImage = this.appService.getUrlBase() + '/indicativeImage/getById/3';
+    //Establece la imagen de hombre
+    this.teleradiographyImage = this.appService.getUrlBase() + '/indicativeImage/getById/4';
+    //Establece la imagen por defecto en imagen real del paciente
+    this.condilographyImage = this.appService.getUrlBase() + '/indicativeImage/getById/5';
     //Establece el formulario
     this.radiographyForm = new FormGroup({});
+    //Crea el formulario
+    this.radiographyForm = new FormGroup({
+      imageOrthopantomography: new FormControl(''),
+      imageTeleradiography: new FormControl(''),
+      imageCondilography: new FormControl(''),
+    });
+  }
+  //Envia el formulario a Nuevo Analisis
+  public sendDataPR(): void {
+    this.dataEvent.emit(this.radiographyForm.value);
   }
 
   //Metodo cargar imagen
@@ -39,28 +51,18 @@ export class PatientRadiographyComponent implements OnInit {
       const file = event.target.files[0];
       const reader = new FileReader();
       switch(src){
-        case 'imageSrcProfile':
-        console.log(event);
-          reader.onload = e => this.imageSrcProfile = reader.result;
-          reader.readAsDataURL(file);
-          break;
-        case 'imageSrcCraneo':
-          console.log(event);
-          reader.onload = e => this.imageSrcCraneo = reader.result;
-          reader.readAsDataURL(file);
-          break;
         case "imageSrcOrthopantomography":
           console.log("entra en ortopa");
-          reader.onload = e => this.imageSrcOrthopantomography = reader.result;
+          reader.onload = e => this.radiographyForm.get('imageOrthopantomography').setValue(reader.result);
           reader.readAsDataURL(file);
           break;
         case 'imageSrcTeleradiography':
           console.log("entra en tele");
-          reader.onload = e => this.imageSrcTeleradiography = reader.result;
+          reader.onload = e => this.radiographyForm.get('imageTeleradiography').setValue(reader.result);
           reader.readAsDataURL(file);
           break;
         case 'imageSrcCondilography':
-          reader.onload = e => this.imageSrcCondilography = reader.result;
+          reader.onload = e => this.radiographyForm.get('imageCondilography').setValue(reader.result);
           reader.readAsDataURL(file);
           break;
       }

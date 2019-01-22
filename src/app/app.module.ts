@@ -39,6 +39,7 @@ import { PatientPhotoComponent } from './components/new-analysis/patient-photo/p
 import { AnalysisPhotographyComponent } from './components/new-analysis/analysis-photography/analysis-photography.component';
 import { PatientRadiographyComponent } from './components/new-analysis/patient-radiography/patient-radiography.component';
 import { AnalysisTeleradiographyComponent } from './components/new-analysis/analysis-teleradiography/analysis-teleradiography.component';
+import { AtImageGifService } from './services/at-image-gif.service';
 
 const stompConfig: StompConfig = {
   url: 'ws://192.168.0.32:8084/meserws/socket',
@@ -105,6 +106,7 @@ const stompConfig: StompConfig = {
     TypeRehabilitation,
     TypeRehabilitationService,
     AfImageGifService,
+    AtImageGifService,
     IndicativeImageService,
     StompService,
     {

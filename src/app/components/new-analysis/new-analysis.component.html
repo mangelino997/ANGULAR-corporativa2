@@ -22,9 +22,9 @@
     <!-- FIN DEL ANALISIS DE LA FOTOGRAFIA -->
     <!-- --- -->
     <!-- FOTOS DE LAS RADIOGRAFÍAS -->
-    <mat-step [stepControl]="arForm">
+    <mat-step [stepControl]="radiographyForm">
         <ng-template matStepLabel>Radiografías del Paciente</ng-template>
-        <app-patient-radiography (dataEvent)="receiveRP($event)"></app-patient-radiography>
+        <app-patient-radiography (dataEvent)="receiveRadiography($event)"></app-patient-radiography>
     </mat-step>
     <!-- FIN DEL RADIOGRAFÍAS -->
     <!-- --- -->

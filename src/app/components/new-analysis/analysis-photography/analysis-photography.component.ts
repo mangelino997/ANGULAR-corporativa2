@@ -50,6 +50,8 @@ export class AnalysisPhotographyComponent implements OnInit {
   public imageReal: any;
   //Define la imagen indicative segun el sexo elegido
   public indicativeImageSex: any;
+  // Define un booleano para controlar la visualizacion de boton Listo
+  public bandera: boolean= false;
   //Constructor
   constructor(private appService: AppService, private afImageGifService: AfImageGifService) { }
   //Al inicializarse el componente
@@ -116,11 +118,14 @@ export class AnalysisPhotographyComponent implements OnInit {
           this.points.push(point);
           this.drawOnCanvas(x, y, color);
           if (this.points.length == this.pointsGlobal[this.count].cantidad) {
-            this.passNextPoints = true;
+            this.bandera = true;
           }
         }
-        else {
+        else if(this.pointsGlobal.length == this.points[this.count].cantidad){
           console.log("Debe presionar Listo para marcar mas puntos");
+        }
+        else {
+          console.log("Debe marcar todos los puntos");
         }
       });
   }
@@ -138,7 +143,8 @@ export class AnalysisPhotographyComponent implements OnInit {
   }
   //Captura el evento click en el boton Listo y permite continuar con el marcado de puntos
   public nextPoints() {
-    if (this.passNextPoints == true) {
+    if (this.bandera == true) {
+      this.bandera=false;
       //Aumenta en 1 el contador
       this.count++;
       this.clearCanva();
@@ -229,11 +235,11 @@ export class AnalysisPhotographyComponent implements OnInit {
   public saveCanvas() {
     let canvas: HTMLCanvasElement;
     canvas = this.canvas.nativeElement;
-    (<HTMLElement>document.getElementById('canvasimgAT')).style.border = "1px solid";
-    (<HTMLElement>document.getElementById('canvasimgAT')).style.width = "100%";
-    (<HTMLElement>document.getElementById('canvasimgAT')).style.height = "auto";
+    (<HTMLElement>document.getElementById('canvasimgAP')).style.border = "1px solid";
+    (<HTMLElement>document.getElementById('canvasimgAP')).style.width = "100%";
+    (<HTMLElement>document.getElementById('canvasimgAP')).style.height = "auto";
     var dataURL = canvas.toDataURL();
-    (<HTMLImageElement>document.getElementById('canvasimgAT')).src = dataURL;
-    (<HTMLElement>document.getElementById('canvasimgAT')).style.display = "inline";
+    (<HTMLImageElement>document.getElementById('canvasimgAP')).src = dataURL;
+    (<HTMLElement>document.getElementById('canvasimgAP')).style.display = "inline";
   }
 }

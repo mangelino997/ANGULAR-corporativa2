@@ -12,24 +12,24 @@
       <div class="col-md-6">
         <mat-card class="mat-card-5">
           <div class="row">
-          <div class="col-md-6 text-center">
-            <h6>Imagen Indicativa</h6>
-            <img src="assets/tele-puntos.png" alt="tele-puntos" width="350">
-            <h5 style="margin-top: 10px;">C:Punto Cóndilo</h5>
-            <h6>Punto más superior de la Cabeza Condilar.</h6>
-          </div>
+            <div class="col-md-6 text-center">
+              <h6>Imagen Indicativa</h6>
+              <img src="{{indicativeImage.image}}" alt="Telerradiografía">
+              <h5 style="margin-top: 10px;">{{indicativeImage.pointName}}</h5>
+              <h6>{{indicativeImage.pointDescription}}</h6>
+            </div>
           <div class="col-md-6 text-center">
             <h6>Imagen Real</h6>
-            <img src="assets/tele-real.png" alt="tele-real" width="350">
-              <div class="row justify-content-center" style="margin-top: 10px;">
-                <button mat-raised-button color="accent">Reset</button>
-                <button style="margin-left: 10px;" mat-raised-button color="primary">Listo</button>
-              </div>
+            <canvas id="idCanvas" #canvas2 style="border: 1px solid black" width="300px" height="300px"></canvas>
+            <div class="row justify-content-center" style="margin-top: 10px;">
+              <button mat-raised-button color="accent" (click)="clearCanva()">Reset</button>
+              <button style="margin-left: 10px;" mat-raised-button color="primary" (click)="nextPoints()" [disabled]="!bandera">Listo</button>
+            </div>
             </div>
           </div>
         </mat-card>
       </div>
-      <div class="col-md-6">
+      <div id="idFinalImage" class="col-md-6 display-none" >
         <mat-card class="mat-card-5">
           <div class="row">
           <div class="col-md-7 text-center">
@@ -38,6 +38,8 @@
           </div>
           <div class="col-md-5 text-center">
             <h6 class="text-center">Planos del Análisis</h6>
+            <img id="canvasimgAT">
+
             <div class="row">
               <div class="col" style="height: 340px; overflow-y: scroll;">
               <div class="li-blue">Plano de Frankfort: Unión de Porion-Sub-orbitario.</div>
