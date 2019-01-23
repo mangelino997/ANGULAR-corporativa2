@@ -24,6 +24,8 @@ export class AnalysisPhotographyComponent implements OnInit {
   public radiographyForm: FormGroup;
   //Define el elemento canvas html
   public canvasEl: HTMLCanvasElement;
+  //Define el elemento canvas que se muestra al finalizar los puntos
+  public canvaElStart: HTMLCanvasElement;
   //Define si ejecuta el metodo nextPoints
   public passNextPoints: boolean = false;
   //Define el ancho del canvas
@@ -32,8 +34,12 @@ export class AnalysisPhotographyComponent implements OnInit {
   @Input() public height = 300;
   //Define el elemento canvas
   @ViewChild('canvas') public canvas: ElementRef;
+  //Define el elemento canvas que se muestra al mostrar los resultados
+  @ViewChild('canvaStart') public canvaStart: ElementRef;
   //Define cx
   private cx: CanvasRenderingContext2D;
+  //Define cx
+  private cx2: CanvasRenderingContext2D;
   //Difine la lista de puntos que se van marcando
   private pointsGlobal: Array<any> = [];
   //Difine la lista de puntos que se van marcando
@@ -159,6 +165,12 @@ export class AnalysisPhotographyComponent implements OnInit {
         //Muestra la imagen final con puntos y lineas
         let card = document.getElementById('idFinalImage');
         card.classList.remove("display-none");
+        document.getElementById('imgStartPhoto').classList.add("display-none");
+        this.canvaElStart = this.canvaStart.nativeElement;
+        this.cx2 = this.canvaElStart.getContext('2d');
+        var image = new Image();
+        image.src = this.imageReal;
+        this.cx2.drawImage(image, 0, 0, this.width, this.height);
         //Dibuja las lineas a partir de los puntos marcados por el usuario
         this.drawPointsWithLines();
       } else {
@@ -190,7 +202,7 @@ export class AnalysisPhotographyComponent implements OnInit {
       let stretch = this.lines[i].stretch;
       this.cx.beginPath();
       //Dibuja y pinta el punto
-      this.fillPoint(this.points[x]);
+      this.fillLines(this.points[x]);
       console.log("pinta primer punto"+this.points[x]);
 
       //Verifica si en el plano correspondiente se debe estirar la linea
@@ -214,23 +226,28 @@ export class AnalysisPhotographyComponent implements OnInit {
         this.cx.moveTo(this.points[x].x, this.points[x].y);
         this.cx.lineTo(this.points[y].x, this.points[y].y);
       }
-      this.fillPoint(this.points[y]);
+      this.fillLines(this.points[y]);
       this.cx.stroke();
       this.cx.closePath();
       //Muestra los trazos en formato de imagen 
-      this.saveCanvas();
     }
-    this.clearCanva();
+    this.fillPoint();
+    this.saveCanvas();
+    this.clearCanva();  }
+  //Dibuja y pinta los puntos
+  public fillPoint(){
+    for(let i=0; i<this.points.length; i++){
+      this.cx.beginPath();
+      this.cx.fillStyle = this.points[i].color;
+      //Dibuja el punto (circulo)
+      this.cx.arc(this.points[i].x, this.points[i].y, 3, 0, Math.PI * 2, true);
+      this.cx.fill();
+    }
   }
-  //Dibuja y pinta el punto enviado como parametro
-  public fillPoint(p) {
-    let color = p.color;
-    this.cx.fillStyle = color;
-    this.cx.strokeStyle = color;
-    //Dibuja los puntos redondos
-    this.cx.arc(p.x, p.y, 3, 0, Math.PI * 2, true);
-    //Pinta los puntos, los rellena con color
-    this.cx.fill();
+  //Dibuja y pinta los trazos
+  public fillLines(p) {
+    this.cx.strokeStyle = p.color;
+    this.cx.fillStyle = p.color;
     this.cx.closePath();
   }
   //Muestra los trazos del análisis en formato de imagen
