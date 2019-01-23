@@ -4,6 +4,7 @@ import { AnalysisPhotographyComponent } from './analysis-photography/analysis-ph
 import { PatientPhotoComponent } from './patient-photo/patient-photo.component';
 import { AnalysisTeleradiographyComponent } from './analysis-teleradiography/analysis-teleradiography.component';
 import { AnalysisOrthopantographyComponent } from './analysis-orthopantography/analysis-orthopantography.component';
+import { AnalysisCandilographyComponent } from './analysis-candilography/analysis-candilography.component';
 
 @Component({
   selector: 'app-new-analysis',
@@ -15,6 +16,8 @@ export class NewAnalysisComponent implements OnInit {
   @ViewChild(AnalysisPhotographyComponent) apComponent;
   //Define el componente Analisis Fotografico
   @ViewChild(AnalysisOrthopantographyComponent) aoComponent;
+  //Define el componente Analisis Candilografía
+  @ViewChild(AnalysisCandilographyComponent) acComponent;
   //Define el componente Foto del Paciente
   @ViewChild(PatientPhotoComponent) ppComponent;
   //Define el componente Radiografias del Paciente
@@ -62,9 +65,12 @@ export class NewAnalysisComponent implements OnInit {
     //Setea la imagen en el canvas de Telerradiografia
     this.arComponent.initCanvas(radiographyPhotos.imageTeleradiography);
     this.arComponent.setIndicativeImage(radiographyPhotos.indicativeImage);
-    //Setea la imagen en el canvas de Ortopantografia
+    //Setea la imagen en el canvas de Ortopantomografia
     this.aoComponent.initCanvas(radiographyPhotos.imageOrthopantomography);
     this.aoComponent.setIndicativeImage(radiographyPhotos.indicativeImage);
+    //Setea la imagen en el canvas de Candilografia
+    this.acComponent.initCanvas(radiographyPhotos.imageCondilography);
+    this.acComponent.setIndicativeImage(radiographyPhotos.indicativeImage);
   }
   
   //

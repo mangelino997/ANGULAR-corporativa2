@@ -41,5 +41,12 @@
         <app-analysis-orthopantography (dataEvent)="receiveAO($event)"></app-analysis-orthopantography>
     </mat-step>
     <!-- FIN DEL ANALISIS DE LA ORTOPANTOGRAFÍA -->
+    <!-- --- -->
+    <!-- ANALISIS DE LA CANDILOGRAÍA -->
+    <mat-step [stepControl]="acForm">
+        <ng-template matStepLabel>Análisis Condilografía</ng-template>
+        <app-analysis-candilography (dataEvent)="receiveAO($event)"></app-analysis-candilography>
+    </mat-step>
+    <!-- FIN DEL ANALISIS DE LA CANDILOGRAÍA -->
 </mat-horizontal-stepper>
 <!-- FIN NUEVO ANALISIS -->

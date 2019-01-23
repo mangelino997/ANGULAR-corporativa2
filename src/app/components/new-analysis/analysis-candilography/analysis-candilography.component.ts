@@ -5,15 +5,15 @@ import { AtImageGifService } from 'src/app/services/at-image-gif.service';
 import { fromEvent } from 'rxjs';
 
 @Component({
-  selector: 'app-analysis-orthopantography',
-  templateUrl: './analysis-orthopantography.component.html',
-  styleUrls: ['./analysis-orthopantography.component.scss']
+  selector: 'app-analysis-candilography',
+  templateUrl: './analysis-candilography.component.html',
+  styleUrls: ['./analysis-candilography.component.scss']
 })
 
-export class AnalysisOrthopantographyComponent implements OnInit {
+export class AnalysisCandilographyComponent implements OnInit {
 
   //Define el formulario
-  public aoForm:FormGroup;
+  public acForm:FormGroup;
 
   //Define el formulario Radiografias
   public radiographyForm: FormGroup;
@@ -28,7 +28,7 @@ export class AnalysisOrthopantographyComponent implements OnInit {
   //Define la altura del canvas
   @Input() public height = 300;
   //Define el elemento canvas
-  @ViewChild('canvas3') public canvas: ElementRef;
+  @ViewChild('canvas4') public canvas: ElementRef;
   //Define el elemento canvas que se muestra al mostrar los resultados
   @ViewChild('canvaStart') public canvaStart: ElementRef;
   //Define cx
@@ -68,11 +68,11 @@ export class AnalysisOrthopantographyComponent implements OnInit {
       pointDescription: null
     }
     //Establece el formulario Analisis de la Fotografia
-    this.aoForm = new FormGroup({});
+    this.acForm = new FormGroup({});
     //Establece el formulario radiografias
     this.radiographyForm = new FormGroup({});
     //Establece el formulario Analisis de la Telerradiografia
-    this.aoForm = new FormGroup({});
+    this.acForm = new FormGroup({});
     //Establece el gif por defecto
     this.nextGif();
     //Define los puntos y colores para el analisis fotografico
@@ -86,7 +86,7 @@ export class AnalysisOrthopantographyComponent implements OnInit {
   private nextGif(): void {
     this.atImageGifService.getByPosition(this.count+1).subscribe(res => {
       let data = res.json();
-      this.indicativeImage.image = this.appService.getUrlBase() + '/aoImageGif/getImageByPosition/' + data.position;
+      this.indicativeImage.image = this.appService.getUrlBase() + '/acImageGif/getImageByPosition/' + data.position;
       this.indicativeImage.pointName = data.pointName;
       this.indicativeImage.pointDescription = data.pointDescription;
     });
@@ -165,9 +165,9 @@ export class AnalysisOrthopantographyComponent implements OnInit {
         this.indicativeImage.pointName = null;
         this.indicativeImage.pointDescription = null;
         //Muestra la imagen final con puntos y lineas
-        let card = document.getElementById('idFinalImage3');
+        let card = document.getElementById('idFinalImage4');
         card.classList.remove("display-none");
-        document.getElementById('imgStartOrth').classList.add("display-none");
+        document.getElementById('imgStartCandi').classList.add("display-none");
         this.canvaElStart = this.canvaStart.nativeElement;
         this.cx2 = this.canvaElStart.getContext('2d');
         var image = new Image();
@@ -253,12 +253,12 @@ export class AnalysisOrthopantographyComponent implements OnInit {
   public saveCanvas() {
     let canvas2: HTMLCanvasElement;
     canvas2 = this.canvas.nativeElement;
-    (<HTMLElement>document.getElementById('canvasimgAO')).style.border = "1px solid";
-    (<HTMLElement>document.getElementById('canvasimgAO')).style.width = "100%";
-    (<HTMLElement>document.getElementById('canvasimgAO')).style.height = "auto";
+    (<HTMLElement>document.getElementById('canvasimgAC')).style.border = "1px solid";
+    (<HTMLElement>document.getElementById('canvasimgAC')).style.width = "100%";
+    (<HTMLElement>document.getElementById('canvasimgAC')).style.height = "auto";
     var dataURL = canvas2.toDataURL();
-    (<HTMLImageElement>document.getElementById('canvasimgAO')).src = dataURL;
-    (<HTMLElement>document.getElementById('canvasimgAO')).style.display = "inline";
+    (<HTMLImageElement>document.getElementById('canvasimgAC')).src = dataURL;
+    (<HTMLElement>document.getElementById('canvasimgAC')).style.display = "inline";
   }
 }
 
