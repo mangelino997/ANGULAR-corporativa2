@@ -5,11 +5,12 @@ import { AtImageGifService } from 'src/app/services/at-image-gif.service';
 import { fromEvent } from 'rxjs';
 
 @Component({
-  selector: 'app-analysis-teleradiography',
-  templateUrl: './analysis-teleradiography.component.html',
-  styleUrls: ['./analysis-teleradiography.component.scss']
+  selector: 'app-analysis-orthopantography',
+  templateUrl: './analysis-orthopantography.component.html',
+  styleUrls: ['./analysis-orthopantography.component.scss']
 })
-export class AnalysisTeleradiographyComponent implements OnInit {
+
+export class AnalysisOrthopantographyComponent implements OnInit {
 
   //Define el formulario
   public atForm:FormGroup;
@@ -26,8 +27,8 @@ export class AnalysisTeleradiographyComponent implements OnInit {
   @Input() public width = 300;
   //Define la altura del canvas
   @Input() public height = 300;
-  //Define el elemento canvas con el que se trabajará
-  @ViewChild('canvas2') public canvas: ElementRef;
+  //Define el elemento canvas
+  @ViewChild('canvas3') public canvas: ElementRef;
   //Define el elemento canvas que se muestra al mostrar los resultados
   @ViewChild('canvaStart') public canvaStart: ElementRef;
   //Define cx
@@ -75,18 +76,17 @@ export class AnalysisTeleradiographyComponent implements OnInit {
     //Establece el gif por defecto
     this.nextGif();
     //Define los puntos y colores para el analisis fotografico
-    this.lines = [{ x: 0, y: 1, stretch: false }, { x: 2, y: 3, stretch: false }, { x: 5, y: 4, stretch: false }, { x: 3, y: 5, stretch: false }, { x: 6, y: 6, stretch: true },
-      { x: 4, y: 7, stretch: false }, { x: 5, y: 7, stretch: false }, { x: 7, y: 8, stretch: false }, { x: 7, y: 9, stretch: false }];
-    this.pointsGlobal = [{cantidad: 1, color: '#009AD6', colorLine: '#ECEC1C'}, {cantidad: 2, color: '#78448D', colorLine: '#ECEC1C'}, {cantidad: 3, color: '#FBEA43', colorLine: '#ECEC1C'}, {cantidad: 4, color: '#FF822C', colorLine: '#ECEC1C'},
-      {cantidad: 5, color: '#007F21', colorLine: '#ECEC1C'}, {cantidad: 6, color: '#f0f0ed', colorLine: '#C00000'}, {cantidad: 7, color: '#ca0018', colorLine: '#ECEC1C'}, {cantidad: 8, color: '#0c0c0c', colorLine: '#00B050'}, {cantidad: 9, color: '#ff82f6', colorLine: '#ECEC1C'},
-       {cantidad: 10, color: '#102277', colorLine: '#ECEC1C'}]
-    this.totalCount = 10;
+    this.lines = [{ x: 0, y: 1, stretch: true }, { x: 0, y: 4, stretch: false}, { x: 1, y: 4, stretch: false }, { x: 2, y: 4, stretch: true }, 
+      { x: 3, y: 3, stretch: false }];
+    this.pointsGlobal = [{cantidad: 2, color: '#C20017', colorLine: '#ECEC1C'}, {cantidad: 3, color: '#FF80F5', colorLine: '#ECEC1C'},
+     {cantidad: 4, color: '#FBEA43', colorLine: '#ECEC1C'}, {cantidad: 5, color: '#009AD9', colorLine: '#ECEC1C'}]
+    this.totalCount = 4;
   }
   //Establece el gif correspondiente
   private nextGif(): void {
     this.atImageGifService.getByPosition(this.count+1).subscribe(res => {
       let data = res.json();
-      this.indicativeImage.image = this.appService.getUrlBase() + '/atImageGif/getImageByPosition/' + data.position;
+      this.indicativeImage.image = this.appService.getUrlBase() + '/aoImageGif/getImageByPosition/' + data.position;
       this.indicativeImage.pointName = data.pointName;
       this.indicativeImage.pointDescription = data.pointDescription;
     });
@@ -165,9 +165,9 @@ export class AnalysisTeleradiographyComponent implements OnInit {
         this.indicativeImage.pointName = null;
         this.indicativeImage.pointDescription = null;
         //Muestra la imagen final con puntos y lineas
-        let card = document.getElementById('idFinalImage2');
+        let card = document.getElementById('idFinalImage3');
         card.classList.remove("display-none");
-        document.getElementById('imgStartTeler').classList.add("display-none");
+        document.getElementById('imgStartOrth').classList.add("display-none");
         this.canvaElStart = this.canvaStart.nativeElement;
         this.cx2 = this.canvaElStart.getContext('2d');
         var image = new Image();
@@ -192,22 +192,18 @@ export class AnalysisTeleradiographyComponent implements OnInit {
     var image = new Image();
     image.src = this.imageReal;
     this.cx.drawImage(image, 0, 0, width, height);
+
     // this.points.splice(0, this.points.length);
     // this.count = 0;
   }
   //Traza las lineas con sus colores correspondientes a partir de los puntos marcados
   public drawPointsWithLines() {
-
     for (let i = 0; i < this.lines.length; i++) {
       //Obtiene el indice de los puntos a unir
       let x = this.lines[i].x;
       let y = this.lines[i].y;
-      console.log(x, y);
       let stretch = this.lines[i].stretch;
       this.cx.beginPath();
-      //Dibuja y pinta el punto
-      //let colorLine = this.lines[i].colorLine;
-
       this.fillLines(this.points[x]);
       //Verifica si en el plano correspondiente se debe estirar la linea
       if (stretch) {
@@ -257,11 +253,12 @@ export class AnalysisTeleradiographyComponent implements OnInit {
   public saveCanvas() {
     let canvas2: HTMLCanvasElement;
     canvas2 = this.canvas.nativeElement;
-    (<HTMLElement>document.getElementById('canvasimgAT')).style.border = "1px solid";
-    (<HTMLElement>document.getElementById('canvasimgAT')).style.width = "100%";
-    (<HTMLElement>document.getElementById('canvasimgAT')).style.height = "auto";
+    (<HTMLElement>document.getElementById('canvasimgAO')).style.border = "1px solid";
+    (<HTMLElement>document.getElementById('canvasimgAO')).style.width = "100%";
+    (<HTMLElement>document.getElementById('canvasimgAO')).style.height = "auto";
     var dataURL = canvas2.toDataURL();
-    (<HTMLImageElement>document.getElementById('canvasimgAT')).src = dataURL;
-    (<HTMLElement>document.getElementById('canvasimgAT')).style.display = "inline";
+    (<HTMLImageElement>document.getElementById('canvasimgAO')).src = dataURL;
+    (<HTMLElement>document.getElementById('canvasimgAO')).style.display = "inline";
   }
 }
+

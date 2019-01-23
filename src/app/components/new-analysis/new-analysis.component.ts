@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { AnalysisPhotographyComponent } from './analysis-photography/analysis-photography.component';
 import { PatientPhotoComponent } from './patient-photo/patient-photo.component';
 import { AnalysisTeleradiographyComponent } from './analysis-teleradiography/analysis-teleradiography.component';
+import { AnalysisOrthopantographyComponent } from './analysis-orthopantography/analysis-orthopantography.component';
 
 @Component({
   selector: 'app-new-analysis',
@@ -12,6 +13,8 @@ import { AnalysisTeleradiographyComponent } from './analysis-teleradiography/ana
 export class NewAnalysisComponent implements OnInit {
   //Define el componente Analisis Fotografico
   @ViewChild(AnalysisPhotographyComponent) apComponent;
+  //Define el componente Analisis Fotografico
+  @ViewChild(AnalysisOrthopantographyComponent) aoComponent;
   //Define el componente Foto del Paciente
   @ViewChild(PatientPhotoComponent) ppComponent;
   //Define el componente Radiografias del Paciente
@@ -56,10 +59,14 @@ export class NewAnalysisComponent implements OnInit {
   public receiveRadiography($event): void {
     let radiographyPhotos= $event;
     console.log(radiographyPhotos);
-    // this.atForm.get('patient').get('image').setValue(radiographyPhotos.imageTeleradiography);
+    //Setea la imagen en el canvas de Telerradiografia
     this.arComponent.initCanvas(radiographyPhotos.imageTeleradiography);
     this.arComponent.setIndicativeImage(radiographyPhotos.indicativeImage);
+    //Setea la imagen en el canvas de Ortopantografia
+    this.aoComponent.initCanvas(radiographyPhotos.imageOrthopantomography);
+    this.aoComponent.setIndicativeImage(radiographyPhotos.indicativeImage);
   }
+  
   //
   //Determina que analisis se va a procesar
   public stepChange(event) {

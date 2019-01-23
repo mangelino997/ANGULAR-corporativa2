@@ -34,5 +34,12 @@
         <app-analysis-teleradiography (dataEvent)="receiveAT($event)"></app-analysis-teleradiography>
     </mat-step>
     <!-- FIN DEL ANALISIS DE LA TELERADIOGRAFÍAS -->
+    <!-- --- -->
+    <!-- ANALISIS DE LA ORTOPANTOGRAFÍA -->
+    <mat-step [stepControl]="aoForm">
+        <ng-template matStepLabel>Análisis Ortopantografía</ng-template>
+        <app-analysis-orthopantography (dataEvent)="receiveAO($event)"></app-analysis-orthopantography>
+    </mat-step>
+    <!-- FIN DEL ANALISIS DE LA ORTOPANTOGRAFÍA -->
 </mat-horizontal-stepper>
 <!-- FIN NUEVO ANALISIS -->
