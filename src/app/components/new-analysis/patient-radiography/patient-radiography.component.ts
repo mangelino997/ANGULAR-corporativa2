@@ -25,9 +25,9 @@ export class PatientRadiographyComponent implements OnInit {
   //Al inicializarse el componente
   ngOnInit() {
     //Establece la imagen de mujer
-    this.orthopantomographyImage = this.appService.getUrlBase() + '/indicativeImage/getById/3';
+    this.orthopantomographyImage = this.appService.getUrlBase() + '/indicativeImage/getById/4';
     //Establece la imagen de hombre
-    this.teleradiographyImage = this.appService.getUrlBase() + '/indicativeImage/getById/4';
+    this.teleradiographyImage = this.appService.getUrlBase() + '/indicativeImage/getById/3';
     //Establece la imagen por defecto en imagen real del paciente
     this.condilographyImage = this.appService.getUrlBase() + '/indicativeImage/getById/5';
     //Establece el formulario

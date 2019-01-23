@@ -17,7 +17,7 @@ export class AnalysisTeleradiographyComponent implements OnInit {
   //Define el formulario Radiografias
   public radiographyForm: FormGroup;
   //Define el elemento canvas html
-  public canvasEl2: HTMLCanvasElement;
+  public canvasEl: HTMLCanvasElement;
   //Define si ejecuta el metodo nextPoints
   public passNextPoints: boolean = false;
   //Define el ancho del canvas
@@ -27,7 +27,7 @@ export class AnalysisTeleradiographyComponent implements OnInit {
   //Define el elemento canvas
   @ViewChild('canvas2') public canvas: ElementRef;
   //Define cx
-  private cx2: CanvasRenderingContext2D;
+  private cx: CanvasRenderingContext2D;
   //Difine la lista de puntos que se van marcando
   private pointsGlobal: Array<any> = [];
   //Difine la lista de puntos que se van marcando
@@ -69,11 +69,11 @@ export class AnalysisTeleradiographyComponent implements OnInit {
     //Establece el gif por defecto
     this.nextGif();
     //Define los puntos y colores para el analisis fotografico
-    this.lines = [{ x: 0, y: 1, stretch: false }, { x: 2, y: 3, stretch: false }, { x: 4, y: 5, stretch: false }, { x: 6, y: 6, stretch: true },
+    this.lines = [{ x: 0, y: 1, stretch: false }, { x: 2, y: 3, stretch: false }, { x: 5, y: 4, stretch: false }, { x: 3, y: 5, stretch: false }, { x: 6, y: 6, stretch: true },
       { x: 4, y: 7, stretch: false }, { x: 5, y: 7, stretch: false }, { x: 7, y: 8, stretch: false }, { x: 7, y: 9, stretch: false }];
-    this.pointsGlobal = [{cantidad: 1, color: '#009AD6'}, {cantidad: 2, color: '#78448D'}, {cantidad: 3, color: '#FBEA43'}, {cantidad: 4, color: '#FF822C'},
-      {cantidad: 5, color: '#007F21'}, {cantidad: 6, color: '#f0f0ed'}, {cantidad: 7, color: '#ca0018'}, {cantidad: 8, color: '#0c0c0c'}, {cantidad: 9, color: '#ff82f6'},
-       {cantidad: 10, color: '#102277'}]
+    this.pointsGlobal = [{cantidad: 1, color: '#009AD6', colorLine: '#ECEC1C'}, {cantidad: 2, color: '#78448D', colorLine: '#ECEC1C'}, {cantidad: 3, color: '#FBEA43', colorLine: '#ECEC1C'}, {cantidad: 4, color: '#FF822C', colorLine: '#ECEC1C'},
+      {cantidad: 5, color: '#007F21', colorLine: '#ECEC1C'}, {cantidad: 6, color: '#f0f0ed', colorLine: '#C00000'}, {cantidad: 7, color: '#ca0018', colorLine: '#ECEC1C'}, {cantidad: 8, color: '#0c0c0c', colorLine: '#00B050'}, {cantidad: 9, color: '#ff82f6', colorLine: '#ECEC1C'},
+       {cantidad: 10, color: '#102277', colorLine: '#ECEC1C'}]
     this.totalCount = 10;
   }
   //Establece el gif correspondiente
@@ -92,26 +92,28 @@ export class AnalysisTeleradiographyComponent implements OnInit {
   //Inicializa el Canvas
   public initCanvas(img) {
     this.imageReal = img;
-    this.canvasEl2 = this.canvas.nativeElement;
-    this.cx2 = this.canvasEl2.getContext('2d');
-    this.cx2.lineWidth = 1;
-    this.cx2.lineCap = 'square';
+    this.canvasEl = this.canvas.nativeElement;
+    this.cx = this.canvasEl.getContext('2d');
+    this.cx.lineWidth = 1;
+    this.cx.lineCap = 'square';
     this.clearCanva();
-    this.captureEvents(this.canvasEl2);
+    this.captureEvents(this.canvasEl);
   }
   //Captura el evento cuando el usuario hace click en el canvas de Analisis Fotografico
-  private captureEvents(canvasEl2: HTMLCanvasElement) {
-    fromEvent(canvasEl2, 'click')
+  private captureEvents(canvasEl: HTMLCanvasElement) {
+    fromEvent(canvasEl, 'click')
       .subscribe(res => {
         let r = <MouseEvent>res;
-        const rect = canvasEl2.getBoundingClientRect();
-        let point = { x: null, y: null, color: null };
+        const rect = canvasEl.getBoundingClientRect();
+        let point = { x: null, y: null, color: null, colorLine: null };
         let x = r.clientX - rect.left;
         let y = r.clientY - rect.top;
-        let color = this.pointsGlobal[this.count].color
+        let color = this.pointsGlobal[this.count].color;
+        let colorLine = this.pointsGlobal[this.count].colorLine;
         point.x = x;
         point.y = y;
         point.color = color;
+        point.colorLine= colorLine;
         //Controla si permite marcar mas puntos, segun si se hizo click en el boton "listo"
         if (this.points.length < this.pointsGlobal[this.count].cantidad) {
           this.points.push(point);
@@ -130,15 +132,16 @@ export class AnalysisTeleradiographyComponent implements OnInit {
   }
   //Dibuja un punto en el canvas
   private drawOnCanvas(x: number, y: number, color: string) {
-    if (!this.cx2) { return; }
+    if (!this.cx) { return; }
     //Define el color
-    this.cx2.fillStyle = color;
+    this.cx.fillStyle = color;
     //Inicializa el marcado en Canvas
-    this.cx2.beginPath();
+    this.cx.beginPath();
     //Dibuja el punto marcado
-    this.cx2.arc(x, y, 3, 0, Math.PI * 2, true);
+    this.cx.arc(x, y, 3, 0, Math.PI * 2, true);
     //Rellena con el color definido el punto marcado
-    this.cx2.fill();
+    this.cx.fill();
+
   }
   //Captura el evento click en el boton Listo y permite continuar con el marcado de puntos
   public nextPoints() {
@@ -156,7 +159,7 @@ export class AnalysisTeleradiographyComponent implements OnInit {
         this.indicativeImage.pointName = null;
         this.indicativeImage.pointDescription = null;
         //Muestra la imagen final con puntos y lineas
-        let card = document.getElementById('idFinalImage');
+        let card = document.getElementById('idFinalImage2');
         card.classList.remove("display-none");
         //Dibuja las lineas a partir de los puntos marcados por el usuario
         this.drawPointsWithLines();
@@ -172,23 +175,27 @@ export class AnalysisTeleradiographyComponent implements OnInit {
     let canvas = document.getElementById('idCanvas');
     let width = canvas.clientWidth;
     let height = canvas.clientHeight;
-    this.cx2.canvas.width = width;
-    this.cx2.canvas.height = height;
+    this.cx.canvas.width = width;
+    this.cx.canvas.height = height;
     var image = new Image();
     image.src = this.imageReal;
-    this.cx2.drawImage(image, 0, 0, width, height);
+    this.cx.drawImage(image, 0, 0, width, height);
     // this.points.splice(0, this.points.length);
     // this.count = 0;
   }
   //Traza las lineas con sus colores correspondientes a partir de los puntos marcados
   public drawPointsWithLines() {
+
     for (let i = 0; i < this.lines.length; i++) {
       //Obtiene el indice de los puntos a unir
       let x = this.lines[i].x;
       let y = this.lines[i].y;
+      console.log(x, y);
       let stretch = this.lines[i].stretch;
-      this.cx2.beginPath();
+      this.cx.beginPath();
       //Dibuja y pinta el punto
+      //let colorLine = this.lines[i].colorLine;
+
       this.fillPoint(this.points[x]);
       //Verifica si en el plano correspondiente se debe estirar la linea
       if (stretch) {
@@ -204,16 +211,16 @@ export class AnalysisTeleradiographyComponent implements OnInit {
         let x2 = this.points[y].x + 80;
         let y2 = a * x2 + b2;
         //Dibuja la linea a partir de los nuevos puntos
-        this.cx2.moveTo(x1, y1);
-        this.cx2.lineTo(x2, y2);
+        this.cx.moveTo(x1, y1);
+        this.cx.lineTo(x2, y2);
       } else {
         //Dibuja la linea de los puntos marcados por el usuario
-        this.cx2.moveTo(this.points[x].x, this.points[x].y);
-        this.cx2.lineTo(this.points[y].x, this.points[y].y);
+        this.cx.moveTo(this.points[x].x, this.points[x].y);
+        this.cx.lineTo(this.points[y].x, this.points[y].y);
       }
       this.fillPoint(this.points[y]);
-      this.cx2.stroke();
-      this.cx2.closePath();
+      this.cx.stroke();
+      this.cx.closePath();
       //Muestra los trazos en formato de imagen 
       this.saveCanvas();
     }
@@ -221,23 +228,24 @@ export class AnalysisTeleradiographyComponent implements OnInit {
   }
   //Dibuja y pinta el punto enviado como parametro
   public fillPoint(p) {
-    let color = p.color;
-    this.cx2.fillStyle = color;
-    this.cx2.strokeStyle = color;
+    let color = p.colorLine;
+    this.cx.strokeStyle = color;
+    this.cx.fillStyle = color;
+
     //Dibuja los puntos redondos
-    this.cx2.arc(p.x, p.y, 3, 0, Math.PI * 2, true);
+    this.cx.arc(p.x, p.y, 3, 0, Math.PI * 2, true);
     //Pinta los puntos, los rellena con color
-    this.cx2.fill();
-    this.cx2.closePath();
+    this.cx.fill();
+    this.cx.closePath();
   }
   //Muestra los trazos del análisis en formato de imagen
   public saveCanvas() {
-    let canvas: HTMLCanvasElement;
-    canvas = this.canvas.nativeElement;
+    let canvas2: HTMLCanvasElement;
+    canvas2 = this.canvas.nativeElement;
     (<HTMLElement>document.getElementById('canvasimgAT')).style.border = "1px solid";
     (<HTMLElement>document.getElementById('canvasimgAT')).style.width = "100%";
     (<HTMLElement>document.getElementById('canvasimgAT')).style.height = "auto";
-    var dataURL = canvas.toDataURL();
+    var dataURL = canvas2.toDataURL();
     (<HTMLImageElement>document.getElementById('canvasimgAT')).src = dataURL;
     (<HTMLElement>document.getElementById('canvasimgAT')).style.display = "inline";
   }

@@ -42,7 +42,7 @@ import { AnalysisTeleradiographyComponent } from './components/new-analysis/anal
 import { AtImageGifService } from './services/at-image-gif.service';
 
 const stompConfig: StompConfig = {
-  url: 'ws://192.168.0.32:8084/meserws/socket',
+  url: 'ws://localhost:8084/meserws/socket',
   headers: {},
   heartbeat_in: 0,
   heartbeat_out: 20000,

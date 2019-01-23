@@ -191,6 +191,8 @@ export class AnalysisPhotographyComponent implements OnInit {
       this.cx.beginPath();
       //Dibuja y pinta el punto
       this.fillPoint(this.points[x]);
+      console.log("pinta primer punto"+this.points[x]);
+
       //Verifica si en el plano correspondiente se debe estirar la linea
       if (stretch) {
         //Calcula la pendiente de la recta
