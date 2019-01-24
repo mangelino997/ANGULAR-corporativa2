@@ -76,11 +76,13 @@ export class AnalysisCandilographyComponent implements OnInit {
     //Establece el gif por defecto
     this.nextGif();
     //Define los puntos y colores para el analisis fotografico
-    this.lines = [{ x: 0, y: 1, stretch: true }, { x: 0, y: 4, stretch: false}, { x: 1, y: 4, stretch: false }, { x: 2, y: 4, stretch: true }, 
-      { x: 3, y: 3, stretch: false }];
-    this.pointsGlobal = [{cantidad: 2, color: '#C20017', colorLine: '#ECEC1C'}, {cantidad: 3, color: '#FF80F5', colorLine: '#ECEC1C'},
-     {cantidad: 4, color: '#FBEA43', colorLine: '#ECEC1C'}, {cantidad: 5, color: '#009AD9', colorLine: '#ECEC1C'}]
-    this.totalCount = 4;
+    this.lines = [
+      { x: 0, y: 0, stretch: false }, { x: 1, y: 1, stretch: false }, { x: 2, y: 2, stretch: false }, { x: 3, y: 3, stretch: false }, 
+      { x: 4, y: 8, stretch: false }, { x: 5, y: 9, stretch: false }, { x: 6, y: 10, stretch: false }, { x: 7, y: 111, stretch: false },
+      { x: 12, y: 16, stretch: false }, { x: 13, y: 17, stretch: false }, { x: 14, y: 18, stretch: false }, { x: 15, y: 19, stretch: false }];
+    this.pointsGlobal = [{cantidad: 4, color: '#C20017', colorLine: '#ECEC1C'}, {cantidad: 8, color: '#6E3B8B', colorLine: '#ECEC1C'},
+     {cantidad: 12, color: '#6EA63B', colorLine: '#ECEC1C'}, {cantidad: 16, color: '#0397D5', colorLine: '#ECEC1C'}, {cantidad: 20, color: '#FBEB03', colorLine: '#ECEC1C'}]
+    this.totalCount = 5;
   }
   //Establece el gif correspondiente
   private nextGif(): void {
@@ -130,9 +132,12 @@ export class AnalysisCandilographyComponent implements OnInit {
         }
         else if(this.pointsGlobal.length == this.points[this.count].cantidad){
           console.log("Debe presionar Listo para marcar mas puntos");
+          
         }
         else {
           console.log("Debe marcar todos los puntos");
+          console.log(this.points.length);
+          console.log(this.pointsGlobal[this.count].cantidad);
         }
       });
   }
@@ -158,6 +163,8 @@ export class AnalysisCandilographyComponent implements OnInit {
       this.clearCanva();
       //Vuelve a false para controlar en el siguiente grupo de puntos
       this.passNextPoints = false;
+      console.log(this.count);
+
       //Verifica si ya se marcaron todos los puntos
       if (this.count == this.totalCount) {
         //Muestra la imagen indicativa por defecto
@@ -185,6 +192,7 @@ export class AnalysisCandilographyComponent implements OnInit {
   //Limpia el canva completo
   public clearCanva() {
     let canvas = document.getElementById('idCanvas');
+    console.log(canvas);
     let width = canvas.clientWidth;
     let height = canvas.clientHeight;
     this.cx.canvas.width = width;
