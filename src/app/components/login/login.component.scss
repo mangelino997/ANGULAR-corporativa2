@@ -1,0 +1,37 @@
+/* Centra la card del login en la pantalla */
+.vcontainer {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+/* Define el formato del titulo */
+.title {
+    font-size: 22px;
+    font-weight: bold;
+}
+//Define el color de texto de boton
+.btn-font-color {
+    color: green;
+}
+//Define el margen superior
+.margin-top-10 {
+    margin-top: 10px;
+}
+//Define el estilo de hr
+.hr-style {
+    margin: 2px 2px 5px 2px;
+    padding: 2px 2px 5px 2px;
+}
+//Define el color de fondo del div
+.back-color {
+    background-color: lightgrey;
+    padding: 5px;
+}
+//Define el estilo de la card
+.mat-card {
+    transition: box-shadow 280ms cubic-bezier(.4,0,.2,1) !important;
+    display: block !important;
+    position: relative !important;
+    padding: 16px 15px 0px 15px !important;
+    border-radius: 4px !important;
+}

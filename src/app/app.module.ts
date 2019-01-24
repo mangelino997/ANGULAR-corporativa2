@@ -43,6 +43,7 @@ import { PatientRadiographyComponent } from './components/new-analysis/patient-r
 import { AnalysisTeleradiographyComponent } from './components/new-analysis/analysis-teleradiography/analysis-teleradiography.component';
 import { AnalysisOrthopantographyComponent } from './components/new-analysis/analysis-orthopantography/analysis-orthopantography.component';
 import { AnalysisCandilographyComponent } from './components/new-analysis/analysis-candilography/analysis-candilography.component';
+import { LoginComponent } from './components/login/login.component';
 
 const stompConfig: StompConfig = {
   url: 'ws://192.168.0.32:8084/meserws/socket',
@@ -71,7 +72,8 @@ const stompConfig: StompConfig = {
     PatientRadiographyComponent,
     AnalysisTeleradiographyComponent,
     AnalysisOrthopantographyComponent,
-    AnalysisCandilographyComponent
+    AnalysisCandilographyComponent,
+    LoginComponent
     
   ],
   imports: [

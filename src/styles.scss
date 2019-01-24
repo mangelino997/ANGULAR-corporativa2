@@ -108,3 +108,7 @@ $green-theme-theme:   mat-light-theme($green-theme-primary, $green-theme-accent)
     color: black;
     margin-bottom: 10px;
 }
+input[type=text]:focus, input[type=password]:focus, input[type=number]:focus, input[type=date]:focus, textarea:focus {
+    box-shadow: 0 0 5px rgba(120, 205, 76, 1);
+    border: 1px solid rgba(120, 205, 76, 1);
+}

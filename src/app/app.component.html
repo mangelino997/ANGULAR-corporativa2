@@ -1,1 +1,2 @@
-<app-sidenav></app-sidenav>
+<app-login *ngIf="showLogin" (dataEvent)="receiveDataFromLogin($event)"></app-login>
+<app-sidenav *ngIf="!showLogin" (dataEvent)="receiveDataFromSidenav($event)"></app-sidenav>
