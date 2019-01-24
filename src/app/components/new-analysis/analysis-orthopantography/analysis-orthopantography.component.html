@@ -20,7 +20,7 @@
           </div>
         <div class="col-md-6 text-center">
           <h6>Imagen Real</h6>
-          <canvas id="idCanvas" #canvas3 style="border: 1px solid black" width="300px" height="300px"></canvas>
+          <canvas id="idCanvas" #canvas3 style="border: 1px solid black"></canvas>
           <div class="row justify-content-center" style="margin-top: 10px;">
             <button mat-raised-button color="accent" (click)="clearCanva()">Reset</button>
             <button style="margin-left: 10px;" mat-raised-button color="primary" (click)="nextPoints()" [disabled]="!bandera">Listo</button>
@@ -29,12 +29,12 @@
         </div>
       </mat-card>
     </div>
-    <div id="idFinalImage3" class="col-md-10 display-none" >
+    <div id="idFinalImage3" class="col-md-12 display-none" >
       <mat-card >
         <div class="row">
           <div class="col-md-4 text-center">
             <h6>Imagen Real</h6>
-            <canvas id="idCanvas" #canvaStart style="border: 1px solid black" width="300px" height="300px"></canvas>
+            <canvas id="idCanvas2" #canvaStart style="border: 1px solid black" ></canvas>
           </div>
           <div class="col-md-4 text-center">
             <h6>Imagen con Unión de Puntos</h6>

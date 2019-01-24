@@ -15,7 +15,7 @@
               <div class="col-md-4 text-center">
                 <h6>Ortopantomografía</h6>
                 <div>
-                  <img id="c" width="80%" height="80%" [src]="radiographyForm.get('imageOrthopantomography').value || orthopantomographyImage" alt="your image" /><br>
+                  <img id="c" [src]="radiographyForm.get('imageOrthopantomography').value || orthopantomographyImage" alt="your image" /><br>
                 </div>
                 <div>
                   <label for="imgOrthopantomography" color="primary" class="btn btn-primary">Subir Foto</label>
@@ -25,7 +25,7 @@
               <div class="col-md-4 text-center">
                 <h6>Telerradiografía</h6>
                 <div>
-                  <img id="d" width="80%" height="80%" [src]="radiographyForm.get('imageTeleradiography').value || teleradiographyImage" alt="your image" /><br>
+                  <img id="d"  [src]="radiographyForm.get('imageTeleradiography').value || teleradiographyImage" alt="your image" /><br>
                 </div>
                 <div>
                   <label for="imgTeleradiography" color="primary" class="btn btn-primary">Subir Foto</label>

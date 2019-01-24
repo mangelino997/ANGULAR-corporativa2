@@ -24,9 +24,9 @@ export class AnalysisOrthopantographyComponent implements OnInit {
   //Define si ejecuta el metodo nextPoints
   public passNextPoints: boolean = false;
   //Define el ancho del canvas
-  @Input() public width = 300;
+  @Input() public width ;
   //Define la altura del canvas
-  @Input() public height = 300;
+  @Input() public height;
   //Define el elemento canvas
   @ViewChild('canvas3') public canvas: ElementRef;
   //Define el elemento canvas que se muestra al mostrar los resultados
@@ -76,7 +76,7 @@ export class AnalysisOrthopantographyComponent implements OnInit {
     //Establece el gif por defecto
     this.nextGif();
     //Define los puntos y colores para el analisis fotografico
-    this.lines = [{ x: 0, y: 1, stretch: true }, { x: 0, y: 4, stretch: false}, { x: 1, y: 4, stretch: false }, { x: 2, y: 4, stretch: true }, 
+    this.lines = [{ x: 0, y: 1, stretch: true }, { x: 0, y: 4, stretch: false}, { x: 1, y: 4, stretch: false }, 
       { x: 3, y: 3, stretch: false }];
     this.pointsGlobal = [{cantidad: 2, color: '#C20017', colorLine: '#ECEC1C'}, {cantidad: 3, color: '#FF80F5', colorLine: '#ECEC1C'},
      {cantidad: 4, color: '#FBEA43', colorLine: '#ECEC1C'}, {cantidad: 5, color: '#009AD9', colorLine: '#ECEC1C'}]
@@ -124,6 +124,8 @@ export class AnalysisOrthopantographyComponent implements OnInit {
         if (this.points.length < this.pointsGlobal[this.count].cantidad) {
           this.points.push(point);
           this.drawOnCanvas(x, y, color);
+          console.log(x, y);
+
           if (this.points.length == this.pointsGlobal[this.count].cantidad) {
             this.bandera = true;
           }
@@ -147,7 +149,6 @@ export class AnalysisOrthopantographyComponent implements OnInit {
     this.cx.arc(x, y, 3, 0, Math.PI * 2, true);
     //Rellena con el color definido el punto marcado
     this.cx.fill();
-
   }
   //Captura el evento click en el boton Listo y permite continuar con el marcado de puntos
   public nextPoints() {
@@ -172,6 +173,7 @@ export class AnalysisOrthopantographyComponent implements OnInit {
         this.cx2 = this.canvaElStart.getContext('2d');
         var image = new Image();
         image.src = this.imageReal;
+        console.log(this,);
         this.cx2.drawImage(image, 0, 0, this.width, this.height);
         //Dibuja las lineas a partir de los puntos marcados por el usuario
         this.drawPointsWithLines();
@@ -214,18 +216,24 @@ export class AnalysisOrthopantographyComponent implements OnInit {
         //Calcular la ordenada al origen del punto 2
         let b2 = this.points[y].y - a * this.points[y].x;
         //Calcula los nuevos puntos para prolongar la recta
-        let x1 = this.points[x].x - 80;
+        let x1 = this.points[x].x - 10;
         let y1 = a * x1 + b;
-        let x2 = this.points[y].x + 80;
+        let x2 = this.points[y].x + 10;
         let y2 = a * x2 + b2;
         //Dibuja la linea a partir de los nuevos puntos
         this.cx.moveTo(x1, y1);
         this.cx.lineTo(x2, y2);
-      } else {
-        //Dibuja la linea de los puntos marcados por el usuario
-        this.cx.moveTo(this.points[x].x, this.points[x].y);
-        this.cx.lineTo(this.points[y].x, this.points[y].y);
+        if(i==0){ //solo marca 4 perpendiculares
+          var index= 2; //posicion del punto inicial desde donde se comienza a trazar la perpendicular
+          this.perpendicularLine(this.points[x].x, this.points[x].y, this.points[y].x, this.points[y].y, index );
+        }
       }
+      else{
+          //Dibuja la linea de los puntos marcados por el usuario
+          this.cx.moveTo(this.points[x].x, this.points[x].y);
+          this.cx.lineTo(this.points[y].x, this.points[y].y);
+        }
+      
       this.fillLines(this.points[y]);
       this.cx.stroke();
     }
@@ -259,6 +267,30 @@ export class AnalysisOrthopantographyComponent implements OnInit {
     var dataURL = canvas2.toDataURL();
     (<HTMLImageElement>document.getElementById('canvasimgAO')).src = dataURL;
     (<HTMLElement>document.getElementById('canvasimgAO')).style.display = "inline";
+  }
+  // Traza la perpendicular segun el Trazo A<-->B (x1, y1, x2, y2) y el punto inicial (index)
+  public perpendicularLine(x1, y1, x2, y2, index){
+    //obtenemos el x,y del punto inical (punto rojo)
+    var X= this.points[index].x; 
+    var Y= this.points[index].y
+    //calculamos la distancia desde los puntos ya trazados
+    var dx = (x2 - x1);
+    var dy = (y2 - y1);
+    //comienza la linea perpendicular VERTICAL desde el punto inicial rojo (index)
+    this.cx.moveTo(X, Y);
+    this.cx.lineTo(X + dy, Y - dx); //dy*2 duplica la linea del trazo para que sea mas larga
+    this.cx.lineTo(X - dy, Y + dx);
+    this.cx.stroke();
+    this.cx.beginPath();
+    //comienza la linea perpendicular HORIZONTAL desde el punto inicial rojo (index)
+    var dxm= (x2 - x1)/2;
+    var dym= (y2 - y1)/2;
+    var mx= X - dxm;
+    var my= Y - dym;
+    this.cx.moveTo(X, Y);
+    this.cx.lineTo(X - dxm, Y - dym);
+    this.cx.lineTo(X + dxm, Y + dym);
+    this.cx.stroke();
   }
 }
 

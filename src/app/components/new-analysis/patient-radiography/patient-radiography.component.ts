@@ -52,7 +52,6 @@ export class PatientRadiographyComponent implements OnInit {
       const reader = new FileReader();
       switch(src){
         case "imageSrcOrthopantomography":
-          console.log("entra en ortopa");
           reader.onload = e => this.radiographyForm.get('imageOrthopantomography').setValue(reader.result);
           reader.readAsDataURL(file);
           break;

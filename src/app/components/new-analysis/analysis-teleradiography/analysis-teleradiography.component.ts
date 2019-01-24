@@ -76,7 +76,7 @@ export class AnalysisTeleradiographyComponent implements OnInit {
     this.nextGif();
     //Define los puntos y colores para el analisis fotografico
     this.lines = [{ x: 0, y: 1, stretch: false }, { x: 2, y: 3, stretch: false }, { x: 5, y: 4, stretch: false }, { x: 3, y: 5, stretch: false }, { x: 6, y: 6, stretch: true },
-      { x: 4, y: 7, stretch: false }, { x: 5, y: 7, stretch: false }, { x: 7, y: 8, stretch: false }, { x: 7, y: 9, stretch: false }];
+      { x: 4, y: 7, stretch: false }, { x: 5, y: 7, stretch: false }, { x: 7, y: 8, stretch: true }, { x: 7, y: 9, stretch: false }];
     this.pointsGlobal = [{cantidad: 1, color: '#009AD6', colorLine: '#ECEC1C'}, {cantidad: 2, color: '#78448D', colorLine: '#ECEC1C'}, {cantidad: 3, color: '#FBEA43', colorLine: '#ECEC1C'}, {cantidad: 4, color: '#FF822C', colorLine: '#ECEC1C'},
       {cantidad: 5, color: '#007F21', colorLine: '#ECEC1C'}, {cantidad: 6, color: '#f0f0ed', colorLine: '#C00000'}, {cantidad: 7, color: '#ca0018', colorLine: '#ECEC1C'}, {cantidad: 8, color: '#0c0c0c', colorLine: '#00B050'}, {cantidad: 9, color: '#ff82f6', colorLine: '#ECEC1C'},
        {cantidad: 10, color: '#102277', colorLine: '#ECEC1C'}]
@@ -226,9 +226,17 @@ export class AnalysisTeleradiographyComponent implements OnInit {
         this.cx.moveTo(x1, y1);
         this.cx.lineTo(x2, y2);
       } else {
-        //Dibuja la linea de los puntos marcados por el usuario
-        this.cx.moveTo(this.points[x].x, this.points[x].y);
-        this.cx.lineTo(this.points[y].x, this.points[y].y);
+        if(i==1){ //solo marca 1 perpendicular
+          //dibujamos primero el trazo y luego llamamos a la funcion que trazara su perpendicular 
+          this.cx.moveTo(this.points[x].x, this.points[x].y);
+          this.cx.lineTo(this.points[y].x, this.points[y].y);
+          var index= 6; //posicion del punto inicial desde donde se comienza a trazar la perpendicular
+          this.perpendicularLine(this.points[x].x, this.points[x].y, this.points[y].x, this.points[y].y, index );
+        }else{
+          //Dibuja la linea de los puntos marcados por el usuario
+          this.cx.moveTo(this.points[x].x, this.points[x].y);
+          this.cx.lineTo(this.points[y].x, this.points[y].y);
+        }
       }
       this.fillLines(this.points[y]);
       this.cx.stroke();
@@ -263,5 +271,18 @@ export class AnalysisTeleradiographyComponent implements OnInit {
     var dataURL = canvas2.toDataURL();
     (<HTMLImageElement>document.getElementById('canvasimgAT')).src = dataURL;
     (<HTMLElement>document.getElementById('canvasimgAT')).style.display = "inline";
+  }
+  // Traza la perpendicular segun el Trazo A<-->B (x1, y1, x2, y2) y el punto inicial (index)
+  public perpendicularLine(x1, y1, x2, y2, index){
+    //obtenemos el x,y del punto inical (punto rojo)
+    var X= this.points[index].x; 
+    var Y= this.points[index].y
+    //calculamos la distancia desde los puntos ya trazados
+    var dx = (x2 - x1);
+    var dy = (y2 - y1);
+    //comienza la linea perpendicular desde el punto inicial rojo (index)
+    this.cx.moveTo(X, Y);
+    this.cx.lineTo(X + dy*2, Y - dx*2); //dy*2 duplica la linea del trazo para que sea mas larga
+    this.cx.stroke();
   }
 }

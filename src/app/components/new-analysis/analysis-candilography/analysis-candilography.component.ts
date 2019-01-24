@@ -78,7 +78,7 @@ export class AnalysisCandilographyComponent implements OnInit {
     //Define los puntos y colores para el analisis fotografico
     this.lines = [
       { x: 0, y: 0, stretch: false }, { x: 1, y: 1, stretch: false }, { x: 2, y: 2, stretch: false }, { x: 3, y: 3, stretch: false }, 
-      { x: 4, y: 8, stretch: false }, { x: 5, y: 9, stretch: false }, { x: 6, y: 10, stretch: false }, { x: 7, y: 111, stretch: false },
+      { x: 4, y: 8, stretch: false }, { x: 5, y: 9, stretch: false }, { x: 6, y: 10, stretch: false }, { x: 7, y: 11, stretch: false },
       { x: 12, y: 16, stretch: false }, { x: 13, y: 17, stretch: false }, { x: 14, y: 18, stretch: false }, { x: 15, y: 19, stretch: false }];
     this.pointsGlobal = [{cantidad: 4, color: '#C20017', colorLine: '#ECEC1C'}, {cantidad: 8, color: '#6E3B8B', colorLine: '#ECEC1C'},
      {cantidad: 12, color: '#6EA63B', colorLine: '#ECEC1C'}, {cantidad: 16, color: '#0397D5', colorLine: '#ECEC1C'}, {cantidad: 20, color: '#FBEB03', colorLine: '#ECEC1C'}]
@@ -206,6 +206,7 @@ export class AnalysisCandilographyComponent implements OnInit {
   }
   //Traza las lineas con sus colores correspondientes a partir de los puntos marcados
   public drawPointsWithLines() {
+    console.log(this.points);
     for (let i = 0; i < this.lines.length; i++) {
       //Obtiene el indice de los puntos a unir
       let x = this.lines[i].x;
@@ -230,9 +231,17 @@ export class AnalysisCandilographyComponent implements OnInit {
         this.cx.moveTo(x1, y1);
         this.cx.lineTo(x2, y2);
       } else {
-        //Dibuja la linea de los puntos marcados por el usuario
-        this.cx.moveTo(this.points[x].x, this.points[x].y);
-        this.cx.lineTo(this.points[y].x, this.points[y].y);
+        if(i==4 || i==5 || i==6 || i==7){ //solo marca 4 perpendiculares
+          //dibujamos primero el trazo y luego llamamos a la funcion que trazara su perpendicular 
+          this.cx.moveTo(this.points[x].x, this.points[x].y);
+          this.cx.lineTo(this.points[y].x, this.points[y].y);
+          var index= i-4; //posicion del punto inicial desde donde se comienza a trazar la perpendicular
+          this.perpendicularLine(this.points[x].x, this.points[x].y, this.points[y].x, this.points[y].y, index );
+        }else{
+          //Dibuja la linea de los puntos marcados por el usuario
+          this.cx.moveTo(this.points[x].x, this.points[x].y);
+          this.cx.lineTo(this.points[y].x, this.points[y].y);
+        }
       }
       this.fillLines(this.points[y]);
       this.cx.stroke();
@@ -267,6 +276,19 @@ export class AnalysisCandilographyComponent implements OnInit {
     var dataURL = canvas2.toDataURL();
     (<HTMLImageElement>document.getElementById('canvasimgAC')).src = dataURL;
     (<HTMLElement>document.getElementById('canvasimgAC')).style.display = "inline";
+  }
+  // Traza la perpendicular segun el Trazo A<-->B (x1, y1, x2, y2) y el punto inicial (index)
+  public perpendicularLine(x1, y1, x2, y2, index){
+    //obtenemos el x,y del punto inical (punto rojo)
+    var X= this.points[index].x; 
+    var Y= this.points[index].y
+    //calculamos la distancia desde los puntos ya trazados
+    var dx = (x2 - x1);
+    var dy = (y2 - y1);
+    //comienza la linea perpendicular desde el punto inicial rojo (index)
+    this.cx.moveTo(X, Y);
+    this.cx.lineTo(X + dy*2, Y - dx*2); //dy*2 duplica la linea del trazo para que sea mas larga
+    this.cx.stroke();
   }
 }
 
