@@ -13,7 +13,7 @@
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-toolbar></app-toolbar>
+    <app-toolbar (dataEvent)="receiveData($event)"></app-toolbar>
     <router-outlet></router-outlet>
     <div class="footer">
       <app-footer></app-footer>

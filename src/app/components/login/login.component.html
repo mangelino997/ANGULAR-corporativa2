@@ -1,0 +1,46 @@
+<div style="position: absolute; top: 0; left: 0; bottom: 0; right: 0;
+      background-image: url('/assets/back.jpg');background-size:cover;" class="vcontainer">
+  <div style="width: 350px">
+    <div class="row justify-content-center">
+      <div class="col">
+        <mat-card>
+          <div class="row justify-content-center">
+            <app-logo></app-logo><span class="title">MeSer ®</span>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col">
+              <form [formGroup]="form">
+                <div id="divUsername" class="form-group">
+                  <label id="labelUsername" for="idUsername">Usuario *</label>
+                  <input id="idUsername" type="text" formControlName="username" autocomplete="off"
+                  class="form-control" required autofocus>
+                </div>
+                <div id="divPassword" class="form-group">
+                  <label id="labelPassword" for="idPassword">Contraseña *</label>
+                  <input id="idPassword" type="password" formControlName="password" autocomplete="off"
+                  class="form-control" required>
+                </div>
+                <div class="row">
+                  <div class="col text-center">
+                      <button mat-raised-button color="primary" (click)="login()" [disabled]="!form.valid">Iniciar Sesión</button>
+                      <br>
+                      <button class="btn-font-color margin-top-10" mat-button (click)="login()">Soy Paciente</button>
+                  </div>
+                </div>
+                <hr class="hr-style"/>
+                <div class="row back-color">
+                  <div class="col text-center">
+                    <h6>Estimado/a Dr./Dra.</h6>
+                    <h6>¿Aún no está registrado/a en MeSer®?</h6>
+                    <button mat-raised-button (click)="login()">Probar</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
