@@ -163,8 +163,6 @@ export class AnalysisCandilographyComponent implements OnInit {
       this.clearCanva();
       //Vuelve a false para controlar en el siguiente grupo de puntos
       this.passNextPoints = false;
-      console.log(this.count);
-
       //Verifica si ya se marcaron todos los puntos
       if (this.count == this.totalCount) {
         //Muestra la imagen indicativa por defecto
@@ -191,8 +189,7 @@ export class AnalysisCandilographyComponent implements OnInit {
   }
   //Limpia el canva completo
   public clearCanva() {
-    let canvas = document.getElementById('idCanvas');
-    console.log(canvas);
+    let canvas = document.getElementById('idCanvas4');
     let width = canvas.clientWidth;
     let height = canvas.clientHeight;
     this.cx.canvas.width = width;
@@ -291,8 +288,11 @@ export class AnalysisCandilographyComponent implements OnInit {
     this.cx.stroke();
   }
   //Envia el formulario a Nuevo Analisis luego a Resultados
-  public sendDataPR(): void {
-    this.dataEvent.emit(this.acForm.value);
+  public sendDataAC(): void {
+    let result= (<HTMLImageElement>document.getElementById('canvasimgAC')).src;
+    this.acForm.get('imageAC').setValue(result);
+    this.dataEvent.emit(this.acForm.get('imageAC').value);
+    console.log(this.acForm.get('imageAC').value);
   }
 }
 

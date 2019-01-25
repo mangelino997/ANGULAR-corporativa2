@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, ElementRef, ViewChild, HostListener } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnInit, Input, ElementRef, ViewChild, HostListener, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 import { AfImageGifService } from 'src/app/services/af-image-gif.service';
 import { AppService } from 'src/app/services/app.service';
@@ -11,6 +11,7 @@ import { IndicativeImageService } from 'src/app/services/indicative-image.servic
   styleUrls: ['./analysis-photography.component.scss']
 })
 export class AnalysisPhotographyComponent implements OnInit {
+  @Output() dataEvent = new EventEmitter<any>();
   //Define un evento escuchador de redimension de pantalla
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -18,10 +19,6 @@ export class AnalysisPhotographyComponent implements OnInit {
   }
   //Define el formulario Analisis de la fotografia
   public apForm: FormGroup;
-  //Define el formulario Analisis de la telerradiografia
-  public atForm: FormGroup;
-  //Define el formulario Radiografias
-  public radiographyForm: FormGroup;
   //Define el elemento canvas html
   public canvasEl: HTMLCanvasElement;
   //Define el elemento canvas que se muestra al finalizar los puntos
@@ -69,11 +66,9 @@ export class AnalysisPhotographyComponent implements OnInit {
       pointDescription: null
     }
     //Establece el formulario Analisis de la Fotografia
-    this.apForm = new FormGroup({});
-    //Establece el formulario radiografias
-    this.radiographyForm = new FormGroup({});
-    //Establece el formulario Analisis de la Telerradiografia
-    this.atForm = new FormGroup({});
+    this.apForm = new FormGroup({
+      imageAP: new FormControl()
+    });
     //Establece el gif por defecto
     this.nextGif();
     //Define los puntos y colores para el analisis fotografico
@@ -260,5 +255,12 @@ export class AnalysisPhotographyComponent implements OnInit {
     var dataURL = canvas.toDataURL();
     (<HTMLImageElement>document.getElementById('canvasimgAP')).src = dataURL;
     (<HTMLElement>document.getElementById('canvasimgAP')).style.display = "inline";
+  }
+  //Envia el formulario a Nuevo Analisis luego a Resultados
+  public sendDataAP(): void {
+    console.log("llama");
+    let result= (<HTMLImageElement>document.getElementById('canvasimgAP')).src;
+    this.apForm.get('imageAP').setValue(result);
+    this.dataEvent.emit(this.apForm.get('imageAP').value);
   }
 }

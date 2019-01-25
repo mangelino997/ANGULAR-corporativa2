@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AppService } from 'src/app/services/app.service';
 import { AtImageGifService } from 'src/app/services/at-image-gif.service';
@@ -11,7 +11,7 @@ import { fromEvent } from 'rxjs';
 })
 
 export class AnalysisOrthopantographyComponent implements OnInit {
-
+  @Output() dataEvent = new EventEmitter<any>();
   //Define el formulario
   public aoForm:FormGroup;
 
@@ -68,11 +68,9 @@ export class AnalysisOrthopantographyComponent implements OnInit {
       pointDescription: null
     }
     //Establece el formulario Analisis de la Fotografia
-    this.aoForm = new FormGroup({});
-    //Establece el formulario radiografias
-    this.radiographyForm = new FormGroup({});
-    //Establece el formulario Analisis de la Telerradiografia
-    this.aoForm = new FormGroup({});
+    this.aoForm = new FormGroup({
+      imageAO: new FormControl()
+    });
     //Establece el gif por defecto
     this.nextGif();
     //Define los puntos y colores para el analisis fotografico
@@ -98,6 +96,7 @@ export class AnalysisOrthopantographyComponent implements OnInit {
   //Inicializa el Canvas
   public initCanvas(img) {
     this.imageReal = img;
+    console.log(this.imageReal);
     this.canvasEl = this.canvas.nativeElement;
     this.cx = this.canvasEl.getContext('2d');
     this.cx.lineWidth = 1;
@@ -173,7 +172,8 @@ export class AnalysisOrthopantographyComponent implements OnInit {
         this.cx2 = this.canvaElStart.getContext('2d');
         var image = new Image();
         image.src = this.imageReal;
-        console.log(this,);
+        console.log(image);
+        console.log(this.canvaElStart);
         this.cx2.drawImage(image, 0, 0, this.width, this.height);
         //Dibuja las lineas a partir de los puntos marcados por el usuario
         this.drawPointsWithLines();
@@ -186,7 +186,9 @@ export class AnalysisOrthopantographyComponent implements OnInit {
   }
   //Limpia el canva completo
   public clearCanva() {
-    let canvas = document.getElementById('idCanvas');
+    let canvas = document.getElementById('idCanvas3');
+    console.log(this.imageReal);
+
     let width = canvas.clientWidth;
     let height = canvas.clientHeight;
     this.cx.canvas.width = width;
@@ -233,7 +235,6 @@ export class AnalysisOrthopantographyComponent implements OnInit {
           this.cx.moveTo(this.points[x].x, this.points[x].y);
           this.cx.lineTo(this.points[y].x, this.points[y].y);
         }
-      
       this.fillLines(this.points[y]);
       this.cx.stroke();
     }
@@ -291,6 +292,12 @@ export class AnalysisOrthopantographyComponent implements OnInit {
     this.cx.lineTo(X - dxm, Y - dym);
     this.cx.lineTo(X + dxm, Y + dym);
     this.cx.stroke();
+  }
+  //Envia el formulario a Nuevo Analisis luego a Resultados
+  public sendDataAO(): void {
+    let result= (<HTMLImageElement>document.getElementById('canvasimgAO')).src;
+    this.aoForm.get('imageAO').setValue(result);
+    this.dataEvent.emit(this.aoForm.get('imageAO').value);
   }
 }
 

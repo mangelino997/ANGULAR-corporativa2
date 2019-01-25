@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Analysis } from 'src/app/modules/analysis';
 import { TypeRehabilitationService } from 'src/app/services/type-rehabilitation.service';
+import { Patient } from 'src/app/modules/patient';
 
 @Component({
   selector: 'app-patient-data',
@@ -12,10 +13,12 @@ export class PatientDataComponent implements OnInit {
   @Output() dataEvent = new EventEmitter<any>();
   //Define el formulario para la seccion Datos del Paciente
   public analysisForm:FormGroup;
+  //Define el formulario para la seccion Datos del Paciente
+  public patientForm:FormGroup;
   //Define la lista de tipos de rehabilitaciones
   public typesRehabilitations:Array<any> = [];
   //Constructor
-  constructor(private analysisModule: Analysis, private typeRehabilitationService: TypeRehabilitationService) { }
+  constructor(private patientData: Patient ,private analysisModule: Analysis, private typeRehabilitationService: TypeRehabilitationService) { }
   //Al inicializarse el componente
   ngOnInit() {
     //Establece el formulario analisis
@@ -25,6 +28,7 @@ export class PatientDataComponent implements OnInit {
     this.analysisForm.get('enrollmentUser').setValue('AS343SD');
     //Obtiene la lista de tipos de rehabilitacion
     this.listTypeRehabilitation();
+
   }
   //Obtiene la lista de tipos de rehabilitaciones
   private listTypeRehabilitation(): void {

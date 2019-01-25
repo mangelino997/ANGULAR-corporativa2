@@ -20,7 +20,7 @@
             </div>
           <div class="col-md-6 text-center">
             <h6>Imagen Real</h6>
-            <canvas id="idCanvas" #canvas2 style="border: 1px solid black" width="300px" height="300px"></canvas>
+            <canvas id="idCanvas2" #canvas2 style="border: 1px solid black" width="300px" height="300px"></canvas>
             <div class="row justify-content-center" style="margin-top: 10px;">
               <button mat-raised-button color="accent" (click)="clearCanva()">Reset</button>
               <button style="margin-left: 10px;" mat-raised-button color="primary" (click)="nextPoints()" [disabled]="!bandera">Listo</button>
@@ -34,7 +34,7 @@
           <div class="row">
             <div class="col-md-4 text-center">
               <h6>Imagen Real</h6>
-              <canvas id="idCanvas" #canvaStart style="border: 1px solid black" width="300px" height="300px"></canvas>
+              <canvas id="idCanvas2" #canvaStart style="border: 1px solid black" width="300px" height="300px"></canvas>
             </div>
             <div class="col-md-4 text-center">
               <h6>Imagen con Unión de Puntos</h6>
@@ -63,6 +63,6 @@
     <br>
     <div>
     <button mat-raised-button matStepperPrevious>Atrás</button>
-    <button class="btn-left-5" mat-raised-button matStepperNext color="primary">Siguiente</button>
+    <button class="btn-left-5" mat-raised-button matStepperNext color="primary" (click)="sendDataAT()">Siguiente</button>
     </div>
   </form>

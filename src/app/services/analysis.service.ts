@@ -6,9 +6,9 @@ import { Message } from '@stomp/stompjs';
 import { StompService } from '@stomp/ng2-stompjs';
 
 @Injectable()
-export class AfImageGifService {
+export class AnalysisService {
   //Define la ruta al servicio web
-  private route:string = "/afImageGif";
+  private route:string = "/analysis";
   //Define la url base
   private url:string = null;
   //Define la url para subcripcion a socket
@@ -40,14 +40,6 @@ export class AfImageGifService {
   public subscribirse = (m: Message) => {
     this.completeList.next(JSON.parse(m.body));
   }
-  //Obtiene un gif por posicion y sexo
-  public getImageByPositionAndSex(position, idSex) {
-    return this.http.get(this.url + '/getImageByPositionAndSex/' + position + '/' + idSex, this.options);
-  }
-  //Obtiene un registro por posicion y sexo
-  public getByPositionAndSex(position, idSex) {
-    return this.http.get(this.url + '/getByPositionAndSex/' + position + '/' + idSex, this.options);
-  }
   //Obtiene el siguiente id
   public getNextId() {
     return this.http.get(this.url + '/getNextId', this.options);
@@ -64,12 +56,38 @@ export class AfImageGifService {
       })
     })
   }
+  //Obtiene los analisis de las ultimas semanas 
+  public getTotalByLastWeeks(id, id2) {
+    return this.http.get(this.url + '/getTotalByLastWeeks/' + id + '/' + id2, this.options);
+  }
+  //Obtiene los analisis de los ultimos meses
+  public getTotalByLastMonths(id, id2) {
+    return this.http.get(this.url + '/getTotalByLastMonths/' + id + '/' + id2, this.options);
+  }
+  //Obtiene los analisis de los ultimos años
+  public getTotalByLastYears(id, id2) {
+    return this.http.get(this.url + '/getTotalByLastYears/' + id + '/' + id2, this.options);
+  }
+  //Obtiene los analisis de los dias
+  public getTotalByLastDays(id) {
+    return this.http.get(this.url + '/getTotalByLastYears/' + id, this.options);
+  }
+  //Obtiene por Paciente y Usuario
+  public listByPatientAndUser(patient, user) {
+    return this.http.get(this.url + '/listByPatientAndUser/' + patient + '/' + user, this.options);
+  }
+  //Obtiene  Paciente y Protesis por codigo
+  public listPatientsAndProthesisCodes(code) {
+    return this.http.get(this.url + '/listPatientsAndProthesisCodes/' + code , this.options);
+  }
+  //Obtiene usuarios 
+  public listUsersDescAnalysis(code) {
+    return this.http.get(this.url + '/listUsersDescAnalysis/' + code , this.options);
+  }
   //Agrega un registro
-  public add(imagenParaSubir: File){
-		const formData = new FormData(); 
-		formData.append('archivo', imagenParaSubir, imagenParaSubir.name); 
-		return this.http.post(this.url, formData);
-	}
+  public add(elemento) {
+    return this.http.post(this.url, elemento, this.options);
+  }
   //Actualiza un registro
   public update(elemento) {
     return this.http.put(this.url, elemento, this.options);

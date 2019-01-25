@@ -21,7 +21,11 @@ export class Analysis {
             prothesisCode: new FormControl(),
             date: new FormControl(),
             nameUser: new FormControl(),
-            enrollmentUser: new FormControl()
+            enrollmentUser: new FormControl(),
+            photographyImage: new FormControl(),
+            teleradiographyImage: new FormControl(),
+            orthopantomographyImage: new FormControl(),
+            condylegraphyImage: new FormControl()
         })
     }
 }

@@ -6,9 +6,9 @@ import { Message } from '@stomp/stompjs';
 import { StompService } from '@stomp/ng2-stompjs';
 
 @Injectable()
-export class AfImageGifService {
+export class DateService {
   //Define la ruta al servicio web
-  private route:string = "/afImageGif";
+  private route:string = "/date";
   //Define la url base
   private url:string = null;
   //Define la url para subcripcion a socket
@@ -40,42 +40,8 @@ export class AfImageGifService {
   public subscribirse = (m: Message) => {
     this.completeList.next(JSON.parse(m.body));
   }
-  //Obtiene un gif por posicion y sexo
-  public getImageByPositionAndSex(position, idSex) {
-    return this.http.get(this.url + '/getImageByPositionAndSex/' + position + '/' + idSex, this.options);
-  }
-  //Obtiene un registro por posicion y sexo
-  public getByPositionAndSex(position, idSex) {
-    return this.http.get(this.url + '/getByPositionAndSex/' + position + '/' + idSex, this.options);
-  }
-  //Obtiene el siguiente id
-  public getNextId() {
-    return this.http.get(this.url + '/getNextId', this.options);
-  }
-  //Obtiene la lista de registros
-  public list() {
-    return this.http.get(this.url, this.options);
-  }
-  //Obtiene un listado por nombre
-  public listByName(name) {
-    return this.http.get(this.url + '/listByName/' + name, this.options).map(res => {
-      return res.json().map(data => {
-        return data;
-      })
-    })
-  }
-  //Agrega un registro
-  public add(imagenParaSubir: File){
-		const formData = new FormData(); 
-		formData.append('archivo', imagenParaSubir, imagenParaSubir.name); 
-		return this.http.post(this.url, formData);
-	}
-  //Actualiza un registro
-  public update(elemento) {
-    return this.http.put(this.url, elemento, this.options);
-  }
-  //Elimina un registro
-  public delete(id) {
-    return this.http.delete(this.url + '/' + id, this.options);
+  //Obtiene la fecha actual
+  public getDate() {
+    return this.http.get(this.url + '/getDate', this.options);
   }
 }

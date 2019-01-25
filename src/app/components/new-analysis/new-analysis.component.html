@@ -1,5 +1,5 @@
 <!-- NUEVO ANALISIS -->
-<mat-horizontal-stepper labelPosition="bottom" (selectionChange)="stepChange($event)" #stepper>
+<mat-horizontal-stepper labelPosition="bottom"  #stepper>
     <!-- DATOS DEL PACIENTE -->
     <mat-step [stepControl]="analysisForm">
         <ng-template matStepLabel>Datos del Paciente</ng-template>
@@ -45,7 +45,7 @@
     <!-- ANALISIS DE LA CANDILOGRAÍA -->
     <mat-step [stepControl]="acForm">
         <ng-template matStepLabel>Análisis Condilografía</ng-template>
-        <app-analysis-candilography (dataEvent)="receiveAO($event)"></app-analysis-candilography>
+        <app-analysis-candilography (dataEvent)="receiveAC($event)"></app-analysis-candilography>
     </mat-step>
     <!-- FIN DEL ANALISIS DE LA CANDILOGRAÍA -->
     <!-- --- -->

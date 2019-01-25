@@ -11,10 +11,14 @@
       <div class="col-md-12">
         <mat-card class="mat-card-dynamic">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10">
               <h6><b>Diagnóstico perteneciente al Dr./Dra.: Juan Perez</b></h6>
             </div>
+            <div class="col-md-2 justify-content-end">
+              <h6><b>{{date}}</b></h6>
+            </div>
           </div>
+          <br>
           <div class="row">
             <div class="col-md-3 text-center">
               <h6>Análisis Fotográfico</h6>
@@ -30,7 +34,7 @@
             </div>
             <div class="col-md-3 text-center">
               <h6>Análisis de la Condilografía</h6>
-              <img id="resultACandilography" [src]="results.get('imageCandilography').value">
+              <img id="resultACandilography" [src]="results.get('imageCondylegraphy').value">
             </div>
           </div>
           <br>
@@ -55,6 +59,6 @@
     <div>
       <button mat-raised-button matStepperPrevious>Atrás</button>
       <button mat-raised-button (click)="stepper.reset()">Reset</button>
-      <button style="margin-left: 50px;" mat-raised-button color="primary">Guardar Análisis</button>
+      <button style="margin-left: 50px;" mat-raised-button color="primary" (click)="saveAnalysis()">Guardar Análisis</button>
     </div>
 </form>

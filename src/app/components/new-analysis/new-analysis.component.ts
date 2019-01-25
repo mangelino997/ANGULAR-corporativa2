@@ -6,6 +6,7 @@ import { AnalysisTeleradiographyComponent } from './analysis-teleradiography/ana
 import { AnalysisOrthopantographyComponent } from './analysis-orthopantography/analysis-orthopantography.component';
 import { AnalysisCandilographyComponent } from './analysis-candilography/analysis-candilography.component';
 import { ResultsComponent } from './results/results.component';
+import { PatientDataComponent } from './patient-data/patient-data.component';
 
 @Component({
   selector: 'app-new-analysis',
@@ -13,6 +14,8 @@ import { ResultsComponent } from './results/results.component';
   styleUrls: ['./new-analysis.component.scss']
 })
 export class NewAnalysisComponent implements OnInit {
+  //Define el componente Datos del Paciente
+  @ViewChild(PatientDataComponent) dpComponent;
   //Define el componente Analisis Fotografico
   @ViewChild(AnalysisPhotographyComponent) apComponent;
   //Define el componente Analisis Fotografico
@@ -22,7 +25,7 @@ export class NewAnalysisComponent implements OnInit {
   //Define el componente Foto del Paciente
   @ViewChild(PatientPhotoComponent) ppComponent;
   //Define el componente Radiografias del Paciente
-  @ViewChild(AnalysisTeleradiographyComponent) arComponent;
+  @ViewChild(AnalysisTeleradiographyComponent) atComponent;
   //Define el componente Resultados
   @ViewChild(ResultsComponent) resultsComponent;
   //Define el formulario para la seccion Datos del Paciente
@@ -51,6 +54,7 @@ export class NewAnalysisComponent implements OnInit {
   public receivePatientData($event): void {
     this.analysisForm = $event;
     this.ppComponent.sexSelected('card-female');
+    this.resultsComponent.receiveData(this.analysisForm.value);
   }
   //Recibe la foto del paciente
   public receivePatientPhoto($event): void {
@@ -66,8 +70,8 @@ export class NewAnalysisComponent implements OnInit {
     let radiographyPhotos= $event;
     console.log(radiographyPhotos);
     //Setea la imagen en el canvas de Telerradiografia
-    this.arComponent.initCanvas(radiographyPhotos.imageTeleradiography);
-    this.arComponent.setIndicativeImage(radiographyPhotos.indicativeImage);
+    this.atComponent.initCanvas(radiographyPhotos.imageTeleradiography);
+    this.atComponent.setIndicativeImage(radiographyPhotos.indicativeImage);
     //Setea la imagen en el canvas de Ortopantomografia
     this.aoComponent.initCanvas(radiographyPhotos.imageOrthopantomography);
     this.aoComponent.setIndicativeImage(radiographyPhotos.indicativeImage);
@@ -75,31 +79,60 @@ export class NewAnalysisComponent implements OnInit {
     this.acComponent.initCanvas(radiographyPhotos.imageCondilography);
     this.acComponent.setIndicativeImage(radiographyPhotos.indicativeImage);
   }
+  // Recibe el formulario del Analisis Fotográfico
+  public receiveAP($event){
+    let resultAP= $event;
+    this.resultsComponent.initResults(resultAP , 'photography'); 
+  }
+  // Recibe el formulario del Analisis Telerradiografia
+  public receiveAT($event){
+    let resultAT= $event;
+    this.resultsComponent.initResults(resultAT , 'teleradiography');  
+  }
+  // Recibe el formulario del Analisis Ortopantomografia
+  public receiveAO($event){
+    let resultAO= $event;
+    this.resultsComponent.initResults(resultAO , 'orthopantomography');
+  }
+  // Recibe el formulario del Analisis Candilografia
+  public receiveAC($event){
+    let resultAC= $event;
+    this.resultsComponent.initResults(resultAC , 'condylegraphy');
+  }
+  // Recibe el formulario de los datos del Profesional
+  public receiveProfessionalData($event){
+
+  }
   
   //
   //Determina que analisis se va a procesar
-  public stepChange(event) {
-    switch (event.selectedIndex) {
-      //Foto del paciente
-      case 1:
-        
-        break;
-      //Analisis Fotografico
-      case 2:
-        
-        break;
-      //Analisis de la Telerradiografia
-      case 4:
-        
-        break;
-      //Analisis de la Ortopantomografia
-      case 5:
-        
-        break;
-      //Analisis de la Condilografia
-      case 6:
-        
-        break;
-    }
-  }
+  // public stepChange(event) {
+  //   switch (event.selectedIndex) {
+  //     //Datos del Paciente
+  //     case 1: 
+  //       this.dpComponent.sendData();
+  //       break;
+  //     //Foto del paciente
+  //     case 2:
+  //       this.ppComponent.sendData();
+  //       break;
+  //     //Analisis Fotografico
+  //     case 3:
+  //       this.apComponent.sendDataAP();
+  //       console.log("entra");
+  //       break;
+  //     //Analisis de la Telerradiografia
+  //     case 5:
+  //       this.atComponent.sendDataAT();
+  //       break;
+  //     //Analisis de la Ortopantomografia
+  //     case 6:
+  //       this.aoComponent.sendDataAO();
+  //       break;
+  //     //Analisis de la Condilografia
+  //     case 7:
+  //       this.acComponent.sendDataAC();
+  //       break;
+  //   }
+  // }
 }

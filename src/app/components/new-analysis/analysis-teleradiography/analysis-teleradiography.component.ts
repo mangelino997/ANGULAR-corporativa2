@@ -185,7 +185,7 @@ export class AnalysisTeleradiographyComponent implements OnInit {
   }
   //Limpia el canva completo
   public clearCanva() {
-    let canvas = document.getElementById('idCanvas');
+    let canvas = document.getElementById('idCanvas2');
     let width = canvas.clientWidth;
     let height = canvas.clientHeight;
     this.cx.canvas.width = width;
@@ -287,9 +287,9 @@ export class AnalysisTeleradiographyComponent implements OnInit {
     this.cx.stroke();
   }
   //Envia el formulario a Nuevo Analisis luego a Resultados
-  public sendDataPR(): void {
-    var result= (<HTMLElement>document.getElementById('canvasimgAT'));
+  public sendDataAT(): void {
+    let result= (<HTMLImageElement>document.getElementById('canvasimgAT')).src;
     this.atForm.get('imageAT').setValue(result);
-    this.dataEvent.emit(this.atForm.value);
+    this.dataEvent.emit(this.atForm.get('imageAT').value);
   }
 }
