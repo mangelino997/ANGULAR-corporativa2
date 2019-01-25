@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AppService } from 'src/app/services/app.service';
 import { AtImageGifService } from 'src/app/services/at-image-gif.service';
@@ -11,6 +11,7 @@ import { fromEvent } from 'rxjs';
 })
 export class AnalysisTeleradiographyComponent implements OnInit {
 
+  @Output() dataEvent = new EventEmitter<any>();
   //Define el formulario
   public atForm:FormGroup;
 
@@ -66,12 +67,12 @@ export class AnalysisTeleradiographyComponent implements OnInit {
       pointName: null,
       pointDescription: null
     }
-    //Establece el formulario Analisis de la Fotografia
-    this.atForm = new FormGroup({});
     //Establece el formulario radiografias
     this.radiographyForm = new FormGroup({});
     //Establece el formulario Analisis de la Telerradiografia
-    this.atForm = new FormGroup({});
+    this.atForm = new FormGroup({
+      imageAT: new FormControl()
+    });
     //Establece el gif por defecto
     this.nextGif();
     //Define los puntos y colores para el analisis fotografico
@@ -284,5 +285,11 @@ export class AnalysisTeleradiographyComponent implements OnInit {
     this.cx.moveTo(X, Y);
     this.cx.lineTo(X + dy*2, Y - dx*2); //dy*2 duplica la linea del trazo para que sea mas larga
     this.cx.stroke();
+  }
+  //Envia el formulario a Nuevo Analisis luego a Resultados
+  public sendDataPR(): void {
+    var result= (<HTMLElement>document.getElementById('canvasimgAT'));
+    this.atForm.get('imageAT').setValue(result);
+    this.dataEvent.emit(this.atForm.value);
   }
 }

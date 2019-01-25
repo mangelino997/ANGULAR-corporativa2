@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AppService } from 'src/app/services/app.service';
 import { AtImageGifService } from 'src/app/services/at-image-gif.service';
@@ -11,7 +11,7 @@ import { fromEvent } from 'rxjs';
 })
 
 export class AnalysisCandilographyComponent implements OnInit {
-
+  @Output() dataEvent = new EventEmitter<any>();
   //Define el formulario
   public acForm:FormGroup;
 
@@ -68,11 +68,11 @@ export class AnalysisCandilographyComponent implements OnInit {
       pointDescription: null
     }
     //Establece el formulario Analisis de la Fotografia
-    this.acForm = new FormGroup({});
+    this.acForm = new FormGroup({
+      imageAC: new FormControl()
+    });
     //Establece el formulario radiografias
     this.radiographyForm = new FormGroup({});
-    //Establece el formulario Analisis de la Telerradiografia
-    this.acForm = new FormGroup({});
     //Establece el gif por defecto
     this.nextGif();
     //Define los puntos y colores para el analisis fotografico
@@ -289,6 +289,10 @@ export class AnalysisCandilographyComponent implements OnInit {
     this.cx.moveTo(X, Y);
     this.cx.lineTo(X + dy*2, Y - dx*2); //dy*2 duplica la linea del trazo para que sea mas larga
     this.cx.stroke();
+  }
+  //Envia el formulario a Nuevo Analisis luego a Resultados
+  public sendDataPR(): void {
+    this.dataEvent.emit(this.acForm.value);
   }
 }
 

@@ -1,0 +1,60 @@
+<form [formGroup]="results">
+    <ng-template matStepLabel>Resultados</ng-template>
+    <div class="title-block">
+      <h4 class="title">
+          Resultados del Análisis
+      </h4>
+    </div>
+    <hr style="margin-top: 0px;">
+    <h5>Estimado Doctor/a: Gracias por realizar el estudio, a continución se muestran los resultados correspondientes.</h5>
+    <div class="row justify-content-center">
+      <div class="col-md-12">
+        <mat-card class="mat-card-dynamic">
+          <div class="row">
+            <div class="col-md-12">
+              <h6><b>Diagnóstico perteneciente al Dr./Dra.: Juan Perez</b></h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3 text-center">
+              <h6>Análisis Fotográfico</h6>
+              <img id="resultAPhotograpphy" [src]="results.get('imagePhotography').value">
+            </div>
+            <div class="col-md-3 text-center">
+              <h6>Análisis de la Telerradiografía</h6>
+              <img id="resultATeleradiography" [src]="results.get('imageTeleradiography').value">
+            </div>
+            <div class="col-md-3 text-center">
+              <h6>Análisis de la Ortopantomografía</h6>
+              <img id="resultAOrthopantomography" [src]="results.get('imageOrthopantomography').value">
+            </div>
+            <div class="col-md-3 text-center">
+              <h6>Análisis de la Condilografía</h6>
+              <img id="resultACandilography" [src]="results.get('imageCandilography').value">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-12">
+              <h6>Conclusión para rehabilitación funcional: Para el Dispositivo Intraoral, 
+              escogido por el Dr./Dra.: Juan Perez, la altura interincisiva promedio es de:</h6>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h5>Placa de reposición mandibular inferior de 9.2mm de altura interincisiva.</h5>
+            </div>
+          </div>
+          <div class="row justify-content-end" style="padding-right: 10px;">
+            <h5>Código de Prótesis: <b>AAA123</b></h5>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+    <br>
+    <div>
+      <button mat-raised-button matStepperPrevious>Atrás</button>
+      <button mat-raised-button (click)="stepper.reset()">Reset</button>
+      <button style="margin-left: 50px;" mat-raised-button color="primary">Guardar Análisis</button>
+    </div>
+</form>

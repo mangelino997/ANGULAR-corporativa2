@@ -5,6 +5,7 @@ import { PatientPhotoComponent } from './patient-photo/patient-photo.component';
 import { AnalysisTeleradiographyComponent } from './analysis-teleradiography/analysis-teleradiography.component';
 import { AnalysisOrthopantographyComponent } from './analysis-orthopantography/analysis-orthopantography.component';
 import { AnalysisCandilographyComponent } from './analysis-candilography/analysis-candilography.component';
+import { ResultsComponent } from './results/results.component';
 
 @Component({
   selector: 'app-new-analysis',
@@ -22,6 +23,8 @@ export class NewAnalysisComponent implements OnInit {
   @ViewChild(PatientPhotoComponent) ppComponent;
   //Define el componente Radiografias del Paciente
   @ViewChild(AnalysisTeleradiographyComponent) arComponent;
+  //Define el componente Resultados
+  @ViewChild(ResultsComponent) resultsComponent;
   //Define el formulario para la seccion Datos del Paciente
   public analysisForm: FormGroup;
   //Define el formulario para la seccion Foto del Paciente

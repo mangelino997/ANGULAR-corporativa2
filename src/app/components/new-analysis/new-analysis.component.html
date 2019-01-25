@@ -48,5 +48,19 @@
         <app-analysis-candilography (dataEvent)="receiveAO($event)"></app-analysis-candilography>
     </mat-step>
     <!-- FIN DEL ANALISIS DE LA CANDILOGRAÍA -->
+    <!-- --- -->
+    <!-- DATOS DEL PROFESIONAL -->
+    <mat-step [stepControl]="professionalForm">
+        <ng-template matStepLabel>Datos del Profesional</ng-template>
+        <app-professional-data (dataEvent)="receiveProfessionalData($event)"></app-professional-data>
+    </mat-step>
+    <!-- FIN DE DATOS DEL PROFESIONAL -->
+    <!-- --- -->
+    <!-- DATOS DEL PROFESIONAL -->
+    <mat-step [stepControl]="results">
+        <ng-template matStepLabel>Resultados</ng-template>
+        <app-results ></app-results>
+    </mat-step>
+    <!-- FIN DE DATOS DEL PROFESIONAL -->
 </mat-horizontal-stepper>
 <!-- FIN NUEVO ANALISIS -->
