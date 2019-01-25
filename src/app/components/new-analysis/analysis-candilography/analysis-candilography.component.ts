@@ -197,9 +197,8 @@ export class AnalysisCandilographyComponent implements OnInit {
     var image = new Image();
     image.src = this.imageReal;
     this.cx.drawImage(image, 0, 0, width, height);
-
-    // this.points.splice(0, this.points.length);
-    // this.count = 0;
+    this.points.splice(0, this.points.length);
+    this.count = 0;
   }
   //Traza las lineas con sus colores correspondientes a partir de los puntos marcados
   public drawPointsWithLines() {

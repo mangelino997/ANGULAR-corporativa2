@@ -51,7 +51,7 @@ export class ResultsComponent implements OnInit {
       this.form.get('date').setValue(res.json());
     });;
   }
-  // Recibe los datos del paciente (del primer formulario)
+  // Recibe los datos del paciente enviados por New Analisis (del primer formulario)
   public receiveData(patientForm){
     this.form.setValue(patientForm);
     console.log(this.form);
@@ -76,7 +76,7 @@ export class ResultsComponent implements OnInit {
   }
   //Guarda los resultados de todo el análisis en la Base de Datos
   public saveAnalysis(){
-    
+    this.form.get('prothesisCode').setValue('AFDFBF33');
       // Guarda y obtiene el id de la imagen resultante en Analisis Fotografico
       this.photographyService.add(this.results.get('imagePhotography').value).subscribe(res=>{
         console.log(res.json());
