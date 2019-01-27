@@ -6,9 +6,9 @@ import { Message } from '@stomp/stompjs';
 import { StompService } from '@stomp/ng2-stompjs';
 
 @Injectable()
-export class AfImageGifService {
+export class AoImageGifService {
   //Define la ruta al servicio web
-  private route:string = "/afImageGif";
+  private route:string = "/aoImageGif";
   //Define la url base
   private url:string = null;
   //Define la url para subcripcion a socket
@@ -40,14 +40,6 @@ export class AfImageGifService {
   public subscribirse = (m: Message) => {
     this.completeList.next(JSON.parse(m.body));
   }
-  //Obtiene un gif por posicion y sexo
-  public getImageByPositionAndSex(position, idSex) {
-    return this.http.get(this.url + '/getImageByPositionAndSex/' + position + '/' + idSex, this.options);
-  }
-  //Obtiene un registro por posicion y sexo
-  public getByPositionAndSex(position, idSex) {
-    return this.http.get(this.url + '/getByPositionAndSex/' + position + '/' + idSex, this.options);
-  }
   //Obtiene el siguiente id
   public getNextId() {
     return this.http.get(this.url + '/getNextId', this.options);
@@ -56,18 +48,18 @@ export class AfImageGifService {
   public list() {
     return this.http.get(this.url, this.options);
   }
-  //Obtiene un listado por nombre
-  public listByName(name) {
-    return this.http.get(this.url + '/listByName/' + name, this.options).map(res => {
-      return res.json().map(data => {
-        return data;
-      })
-    })
+  //Obtiene un gif por posicion y sexo
+  public getImageByPosition(position) {
+    return this.http.get(this.url + '/getImageByPosition/' + position , this.options);
+  }
+  //Obtiene un registro por posicion y sexo
+  public getByPosition(position) {
+    return this.http.get(this.url + '/getByPosition/' + position, this.options);
   }
   //Agrega un registro
   public add(image){
 		const formData = new FormData(); 
-		formData.append('file', image); 
+		formData.append('archive', image, image.name); 
 		return this.http.post(this.url, formData);
 	}
   //Actualiza un registro

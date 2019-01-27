@@ -17,7 +17,7 @@ export class Patient {
             documentNumber: new FormControl('', Validators.required),
             age: new FormControl('', Validators.required),
             birthdate: new FormControl('', Validators.required),
-            placeBirth: new FormControl('', Validators.required),
+            placebirth: new FormControl('', Validators.required),
             address: new FormControl('', Validators.required),
             city: new FormControl(),
             state: new FormControl(),

@@ -1,62 +1,69 @@
 <form [formGroup]="acForm">
-    <ng-template matStepLabel>Análisis Condilografía</ng-template>
-    <div class="title-block">
-      <h4 class="title">
-          Análisis Condilografía
-      </h4>
-    </div>
-    <hr style="margin-top: 0px;">
-    <h5>Estimado Doctor/a: Siga los pasos para marcar los puntos del análisis de la Condilografía.</h5>
-    <br>
-    <div class="row justify-content-center">
-      <div id="imgStartCandi" class="col-md-6">
-        <mat-card class="mat-card-5">
-          <div class="row">
-            <div class="col-md-6 text-center">
-              <h6>Imagen Indicativa</h6>
-              <img src="{{indicativeImage.image}}" alt="Telerradiografía">
-              <h5 style="margin-top: 10px;">{{indicativeImage.pointName}}</h5>
-              <h6>{{indicativeImage.pointDescription}}</h6>
-            </div>
-          <div class="col-md-6 text-center">
+  <ng-template matStepLabel>Análisis Condilografía</ng-template>
+  <div class="title-block">
+    <h4 class="title">
+      Análisis de la Condilografía
+    </h4>
+  </div>
+  <hr style="margin-top: 0px;">
+  <h5>Estimado Doctor/a: Siga los pasos para marcar los puntos del análisis de la Condilografía.</h5>
+  <br>
+  <div class="row justify-content-center">
+    <div id="idInitCardAC" class="col-md-12">
+      <mat-card>
+        <div class="row justify-content-center">
+          <div class="col-md-5 text-center">
+            <h6>Imagen Indicativa</h6>
+            <img src="{{indicativeImage.image}}" alt="Condilografia">
+            <h5 style="margin-top: 10px;">{{indicativeImage.pointName}}</h5>
+            <h6>{{indicativeImage.pointDescription}}</h6>
+          </div>
+          <div class="col-md-5 text-center">
             <h6>Imagen Real</h6>
-            <canvas id="idCanvas4" #canvas4 style="border: 1px solid black" width="300px" height="300px"></canvas>
+            <canvas id="idCanvasAC" #canvasAC style="border: 1px solid black"></canvas>
             <div class="row justify-content-center" style="margin-top: 10px;">
-              <button mat-raised-button color="accent" (click)="clearCanva()">Reset</button>
-              <button style="margin-left: 10px;" mat-raised-button color="primary" (click)="nextPoints()" [disabled]="!bandera">Listo</button>
-            </div>
+              <button mat-raised-button color="accent" (click)="resetCanvas()">Reset</button>
+              <button style="margin-left: 10px;" mat-raised-button color="primary" (click)="nextPoints()" [disabled]="!flag">Listo</button>
             </div>
           </div>
-        </mat-card>
-      </div>
-      <div id="idFinalImage4" class="col-md-12 display-none" >
-        <mat-card >
-          <div class="row">
-            <div class="col-md-4 text-center">
-              <h6>Imagen Real</h6>
-              <canvas id="idCanvas4" #canvaStart style="border: 1px solid black" width="300px" height="300px"></canvas>
+        </div>
+      </mat-card>
+    </div>
+    <div id="idFinalCardAC" class="col-md-12 display-none">
+      <mat-card>
+        <div class="row">
+          <div class="col-md-5 text-center">
+            <h6>Imagen Real</h6>
+            <img src="{{imageReal}}">
+          </div>
+          <div class="col-md-5 text-center">
+            <h6>Imagen con Unión de Puntos</h6>
+            <img src="{{imageFinalLines}}">
+          </div>
+          <div class="col-md-2 text-center">
+            <h6 class="text-center">Planos del Análisis</h6>
+            <div class="row">
+              <div class="col" style="height: 280px; overflow-y: scroll;">
+                <div class="li-blue">Perpendicular articular: Plano que parte de TG perpendicular al Plano Articular(
+                  P-TG).</div>
+                <div class="li-lightgreen">Plano Articular: se forma uniendo los puntos P-TG.</div>
+                <div class="li-board">Plano Condilar: se forma uniendo los puntos C-R.</div>
+              </div>
             </div>
-            <div class="col-md-4 text-center">
-              <h6>Imagen con Unión de Puntos</h6>
-              <img id="canvasimgAC">
-            </div>
-            <div class="col-md-4 text-center">
-              <h6 class="text-center">Planos del Análisis</h6>
-              <div class="row">
-                <div class="col" style="height: 280px; overflow-y: scroll;">
-                  <div class="li-blue">Perpendicular articular: Plano que parte de TG perpendicular al Plano Articular( P-TG).</div>
-                  <div class="li-lightgreen">Plano Articular: se forma uniendo los puntos P-TG.</div>
-                  <div class="li-board">Plano Condilar: se forma uniendo los puntos C-R.</div>
-                </div>
+            <br><br>
+            <div class="row">
+              <div class="col text-center">
+                <button mat-raised-button color="primary" (click)="resetAll()">Reset</button>
               </div>
             </div>
           </div>
-        </mat-card>
-      </div>
+        </div>
+      </mat-card>
     </div>
-    <br>
-    <div>
+  </div>
+  <br>
+  <div>
     <button mat-raised-button matStepperPrevious>Atrás</button>
-    <button class="btn-left-5" mat-raised-button matStepperNext color="primary" (click)="sendDataAC()">Siguiente</button>
-    </div>
-  </form>
+    <button class="btn-left-5" mat-raised-button color="primary" matStepperNext (click)="sendDataAC()">Siguiente</button>
+  </div>
+</form>

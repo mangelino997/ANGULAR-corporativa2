@@ -22,6 +22,7 @@ export class Analysis {
             date: new FormControl(),
             nameUser: new FormControl(),
             enrollmentUser: new FormControl(),
+            patientImage: new FormControl(),
             photographyImage: new FormControl(),
             teleradiographyImage: new FormControl(),
             orthopantomographyImage: new FormControl(),

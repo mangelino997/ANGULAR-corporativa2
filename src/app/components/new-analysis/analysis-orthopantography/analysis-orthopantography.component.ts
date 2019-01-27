@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, EventEmitter, Output, HostListener } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AppService } from 'src/app/services/app.service';
-import { AtImageGifService } from 'src/app/services/at-image-gif.service';
+import { AoImageGifService } from 'src/app/services/ao-image-gif.service';
 import { fromEvent } from 'rxjs';
 
 @Component({
@@ -9,32 +9,28 @@ import { fromEvent } from 'rxjs';
   templateUrl: './analysis-orthopantography.component.html',
   styleUrls: ['./analysis-orthopantography.component.scss']
 })
-
 export class AnalysisOrthopantographyComponent implements OnInit {
+  //Define el evento que emite datos al componente padre
   @Output() dataEvent = new EventEmitter<any>();
-  //Define el formulario
-  public aoForm:FormGroup;
-
-  //Define el formulario Radiografias
-  public radiographyForm: FormGroup;
-  //Define el elemento canvas con el que se trabajará
+  //Define un evento escuchador de redimension de pantalla
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.clearCanva();
+  }
+  //Define el formulario Analisis de la Ortopantomografia
+  public aoForm: FormGroup;
+  //Define el elemento canvas html
   public canvasEl: HTMLCanvasElement;
   //Define el elemento canvas que se muestra al finalizar los puntos
   public canvaElStart: HTMLCanvasElement;
-  //Define si ejecuta el metodo nextPoints
-  public passNextPoints: boolean = false;
   //Define el ancho del canvas
-  @Input() public width ;
+  @Input() public width = 650;
   //Define la altura del canvas
-  @Input() public height;
+  @Input() public height = 380;
   //Define el elemento canvas
-  @ViewChild('canvas3') public canvas: ElementRef;
-  //Define el elemento canvas que se muestra al mostrar los resultados
-  @ViewChild('canvaStart') public canvaStart: ElementRef;
+  @ViewChild('canvasAO') public canvas: ElementRef;
   //Define cx
   private cx: CanvasRenderingContext2D;
-  //Define cx
-  private cx2: CanvasRenderingContext2D;
   //Difine la lista de puntos que se van marcando
   private pointsGlobal: Array<any> = [];
   //Difine la lista de puntos que se van marcando
@@ -51,14 +47,12 @@ export class AnalysisOrthopantographyComponent implements OnInit {
   public imageReal: any;
   //Define la imagen indicative segun el sexo elegido
   public indicativeImageSex: any;
-  // Define un booleano para controlar la visualizacion de boton Listo
-  public bandera: boolean= false;
-
+  //Define un booleano para controlar la visualizacion de boton Listo
+  public flag: boolean = false;
+  //Define la imagen final con los trazos
+  public imageFinalLines: any;
   //Constructor
-  constructor(private appService: AppService, private atImageGifService: AtImageGifService) {
-    
-   }
-  //Al inicializarse el componente
+  constructor(private appService: AppService, private aoImageGifService: AoImageGifService) { }
   //Al inicializarse el componente
   ngOnInit() {
     //Incializa la imagen gif indicativa
@@ -67,22 +61,20 @@ export class AnalysisOrthopantographyComponent implements OnInit {
       pointName: null,
       pointDescription: null
     }
-    //Establece el formulario Analisis de la Fotografia
-    this.aoForm = new FormGroup({
-      imageAO: new FormControl()
-    });
+    //Establece el formulario Analisis de la Ortopantomografia
+    this.aoForm = new FormGroup({});
     //Establece el gif por defecto
     this.nextGif();
     //Define los puntos y colores para el analisis fotografico
-    this.lines = [{ x: 0, y: 1, stretch: true }, { x: 0, y: 4, stretch: false}, { x: 1, y: 4, stretch: false }, 
-      { x: 3, y: 3, stretch: false }];
-    this.pointsGlobal = [{cantidad: 2, color: '#C20017', colorLine: '#ECEC1C'}, {cantidad: 3, color: '#FF80F5', colorLine: '#ECEC1C'},
-     {cantidad: 4, color: '#FBEA43', colorLine: '#ECEC1C'}, {cantidad: 5, color: '#009AD9', colorLine: '#ECEC1C'}]
+    this.lines = [{ x: 0, y: 1, stretch: true }, { x: 0, y: 4, stretch: false }, { x: 1, y: 4, stretch: false },
+    { x: 3, y: 3, stretch: false }];
+    this.pointsGlobal = [{ cantidad: 2, color: '#C20017', colorLine: '#ECEC1C' }, { cantidad: 3, color: '#FF80F5', colorLine: '#ECEC1C' },
+    { cantidad: 4, color: '#FBEA43', colorLine: '#ECEC1C' }, { cantidad: 5, color: '#009AD9', colorLine: '#ECEC1C' }]
     this.totalCount = 4;
   }
   //Establece el gif correspondiente
   private nextGif(): void {
-    this.atImageGifService.getByPosition(this.count+1).subscribe(res => {
+    this.aoImageGifService.getByPosition(this.count + 1).subscribe(res => {
       let data = res.json();
       this.indicativeImage.image = this.appService.getUrlBase() + '/aoImageGif/getImageByPosition/' + data.position;
       this.indicativeImage.pointName = data.pointName;
@@ -96,7 +88,6 @@ export class AnalysisOrthopantographyComponent implements OnInit {
   //Inicializa el Canvas
   public initCanvas(img) {
     this.imageReal = img;
-    console.log(this.imageReal);
     this.canvasEl = this.canvas.nativeElement;
     this.cx = this.canvasEl.getContext('2d');
     this.cx.lineWidth = 1;
@@ -118,21 +109,17 @@ export class AnalysisOrthopantographyComponent implements OnInit {
         point.x = x;
         point.y = y;
         point.color = color;
-        point.colorLine= colorLine;
+        point.colorLine = colorLine;
         //Controla si permite marcar mas puntos, segun si se hizo click en el boton "listo"
         if (this.points.length < this.pointsGlobal[this.count].cantidad) {
           this.points.push(point);
           this.drawOnCanvas(x, y, color);
-          console.log(x, y);
-
           if (this.points.length == this.pointsGlobal[this.count].cantidad) {
-            this.bandera = true;
+            this.flag = true;
           }
-        }
-        else if(this.pointsGlobal.length == this.points[this.count].cantidad){
+        } else if (this.pointsGlobal.length == this.points[this.count].cantidad) {
           console.log("Debe presionar Listo para marcar mas puntos");
-        }
-        else {
+        } else {
           console.log("Debe marcar todos los puntos");
         }
       });
@@ -151,30 +138,23 @@ export class AnalysisOrthopantographyComponent implements OnInit {
   }
   //Captura el evento click en el boton Listo y permite continuar con el marcado de puntos
   public nextPoints() {
-    if (this.bandera == true) {
-      this.bandera=false;
+    if (this.flag == true) {
+      this.flag = false;
       //Aumenta en 1 el contador
       this.count++;
       this.clearCanva();
-      //Vuelve a false para controlar en el siguiente grupo de puntos
-      this.passNextPoints = false;
       //Verifica si ya se marcaron todos los puntos
       if (this.count == this.totalCount) {
+        let canvas = document.getElementById('idCanvasAO');
+        this.width = canvas.clientWidth;
+        this.height = canvas.clientHeight;
         //Muestra la imagen indicativa por defecto
         this.indicativeImage.image = this.indicativeImageSex;
         this.indicativeImage.pointName = null;
         this.indicativeImage.pointDescription = null;
         //Muestra la imagen final con puntos y lineas
-        let card = document.getElementById('idFinalImage3');
-        card.classList.remove("display-none");
-        document.getElementById('imgStartOrth').classList.add("display-none");
-        this.canvaElStart = this.canvaStart.nativeElement;
-        this.cx2 = this.canvaElStart.getContext('2d');
-        var image = new Image();
-        image.src = this.imageReal;
-        console.log(image);
-        console.log(this.canvaElStart);
-        this.cx2.drawImage(image, 0, 0, this.width, this.height);
+        document.getElementById('idFinalCardAO').classList.remove("display-none");
+        document.getElementById('idInitCardAO').classList.add("display-none");
         //Dibuja las lineas a partir de los puntos marcados por el usuario
         this.drawPointsWithLines();
       } else {
@@ -184,11 +164,31 @@ export class AnalysisOrthopantographyComponent implements OnInit {
       console.log("Debe marcar todos los puntos solicitados");
     }
   }
+  //Reestablece el canvas y los gifs
+  public resetCanvas(): void {
+    this.clearCanva();
+    this.points.splice(0, this.points.length);
+    this.count = 0;
+    this.nextGif();
+  }
+  //Reestablece todos los puntos y lineas
+  public resetAll(): void {
+    //Muestra el gifs y el canvas para marcado nuevamente de puntos
+    document.getElementById('idFinalCardAO').classList.add("display-none");
+    document.getElementById('idInitCardAO').classList.remove("display-none");
+    this.points.splice(0, this.points.length);
+    this.count = 0;
+    this.cx.canvas.width = this.width;
+    this.cx.canvas.height = this.height;
+    var image = new Image();
+    image.src = this.imageReal;
+    this.cx.drawImage(image, 0, 0, this.width, this.height);
+    this.nextGif();
+    this.resetCanvas();
+  }
   //Limpia el canva completo
   public clearCanva() {
-    let canvas = document.getElementById('idCanvas3');
-    console.log(this.imageReal);
-
+    let canvas = document.getElementById('idCanvasAO');
     let width = canvas.clientWidth;
     let height = canvas.clientHeight;
     this.cx.canvas.width = width;
@@ -196,9 +196,6 @@ export class AnalysisOrthopantographyComponent implements OnInit {
     var image = new Image();
     image.src = this.imageReal;
     this.cx.drawImage(image, 0, 0, width, height);
-
-    // this.points.splice(0, this.points.length);
-    // this.count = 0;
   }
   //Traza las lineas con sus colores correspondientes a partir de los puntos marcados
   public drawPointsWithLines() {
@@ -225,26 +222,26 @@ export class AnalysisOrthopantographyComponent implements OnInit {
         //Dibuja la linea a partir de los nuevos puntos
         this.cx.moveTo(x1, y1);
         this.cx.lineTo(x2, y2);
-        if(i==0){ //solo marca 4 perpendiculares
-          var index= 2; //posicion del punto inicial desde donde se comienza a trazar la perpendicular
-          this.perpendicularLine(this.points[x].x, this.points[x].y, this.points[y].x, this.points[y].y, index );
+        if (i == 0) { //solo marca 4 perpendiculares
+          var index = 2; //posicion del punto inicial desde donde se comienza a trazar la perpendicular
+          this.perpendicularLine(this.points[x].x, this.points[x].y, this.points[y].x, this.points[y].y, index);
         }
       }
-      else{
-          //Dibuja la linea de los puntos marcados por el usuario
-          this.cx.moveTo(this.points[x].x, this.points[x].y);
-          this.cx.lineTo(this.points[y].x, this.points[y].y);
-        }
+      else {
+        //Dibuja la linea de los puntos marcados por el usuario
+        this.cx.moveTo(this.points[x].x, this.points[x].y);
+        this.cx.lineTo(this.points[y].x, this.points[y].y);
+      }
       this.fillLines(this.points[y]);
       this.cx.stroke();
     }
     this.fillPoint();
-    this.saveCanvas();
+    this.setImageFromCanvas();
     this.clearCanva();
   }
   //Dibuja y pinta los puntos
-  public fillPoint(){
-    for(let i=0; i<this.points.length; i++){
+  public fillPoint() {
+    for (let i = 0; i < this.points.length; i++) {
       this.cx.beginPath();
       this.cx.fillStyle = this.points[i].color;
       //Dibuja el punto (circulo)
@@ -259,21 +256,17 @@ export class AnalysisOrthopantographyComponent implements OnInit {
     this.cx.closePath();
   }
   //Muestra los trazos del análisis en formato de imagen
-  public saveCanvas() {
-    let canvas2: HTMLCanvasElement;
-    canvas2 = this.canvas.nativeElement;
-    (<HTMLElement>document.getElementById('canvasimgAO')).style.border = "1px solid";
-    (<HTMLElement>document.getElementById('canvasimgAO')).style.width = "100%";
-    (<HTMLElement>document.getElementById('canvasimgAO')).style.height = "auto";
-    var dataURL = canvas2.toDataURL();
-    (<HTMLImageElement>document.getElementById('canvasimgAO')).src = dataURL;
-    (<HTMLElement>document.getElementById('canvasimgAO')).style.display = "inline";
+  public setImageFromCanvas() {
+    let canvas: HTMLCanvasElement;
+    canvas = this.canvas.nativeElement;
+    var dataURL = canvas.toDataURL();
+    this.imageFinalLines = dataURL;
   }
   // Traza la perpendicular segun el Trazo A<-->B (x1, y1, x2, y2) y el punto inicial (index)
-  public perpendicularLine(x1, y1, x2, y2, index){
+  public perpendicularLine(x1, y1, x2, y2, index) {
     //obtenemos el x,y del punto inical (punto rojo)
-    var X= this.points[index].x; 
-    var Y= this.points[index].y
+    var X = this.points[index].x;
+    var Y = this.points[index].y
     //calculamos la distancia desde los puntos ya trazados
     var dx = (x2 - x1);
     var dy = (y2 - y1);
@@ -284,10 +277,10 @@ export class AnalysisOrthopantographyComponent implements OnInit {
     this.cx.stroke();
     this.cx.beginPath();
     //comienza la linea perpendicular HORIZONTAL desde el punto inicial rojo (index)
-    var dxm= (x2 - x1)/2;
-    var dym= (y2 - y1)/2;
-    var mx= X - dxm;
-    var my= Y - dym;
+    var dxm = (x2 - x1) / 2;
+    var dym = (y2 - y1) / 2;
+    var mx = X - dxm;
+    var my = Y - dym;
     this.cx.moveTo(X, Y);
     this.cx.lineTo(X - dxm, Y - dym);
     this.cx.lineTo(X + dxm, Y + dym);
@@ -295,9 +288,6 @@ export class AnalysisOrthopantographyComponent implements OnInit {
   }
   //Envia el formulario a Nuevo Analisis luego a Resultados
   public sendDataAO(): void {
-    let result= (<HTMLImageElement>document.getElementById('canvasimgAO')).src;
-    this.aoForm.get('imageAO').setValue(result);
-    this.dataEvent.emit(this.aoForm.get('imageAO').value);
+    this.dataEvent.emit(this.imageFinalLines);
   }
 }
-

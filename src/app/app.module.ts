@@ -1,9 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCheckboxModule, MatMenuModule, MatToolbarModule, MatDividerModule,
@@ -19,7 +17,8 @@ import { TypeRehabilitationService } from './services/type-rehabilitation.servic
 import { AfImageGifService } from './services/af-image-gif.service';
 import { IndicativeImageService } from './services/indicative-image.service';
 import { AtImageGifService } from './services/at-image-gif.service';
-
+import { AoImageGifService } from './services/ao-image-gif.service';
+import { ModuleService } from './services/module.service';
 
 //Modelos
 import { Analysis } from './modules/analysis';
@@ -54,7 +53,7 @@ import { DateService } from './services/date.service';
 import { AnalysisService } from './services/analysis.service';
 
 const stompConfig: StompConfig = {
-  url: 'ws://192.168.0.32:8084/meserws/socket',
+  url: 'ws://localhost:8084/meserws/socket',
   headers: {},
   heartbeat_in: 0,
   heartbeat_out: 20000,
@@ -84,7 +83,6 @@ const stompConfig: StompConfig = {
     LoginComponent,
     ProfessionalDataComponent,
     ResultsComponent
-    
   ],
   imports: [
     BrowserModule,
@@ -125,6 +123,7 @@ const stompConfig: StompConfig = {
     TypeRehabilitationService,
     AfImageGifService,
     AtImageGifService,
+    AoImageGifService,
     IndicativeImageService,
     PhotographyImageService,
     TeleradiographyImageService,
@@ -132,6 +131,7 @@ const stompConfig: StompConfig = {
     CondylegraphyImageService,
     DateService,
     AnalysisService,
+    ModuleService,
     StompService,
     {
       provide: StompConfig,

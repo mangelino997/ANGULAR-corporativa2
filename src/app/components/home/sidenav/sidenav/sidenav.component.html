@@ -7,6 +7,12 @@
           <button mat-raised-button color="primary" routerLink="newanalysis">Nuevo Análisis +</button>
         </div>
       </div>
+      <br>
+      <div *ngFor="let m of menu">
+        <div class="row" *ngFor="let s of m.suboptions">
+          <button class="btn-full" mat-button (click)="navigate(m.name, s.name)"><mat-icon class="icon-right-5">{{s.icon}}</mat-icon>{{s.name}}</button>
+        </div>
+      </div>
       <div class="row footer-sidenav">
         <app-footer-sidenav style="width: 100%;"></app-footer-sidenav>
       </div>
@@ -15,8 +21,8 @@
   <mat-sidenav-content>
     <app-toolbar (dataEvent)="receiveData($event)"></app-toolbar>
     <router-outlet></router-outlet>
-    <div class="footer">
+    <!-- <div class="footer">
       <app-footer></app-footer>
-    </div>
+    </div> -->
   </mat-sidenav-content>
 </mat-sidenav-container>

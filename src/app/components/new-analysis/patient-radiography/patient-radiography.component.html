@@ -1,54 +1,54 @@
 <form [formGroup]="radiographyForm">
-    <ng-template matStepLabel>Radiografías del Paciente</ng-template>
-    <div class="title-block">
-        <h4 class="title">
-          Radiografías del Paciente
-        </h4>
-      </div>
-      <hr style="margin-top: 0px;">
-      <h5>Estimado Doctor/a: Cargue cada una de las radiografías del paciente.</h5>
-      <br>
-      <div class="row justify-content-center">
-        <div class="col-md-12">
-          <mat-card class="mat-card-4">
-            <div class="row">
-              <div class="col-md-4 text-center">
-                <h6>Ortopantomografía</h6>
-                <div>
-                  <img id="c" [src]="radiographyForm.get('imageOrthopantomography').value || orthopantomographyImage" alt="your image" /><br>
-                </div>
-                <div>
-                  <label for="imgOrthopantomography" color="primary" class="btn btn-primary">Subir Foto</label>
-                  <input id="imgOrthopantomography" type='file' (change)="readURL($event, 'imageSrcOrthopantomography')" style="display: none"/>
-                </div>
-              </div>
-              <div class="col-md-4 text-center">
-                <h6>Telerradiografía</h6>
-                <div>
-                  <img id="d"  [src]="radiographyForm.get('imageTeleradiography').value || teleradiographyImage" alt="your image" /><br>
-                </div>
-                <div>
-                  <label for="imgTeleradiography" color="primary" class="btn btn-primary">Subir Foto</label>
-                  <input id="imgTeleradiography" type='file' (change)="readURL($event, 'imageSrcTeleradiography');" style="display: none"/>
-                </div>               
-              </div>
-              <div class="col-md-4 text-center">
-                <h6>Condilografía</h6>
-                <div>
-                  <img id="e" width="80%" height="80%" [src]="radiographyForm.get('imageCondilography').value || condilographyImage" alt="your image" /><br>
-                </div>
-                <div>
-                  <label for="imgCondilography" color="primary" class="btn btn-primary">Subir Foto</label>
-                  <input id="imgCondilography" type='file' (change)="readURL($event, 'imageSrcCondilography');" style="display: none"/>
-                </div>
-              </div>
+  <ng-template matStepLabel>Radiografías del Paciente</ng-template>
+  <div class="title-block">
+    <h4 class="title">
+      Radiografías del Paciente
+    </h4>
+  </div>
+  <hr style="margin-top: 0px;">
+  <h5>Estimado Doctor/a: Cargue cada una de las radiografías del paciente.</h5>
+  <br>
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <mat-card class="mat-card-4">
+        <div class="row">
+          <div class="col-md-4 text-center">
+            <h5>Ortopantomografía</h5>
+            <div>
+              <img class="img-a" [src]="radiographyForm.get('imageOrthopantomography').value || orthopantomographyImage" />
             </div>
-          </mat-card>
+            <div>
+              <input style="display: none;" type="file" (change)="readURL($event, 1)" #fileInput1/>
+              <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="fileInput1.click()">Subir Foto</button>
+            </div>
+          </div>
+          <div class="col-md-4 text-center">
+            <h5>Telerradiografía</h5>
+            <div>
+              <img class="img-b" [src]="radiographyForm.get('imageTeleradiography').value || teleradiographyImage" />
+            </div>
+            <div>
+              <input style="display: none;" type="file" (change)="readURL($event, 2)" #fileInput2/>
+              <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="fileInput2.click()">Subir Foto</button>
+            </div>
+          </div>
+          <div class="col-md-4 text-center">
+            <h5>Condilografía</h5>
+            <div>
+              <img class="img-a" [src]="radiographyForm.get('imageCondilography').value || condilographyImage" />
+            </div>
+            <div>
+              <input style="display: none;" type="file" (change)="readURL($event, 3)" #fileInput3/>
+              <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="fileInput3.click()">Subir Foto</button>
+            </div>
+          </div>
         </div>
-      </div>
-      <br>
-      <div>
-          <button mat-raised-button matStepperPrevious>Atrás</button>
-          <button class="btn-left-5" mat-raised-button matStepperNext (click)="sendDataPR()" color="primary">Siguiente</button>
-      </div>
-  </form>
+      </mat-card>
+    </div>
+  </div>
+  <br>
+  <div>
+    <button mat-raised-button matStepperPrevious>Atrás</button>
+    <button class="btn-left-5" mat-raised-button matStepperNext (click)="sendDataPR()" color="primary">Siguiente</button>
+  </div>
+</form>

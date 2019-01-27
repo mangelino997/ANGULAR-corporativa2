@@ -1,5 +1,5 @@
 <!-- NUEVO ANALISIS -->
-<mat-horizontal-stepper labelPosition="bottom"  #stepper>
+<mat-horizontal-stepper labelPosition="bottom" #stepper>
     <!-- DATOS DEL PACIENTE -->
     <mat-step [stepControl]="analysisForm">
         <ng-template matStepLabel>Datos del Paciente</ng-template>
@@ -57,9 +57,9 @@
     <!-- FIN DE DATOS DEL PROFESIONAL -->
     <!-- --- -->
     <!-- DATOS DEL PROFESIONAL -->
-    <mat-step [stepControl]="results">
+    <mat-step [stepControl]="resultsForm">
         <ng-template matStepLabel>Resultados</ng-template>
-        <app-results ></app-results>
+        <app-results></app-results>
     </mat-step>
     <!-- FIN DE DATOS DEL PROFESIONAL -->
 </mat-horizontal-stepper>

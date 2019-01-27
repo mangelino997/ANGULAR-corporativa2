@@ -19,48 +19,41 @@ export class PatientRadiographyComponent implements OnInit {
   //Define la imagen de condilography
   public condilographyImage:string;
   //Constructor
-  constructor(private appService: AppService) {
-
-   }
+  constructor(private appService: AppService) {}
   //Al inicializarse el componente
   ngOnInit() {
-    //Establece la imagen de mujer
-    this.orthopantomographyImage = this.appService.getUrlBase() + '/indicativeImage/getById/4';
-    //Establece la imagen de hombre
+    //Establece la teleradiografia
     this.teleradiographyImage = this.appService.getUrlBase() + '/indicativeImage/getById/3';
-    //Establece la imagen por defecto en imagen real del paciente
+    //Establece la ortopantomografia
+    this.orthopantomographyImage = this.appService.getUrlBase() + '/indicativeImage/getById/4';
+    //Establece la condilografia
     this.condilographyImage = this.appService.getUrlBase() + '/indicativeImage/getById/5';
-    //Establece el formulario
-    this.radiographyForm = new FormGroup({});
     //Crea el formulario
     this.radiographyForm = new FormGroup({
-      imageOrthopantomography: new FormControl(''),
-      imageTeleradiography: new FormControl(''),
-      imageCondilography: new FormControl(''),
+      imageOrthopantomography: new FormControl(),
+      imageTeleradiography: new FormControl(),
+      imageCondilography: new FormControl(),
     });
   }
   //Envia el formulario a Nuevo Analisis
   public sendDataPR(): void {
     this.dataEvent.emit(this.radiographyForm.value);
   }
-
   //Metodo cargar imagen
-  public readURL(event, src): void {
-    console.log(src);
+  public readURL(event, image): void {
     if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      switch(src){
-        case "imageSrcOrthopantomography":
+      let file = event.target.files[0];
+      let reader = new FileReader();
+      switch(image) {
+        case 1:
           reader.onload = e => this.radiographyForm.get('imageOrthopantomography').setValue(reader.result);
           reader.readAsDataURL(file);
           break;
-        case 'imageSrcTeleradiography':
-          console.log("entra en tele");
+        case 2:
           reader.onload = e => this.radiographyForm.get('imageTeleradiography').setValue(reader.result);
           reader.readAsDataURL(file);
           break;
-        case 'imageSrcCondilography':
+        case 3:
           reader.onload = e => this.radiographyForm.get('imageCondilography').setValue(reader.result);
           reader.readAsDataURL(file);
           break;

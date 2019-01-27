@@ -76,7 +76,7 @@ export class AnalysisService {
   public listByPatientAndUser(patient, user) {
     return this.http.get(this.url + '/listByPatientAndUser/' + patient + '/' + user, this.options);
   }
-  //Obtiene  Paciente y Protesis por codigo
+  //Obtiene Paciente y Protesis por codigo
   public listPatientsAndProthesisCodes(code) {
     return this.http.get(this.url + '/listPatientsAndProthesisCodes/' + code , this.options);
   }
@@ -84,13 +84,28 @@ export class AnalysisService {
   public listUsersDescAnalysis(code) {
     return this.http.get(this.url + '/listUsersDescAnalysis/' + code , this.options);
   }
+  //Agrega las imagenes del analisis
+  public addAnalysis(pImage, apImage, atImage, aoImage, acImage) {
+    const formData = new FormData(); 
+    let pi = new Blob([pImage], {type : 'image/jpg'});
+    let ap = new Blob([apImage], {type : 'image/jpg'});
+    let at = new Blob([atImage], {type : 'image/jpg'});
+    let ao = new Blob([aoImage], {type : 'image/jpg'});
+    let ac = new Blob([acImage], {type : 'image/jpg'});
+    formData.append('patientImage', pi);
+    formData.append('photographyImage', ap);
+    formData.append('teleradiographyImage', at);
+    formData.append('orthopantomographyImage', ao);
+    formData.append('condylegraphyImage', ac);
+		return this.http.post(this.url + '/addImages', formData);
+  }
   //Agrega un registro
-  public add(elemento) {
-    return this.http.post(this.url, elemento, this.options);
+  public add(element) {
+    return this.http.post(this.url, element, this.options);
   }
   //Actualiza un registro
-  public update(elemento) {
-    return this.http.put(this.url, elemento, this.options);
+  public update(element) {
+    return this.http.put(this.url, element, this.options);
   }
   //Elimina un registro
   public delete(id) {

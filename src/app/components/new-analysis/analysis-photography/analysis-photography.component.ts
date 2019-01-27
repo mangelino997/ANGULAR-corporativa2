@@ -3,7 +3,6 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 import { AfImageGifService } from 'src/app/services/af-image-gif.service';
 import { AppService } from 'src/app/services/app.service';
-import { IndicativeImageService } from 'src/app/services/indicative-image.service';
 
 @Component({
   selector: 'app-analysis-photography',
@@ -11,6 +10,7 @@ import { IndicativeImageService } from 'src/app/services/indicative-image.servic
   styleUrls: ['./analysis-photography.component.scss']
 })
 export class AnalysisPhotographyComponent implements OnInit {
+  //Define el evento que emite datos al componente padre
   @Output() dataEvent = new EventEmitter<any>();
   //Define un evento escuchador de redimension de pantalla
   @HostListener('window:resize', ['$event'])
@@ -23,20 +23,14 @@ export class AnalysisPhotographyComponent implements OnInit {
   public canvasEl: HTMLCanvasElement;
   //Define el elemento canvas que se muestra al finalizar los puntos
   public canvaElStart: HTMLCanvasElement;
-  //Define si ejecuta el metodo nextPoints
-  public passNextPoints: boolean = false;
   //Define el ancho del canvas
   @Input() public width = 300;
   //Define la altura del canvas
   @Input() public height = 300;
   //Define el elemento canvas
   @ViewChild('canvas') public canvas: ElementRef;
-  //Define el elemento canvas que se muestra al mostrar los resultados
-  @ViewChild('canvaStart') public canvaStart: ElementRef;
   //Define cx
   private cx: CanvasRenderingContext2D;
-  //Define cx
-  private cx2: CanvasRenderingContext2D;
   //Difine la lista de puntos que se van marcando
   private pointsGlobal: Array<any> = [];
   //Difine la lista de puntos que se van marcando
@@ -53,8 +47,10 @@ export class AnalysisPhotographyComponent implements OnInit {
   public imageReal: any;
   //Define la imagen indicative segun el sexo elegido
   public indicativeImageSex: any;
-  // Define un booleano para controlar la visualizacion de boton Listo
-  public bandera: boolean= false;
+  //Define un booleano para controlar la visualizacion de boton Listo
+  public flag:boolean = false;
+  //Define la imagen final con los trazos
+  public imageFinalLines:any;
   //Constructor
   constructor(private appService: AppService, private afImageGifService: AfImageGifService) { }
   //Al inicializarse el componente
@@ -119,7 +115,7 @@ export class AnalysisPhotographyComponent implements OnInit {
           this.points.push(point);
           this.drawOnCanvas(x, y, color);
           if (this.points.length == this.pointsGlobal[this.count].cantidad) {
-            this.bandera = true;
+            this.flag = true;
           }
         }
         else if(this.pointsGlobal.length == this.points[this.count].cantidad){
@@ -144,13 +140,11 @@ export class AnalysisPhotographyComponent implements OnInit {
   }
   //Captura el evento click en el boton Listo y permite continuar con el marcado de puntos
   public nextPoints() {
-    if (this.bandera == true) {
-      this.bandera=false;
+    if (this.flag == true) {
+      this.flag=false;
       //Aumenta en 1 el contador
       this.count++;
       this.clearCanva();
-      //Vuelve a false para controlar en el siguiente grupo de puntos
-      this.passNextPoints = false;
       //Verifica si ya se marcaron todos los puntos
       if (this.count == this.totalCount) {
         //Muestra la imagen indicativa por defecto
@@ -158,14 +152,8 @@ export class AnalysisPhotographyComponent implements OnInit {
         this.indicativeImage.pointName = null;
         this.indicativeImage.pointDescription = null;
         //Muestra la imagen final con puntos y lineas
-        let card = document.getElementById('idFinalImage');
-        card.classList.remove("display-none");
-        document.getElementById('imgStartPhoto').classList.add("display-none");
-        this.canvaElStart = this.canvaStart.nativeElement;
-        this.cx2 = this.canvaElStart.getContext('2d');
-        var image = new Image();
-        image.src = this.imageReal;
-        this.cx2.drawImage(image, 0, 0, this.width, this.height);
+        document.getElementById('idFinalCard').classList.remove("display-none");
+        document.getElementById('idInitCard').classList.add("display-none");
         //Dibuja las lineas a partir de los puntos marcados por el usuario
         this.drawPointsWithLines();
       } else {
@@ -174,6 +162,30 @@ export class AnalysisPhotographyComponent implements OnInit {
     } else {
       console.log("Debe marcar todos los puntos solicitados");
     }
+  }
+  //Reestablece el canvas y los gifs
+  public resetCanvas(): void {
+    this.clearCanva();
+    this.points.splice(0, this.points.length);
+    this.count = 0;
+    this.nextGif();
+  }
+  //Reestablece todos los puntos y lineas
+  public resetAll(): void {
+    //Muestra el gifs y el canvas para marcado nuevamente de puntos
+    document.getElementById('idFinalCard').classList.add("display-none");
+    document.getElementById('idInitCard').classList.remove("display-none");
+    this.points.splice(0, this.points.length);
+    this.count = 0;
+    let width = 300;
+    let height = 300;
+    this.cx.canvas.width = width;
+    this.cx.canvas.height = height;
+    var image = new Image();
+    image.src = this.imageReal;
+    this.cx.drawImage(image, 0, 0, width, height);
+    this.nextGif();
+    this.resetCanvas();
   }
   //Limpia el canva completo
   public clearCanva() {
@@ -185,11 +197,9 @@ export class AnalysisPhotographyComponent implements OnInit {
     var image = new Image();
     image.src = this.imageReal;
     this.cx.drawImage(image, 0, 0, width, height);
-    // this.points.splice(0, this.points.length);
-    // this.count = 0;
   }
   //Traza las lineas con sus colores correspondientes a partir de los puntos marcados
-  public drawPointsWithLines() {
+  private drawPointsWithLines() {
     for (let i = 0; i < this.lines.length; i++) {
       //Obtiene el indice de los puntos a unir
       let x = this.lines[i].x;
@@ -198,8 +208,6 @@ export class AnalysisPhotographyComponent implements OnInit {
       this.cx.beginPath();
       //Dibuja y pinta el punto
       this.fillLines(this.points[x]);
-      console.log("pinta primer punto"+this.points[x]);
-
       //Verifica si en el plano correspondiente se debe estirar la linea
       if (stretch) {
         //Calcula la pendiente de la recta
@@ -224,13 +232,13 @@ export class AnalysisPhotographyComponent implements OnInit {
       this.fillLines(this.points[y]);
       this.cx.stroke();
       this.cx.closePath();
-      //Muestra los trazos en formato de imagen 
     }
     this.fillPoint();
-    this.saveCanvas();
-    this.clearCanva();  }
+    this.setImageFromCanvas();
+    this.clearCanva();
+  }
   //Dibuja y pinta los puntos
-  public fillPoint(){
+  private fillPoint() {
     for(let i=0; i<this.points.length; i++){
       this.cx.beginPath();
       this.cx.fillStyle = this.points[i].color;
@@ -240,27 +248,20 @@ export class AnalysisPhotographyComponent implements OnInit {
     }
   }
   //Dibuja y pinta los trazos
-  public fillLines(p) {
+  private fillLines(p) {
     this.cx.strokeStyle = p.color;
     this.cx.fillStyle = p.color;
     this.cx.closePath();
   }
   //Muestra los trazos del análisis en formato de imagen
-  public saveCanvas() {
+  private setImageFromCanvas() {
     let canvas: HTMLCanvasElement;
     canvas = this.canvas.nativeElement;
-    (<HTMLElement>document.getElementById('canvasimgAP')).style.border = "1px solid";
-    (<HTMLElement>document.getElementById('canvasimgAP')).style.width = "100%";
-    (<HTMLElement>document.getElementById('canvasimgAP')).style.height = "auto";
     var dataURL = canvas.toDataURL();
-    (<HTMLImageElement>document.getElementById('canvasimgAP')).src = dataURL;
-    (<HTMLElement>document.getElementById('canvasimgAP')).style.display = "inline";
+    this.imageFinalLines = dataURL;
   }
   //Envia el formulario a Nuevo Analisis luego a Resultados
   public sendDataAP(): void {
-    console.log("llama");
-    let result= (<HTMLImageElement>document.getElementById('canvasimgAP')).src;
-    this.apForm.get('imageAP').setValue(result);
-    this.dataEvent.emit(this.apForm.get('imageAP').value);
+    this.dataEvent.emit(this.imageFinalLines);
   }
 }

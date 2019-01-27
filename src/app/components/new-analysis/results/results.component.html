@@ -1,4 +1,4 @@
-<form [formGroup]="results">
+<form [formGroup]="analysisForm">
     <ng-template matStepLabel>Resultados</ng-template>
     <div class="title-block">
       <h4 class="title">
@@ -14,7 +14,7 @@
             <div class="col-md-10">
               <h6><b>Diagnóstico perteneciente al Dr./Dra.: Juan Perez</b></h6>
             </div>
-            <div class="col-md-2 justify-content-end">
+            <div class="col-md-2">
               <h6><b>{{date}}</b></h6>
             </div>
           </div>
@@ -22,19 +22,19 @@
           <div class="row">
             <div class="col-md-3 text-center">
               <h6>Análisis Fotográfico</h6>
-              <img id="resultAPhotograpphy" [src]="results.get('imagePhotography').value">
+              <img id="resultAPhotograpphy" [src]="photographyImage">
             </div>
             <div class="col-md-3 text-center">
               <h6>Análisis de la Telerradiografía</h6>
-              <img id="resultATeleradiography" [src]="results.get('imageTeleradiography').value">
+              <img id="resultATeleradiography" [src]="teleradiographyImage">
             </div>
             <div class="col-md-3 text-center">
               <h6>Análisis de la Ortopantomografía</h6>
-              <img id="resultAOrthopantomography" [src]="results.get('imageOrthopantomography').value">
+              <img id="resultAOrthopantomography" [src]="orthopantomographyImage">
             </div>
             <div class="col-md-3 text-center">
               <h6>Análisis de la Condilografía</h6>
-              <img id="resultACandilography" [src]="results.get('imageCondylegraphy').value">
+              <img id="resultACandilography" [src]="condylegraphyImage">
             </div>
           </div>
           <br>
@@ -46,11 +46,11 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <h5>Placa de reposición mandibular inferior de 9.2mm de altura interincisiva.</h5>
+              <h5>{{analysisForm.value.conclusion}}</h5>
             </div>
           </div>
           <div class="row justify-content-end" style="padding-right: 10px;">
-            <h5>Código de Prótesis: <b>AAA123</b></h5>
+            <h5>Código de Prótesis: <b>{{analysisForm.value.prothesisCode}}</b></h5>
           </div>
         </mat-card>
       </div>

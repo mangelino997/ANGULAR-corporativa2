@@ -10,15 +10,14 @@ import { Patient } from 'src/app/modules/patient';
   styleUrls: ['./patient-data.component.scss']
 })
 export class PatientDataComponent implements OnInit {
+  //Define el evento que emite datos al componente padre
   @Output() dataEvent = new EventEmitter<any>();
   //Define el formulario para la seccion Datos del Paciente
   public analysisForm:FormGroup;
-  //Define el formulario para la seccion Datos del Paciente
-  public patientForm:FormGroup;
   //Define la lista de tipos de rehabilitaciones
   public typesRehabilitations:Array<any> = [];
   //Constructor
-  constructor(private patientData: Patient ,private analysisModule: Analysis, private typeRehabilitationService: TypeRehabilitationService) { }
+  constructor(private analysisModule: Analysis, private typeRehabilitationService: TypeRehabilitationService) { }
   //Al inicializarse el componente
   ngOnInit() {
     //Establece el formulario analisis
@@ -28,7 +27,6 @@ export class PatientDataComponent implements OnInit {
     this.analysisForm.get('enrollmentUser').setValue('AS343SD');
     //Obtiene la lista de tipos de rehabilitacion
     this.listTypeRehabilitation();
-
   }
   //Obtiene la lista de tipos de rehabilitaciones
   private listTypeRehabilitation(): void {
@@ -36,8 +34,11 @@ export class PatientDataComponent implements OnInit {
       this.typesRehabilitations = res.json();
     });
   }
-  //Envia el formulario a Nuevo Analisis
+  //Envia el formulario a componente padre Nuevo Analisis
   public sendData(): void {
+    let user = {id:1};
+    this.analysisForm.get('user').setValue(user);
+    this.analysisForm.get('patient').get('user').setValue(user);
     this.dataEvent.emit(this.analysisForm);
   }
   //Funcion para comparar y mostrar elemento de campo select
