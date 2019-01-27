@@ -55,9 +55,16 @@ export class ResultsComponent implements OnInit {
     //Establece el codigo de la protesis
     this.analysisForm.get('prothesisCode').setValue('AAA123');
   }
+<<<<<<< HEAD
   //Recibe el formulario del analisis
   public setAnalysis(analysisForm) {
     this.analysisForm.setValue(analysisForm);
+=======
+  // Recibe los datos del paciente enviados por New Analisis (del primer formulario)
+  public receiveData(patientForm){
+    this.form.setValue(patientForm);
+    console.log(this.form);
+>>>>>>> f5f92798b5cddc3f5929d0708c661f1fd4df8254
   }
   //Inicializa los resultados de los Análisis
   public initResults(image, type) {
@@ -80,6 +87,7 @@ export class ResultsComponent implements OnInit {
     }
   }
   //Guarda los resultados de todo el análisis en la Base de Datos
+<<<<<<< HEAD
   public saveAnalysis() {
     this.analysisService.addAnalysis(this.patientImage, this.photographyImage, 
       this.teleradiographyImage, this.orthopantomographyImage, this.condylegraphyImage).subscribe(
@@ -94,6 +102,38 @@ export class ResultsComponent implements OnInit {
             res => {
               let response = res.json();
               this.toastr.success(response.mensaje);
+=======
+  public saveAnalysis(){
+    this.form.get('prothesisCode').setValue('AFDFBF33');
+      // Guarda y obtiene el id de la imagen resultante en Analisis Fotografico
+      this.photographyService.add(this.results.get('imagePhotography').value).subscribe(res=>{
+        console.log(res.json());
+
+          this.form.get('photographyImage').setValue({id: res.json().id -1});
+          // Guarda y obtiene el id de la imagen resultante en Analsiis Teleradiografia
+          this.teleradiographyService.add(this.results.get('imageTeleradiography').value).subscribe(res=>{
+            this.form.get('teleradiographyImage').setValue({id: res.json().id -1});
+            // Guarda y obtiene el id de la imagen resultante en Analsiis Ortopantomografia
+            this.orthopantomographyService.add(this.results.get('imageOrthopantomography').value).subscribe(res=>{
+              this.form.get('orthopantomographyImage').setValue({id: res.json().id -1});
+              // Guarda y obtiene el id de la imagen resultante en Analsiis Ortopantomografia
+              this.condylegraphyService.add(this.results.get('imageCondylegraphy').value).subscribe(res=>{
+                this.form.get('condylegraphyImage').setValue({id: res.json().id -1});
+                // Guarda todo el formulario completo
+                console.log(this.form.value);
+                this.analysisService.add(this.form.value).subscribe(res=>{
+                  console.log(res.json());
+                },
+                err => {
+                  var respuesta = err.json();
+                  //this.toastr.error(respuesta.mensaje);
+                });
+              },
+              err => {
+                var respuesta = err.json();
+                //this.toastr.error(respuesta.mensaje);
+              });
+>>>>>>> f5f92798b5cddc3f5929d0708c661f1fd4df8254
             },
             err => {
               var response = err.json();
