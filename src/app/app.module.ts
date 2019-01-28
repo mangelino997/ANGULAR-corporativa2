@@ -51,9 +51,10 @@ import { CondylegraphyImageService } from './services/condylegraphy-image.servic
 import { TeleradiographyImageService } from './services/teleradiography-image.service';
 import { DateService } from './services/date.service';
 import { AnalysisService } from './services/analysis.service';
+import { MyAnalysisComponent } from './components/my-analysis/my-analysis.component';
 
 const stompConfig: StompConfig = {
-  url: 'ws://localhost:8084/meserws/socket',
+  url: 'ws://192.168.0.32:8084/meserws/socket',
   headers: {},
   heartbeat_in: 0,
   heartbeat_out: 20000,
@@ -82,7 +83,8 @@ const stompConfig: StompConfig = {
     AnalysisCandilographyComponent,
     LoginComponent,
     ProfessionalDataComponent,
-    ResultsComponent
+    ResultsComponent,
+    MyAnalysisComponent
   ],
   imports: [
     BrowserModule,

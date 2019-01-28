@@ -54,7 +54,12 @@ export class CondylegraphyImageService {
     const formData = new FormData(); 
 		formData.append('archive', blob, 'analysisResult'); 
 		return this.http.post(this.url, formData);
-	}
+  }
+  //
+  //Obtiene la lista de registros
+  public getById(id) {
+    return this.http.get(this.url + '/getById/' + id);
+  }
   //Actualiza un registro
   public update(elemento) {
     return this.http.put(this.url, elemento, this.options);

@@ -10,7 +10,9 @@
       <br>
       <div *ngFor="let m of menu">
         <div class="row" *ngFor="let s of m.suboptions">
-          <button class="btn-full" mat-button (click)="navigate(m.name, s.name)"><mat-icon class="icon-right-5">{{s.icon}}</mat-icon>{{s.name}}</button>
+          <button class="btn-full" mat-button routerLink="{{s.route}}">
+            <mat-icon class="icon-right-5">{{s.icon}}</mat-icon>{{s.name}}
+          </button>
         </div>
       </div>
       <div class="row footer-sidenav">

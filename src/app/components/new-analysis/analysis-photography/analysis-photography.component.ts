@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ElementRef, ViewChild, HostListener, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 import { AfImageGifService } from 'src/app/services/af-image-gif.service';
 import { AppService } from 'src/app/services/app.service';
@@ -63,7 +63,7 @@ export class AnalysisPhotographyComponent implements OnInit {
     }
     //Establece el formulario Analisis de la Fotografia
     this.apForm = new FormGroup({
-      imageAP: new FormControl()
+      imageAP: new FormControl('', Validators.required)
     });
     //Establece el gif por defecto
     this.nextGif();
@@ -236,6 +236,7 @@ export class AnalysisPhotographyComponent implements OnInit {
     this.fillPoint();
     this.setImageFromCanvas();
     this.clearCanva();
+    this.apForm.get('imageAP').setValue(true);
   }
   //Dibuja y pinta los puntos
   private fillPoint() {

@@ -18,5 +18,7 @@ export class AppComponent {
   //Recibe los datos del componente sidenav
   public receiveDataFromSidenav($event) {
     this.showLogin = $event ? false : true;
+    console.log($event);
+
   }
 }

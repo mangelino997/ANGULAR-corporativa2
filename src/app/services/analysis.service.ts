@@ -56,6 +56,10 @@ export class AnalysisService {
       })
     })
   }
+  //Obtiene un listado por alias
+  public listByAlias(alias) {
+      return this.http.get(this.url + '/listByAlias/'+alias);
+  }
   //Obtiene los analisis de las ultimas semanas 
   public getTotalByLastWeeks(id, id2) {
     return this.http.get(this.url + '/getTotalByLastWeeks/' + id + '/' + id2, this.options);
