@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AnalysisPhotographyComponent } from './analysis-photography/analysis-photography.component';
 import { PatientPhotoComponent } from './patient-photo/patient-photo.component';
 import { AnalysisTeleradiographyComponent } from './analysis-teleradiography/analysis-teleradiography.component';
@@ -7,6 +7,13 @@ import { AnalysisOrthopantographyComponent } from './analysis-orthopantography/a
 import { AnalysisCandilographyComponent } from './analysis-candilography/analysis-candilography.component';
 import { ResultsComponent } from './results/results.component';
 import { PatientDataComponent } from './patient-data/patient-data.component';
+import { Analysis } from 'src/app/modules/analysis';
+import { PatientPhoto } from 'src/app/modules/patiente-photo';
+import { AnalysisPhotography } from 'src/app/modules/analysisPhotography';
+import { PatientRadiography } from 'src/app/modules/patient-radiography';
+import { AnalysisTeleradiography } from 'src/app/modules/analysis-teleradiography';
+import { AnalysisCondylegraphy } from 'src/app/modules/analysis-condylegraphy';
+import { AnalysisOrthopantomography } from 'src/app/modules/analysis-orthopantomography';
 
 @Component({
   selector: 'app-new-analysis',
@@ -47,23 +54,26 @@ export class NewAnalysisComponent implements OnInit {
   //Define el formulario para la seccion Resultados
   public resultsForm:FormGroup;
   //Constructor
-  constructor() { }
+  constructor(
+    private ac: AnalysisCondylegraphy, private at: AnalysisTeleradiography, private pr: PatientRadiography, 
+    private ao: AnalysisOrthopantomography, private ap: AnalysisPhotography, private patientPhoto: PatientPhoto, 
+    private analysisModule: Analysis, ) { }
   //Al inicializarse el componente
   ngOnInit() {
     //Inicializa el formulario de datos del paciente
-    this.analysisForm = new FormGroup({});
+    this.analysisForm = this.analysisModule.form;
     //Inicializa el formulario de foto del paciente
-    this.patientPhotoForm = new FormGroup({});
+    this.patientPhotoForm = this.patientPhoto.form;
     //Inicializa el formulario para analisis fotografico
-    this.apForm = new FormGroup({});
+    this.apForm = this.ap.form;
     //Inicializa el formulario para radiografías del paciente
-    this.radiographyForm = new FormGroup({});
+    this.radiographyForm = this.pr.form;
     //Inicializa el formulario para analisis de la teleradiografia
-    this.atForm = new FormGroup({});
+    this.atForm = this.at.form;
     //Inicializa el formulario para analisis de la ortopantomografia
-    this.aoForm = new FormGroup({});
+    this.aoForm = this.ao.form;
     //Inicializa el formulario para analisis de la condilografia
-    this.acForm = new FormGroup({});
+    this.acForm = this.ac.form;
     //Inicializa el formulario para datos del profesional
     this.professionalForm = new FormGroup({});
     //Inicializa el formulario para resultados
@@ -87,7 +97,9 @@ export class NewAnalysisComponent implements OnInit {
   }
   //Recibe el formulario del Analisis Fotográfico
   public receiveAP($event){
+    this.apForm = $event;
     this.resultsComponent.initResults($event, 'photography');
+
   }
   //Recibe el formulario de Radiografias
   public receiveRadiography($event): void {
@@ -104,18 +116,24 @@ export class NewAnalysisComponent implements OnInit {
   }
   //Recibe el formulario del Analisis Telerradiografia
   public receiveAT($event){
+    this.atForm= $event;
     this.resultsComponent.initResults($event, 'teleradiography');  
   }
   //Recibe el formulario del Analisis Ortopantomografia
   public receiveAO($event){
+    this.aoForm= $event;
     this.resultsComponent.initResults($event, 'orthopantomography');
   }
   //Recibe el formulario del Analisis Candilografia
   public receiveAC($event){
+    this.acForm= $event;
     this.resultsComponent.initResults($event, 'condylegraphy');
   }
   //Recibe el formulario de los datos del Profesional
   public receiveProfessionalData($event){
 
+  }
+  public onStepChange(event: any): void  {
+    console.log(event.selectedIndex);
   }
 }

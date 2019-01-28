@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { AppService } from 'src/app/services/app.service';
 import { AtImageGifService } from 'src/app/services/at-image-gif.service';
 import { fromEvent } from 'rxjs';
+import { AnalysisCondylegraphy } from 'src/app/modules/analysis-condylegraphy';
 
 @Component({
   selector: 'app-analysis-candilography',
@@ -52,7 +53,7 @@ export class AnalysisCandilographyComponent implements OnInit {
   //Define la imagen final con los trazos
   public imageFinalLines: any;
   //Constructor
-  constructor(private appService: AppService, private atImageGifService: AtImageGifService) {}
+  constructor(private ac: AnalysisCondylegraphy, private appService: AppService, private atImageGifService: AtImageGifService) {}
   //Al inicializarse el componente
   //Al inicializarse el componente
   ngOnInit() {
@@ -63,7 +64,7 @@ export class AnalysisCandilographyComponent implements OnInit {
       pointDescription: null
     }
     //Establece el formulario Analisis de la Condilografia
-    this.acForm = new FormGroup({});
+    this.acForm = this.ac.form;
     //Establece el gif por defecto
     this.nextGif();
     //Define los puntos y colores para el analisis fotografico
@@ -247,6 +248,7 @@ export class AnalysisCandilographyComponent implements OnInit {
     this.fillPoint();
     this.setImageFromCanvas();
     this.clearCanva();
+    this.acForm.get('imageAC').setValue(true); //seteo true como valor para habilitar el linestep
   }
   //Dibuja y pinta los puntos
   public fillPoint() {

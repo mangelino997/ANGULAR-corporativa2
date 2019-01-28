@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 import { AfImageGifService } from 'src/app/services/af-image-gif.service';
 import { AppService } from 'src/app/services/app.service';
+import { AnalysisPhotography } from 'src/app/modules/analysisPhotography';
 
 @Component({
   selector: 'app-analysis-photography',
@@ -52,7 +53,7 @@ export class AnalysisPhotographyComponent implements OnInit {
   //Define la imagen final con los trazos
   public imageFinalLines:any;
   //Constructor
-  constructor(private appService: AppService, private afImageGifService: AfImageGifService) { }
+  constructor(private ap: AnalysisPhotography ,private appService: AppService, private afImageGifService: AfImageGifService) { }
   //Al inicializarse el componente
   ngOnInit() {
     //Incializa la imagen gif indicativa
@@ -62,9 +63,7 @@ export class AnalysisPhotographyComponent implements OnInit {
       pointDescription: null
     }
     //Establece el formulario Analisis de la Fotografia
-    this.apForm = new FormGroup({
-      imageAP: new FormControl('', Validators.required)
-    });
+    this.apForm = this.ap.form;
     //Establece el gif por defecto
     this.nextGif();
     //Define los puntos y colores para el analisis fotografico
@@ -236,7 +235,7 @@ export class AnalysisPhotographyComponent implements OnInit {
     this.fillPoint();
     this.setImageFromCanvas();
     this.clearCanva();
-    this.apForm.get('imageAP').setValue(true);
+    this.apForm.get('imageAP').setValue(true); //seteo true como valor para habilitar el linestep
   }
   //Dibuja y pinta los puntos
   private fillPoint() {
@@ -263,6 +262,6 @@ export class AnalysisPhotographyComponent implements OnInit {
   }
   //Envia el formulario a Nuevo Analisis luego a Resultados
   public sendDataAP(): void {
-    this.dataEvent.emit(this.imageFinalLines);
+    this.dataEvent.emit(this.imageFinalLines)
   }
 }

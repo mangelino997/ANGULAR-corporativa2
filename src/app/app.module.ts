@@ -55,6 +55,14 @@ import { LoginComponent } from './components/login/login.component';
 import { ProfessionalDataComponent } from './components/new-analysis/professional-data/professional-data.component';
 import { ResultsComponent } from './components/new-analysis/results/results.component';
 import { MyAnalysisComponent } from './components/my-analysis/my-analysis.component';
+import { MatStepper } from '@angular/material';
+import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
+import { PatientPhoto } from './modules/patiente-photo';
+import { AnalysisPhotography } from './modules/analysisPhotography';
+import { PatientRadiography } from './modules/patient-radiography';
+import { AnalysisTeleradiography } from './modules/analysis-teleradiography';
+import { AnalysisOrthopantomography } from './modules/analysis-orthopantomography';
+import { AnalysisCondylegraphy } from './modules/analysis-condylegraphy';
 
 const stompConfig: StompConfig = {
   url: 'ws://localhost:8084/meserws/socket',
@@ -124,11 +132,18 @@ const stompConfig: StompConfig = {
   providers: [
     Analysis,
     Patient,
+    PatientPhoto,
+    AnalysisPhotography,
+    PatientRadiography,
+    PatientRadiography,
+    AnalysisTeleradiography,
     TypeRehabilitation,
     TypeRehabilitationService,
     AfImageGifService,
     AtImageGifService,
     AoImageGifService,
+    AnalysisOrthopantomography,
+    AnalysisCondylegraphy,
     IndicativeImageService,
     PhotographyImageService,
     TeleradiographyImageService,

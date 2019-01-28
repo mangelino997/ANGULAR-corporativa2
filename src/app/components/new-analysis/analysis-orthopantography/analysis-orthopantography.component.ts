@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { AppService } from 'src/app/services/app.service';
 import { AoImageGifService } from 'src/app/services/ao-image-gif.service';
 import { fromEvent } from 'rxjs';
+import { AnalysisOrthopantomography } from 'src/app/modules/analysis-orthopantomography';
 
 @Component({
   selector: 'app-analysis-orthopantography',
@@ -52,7 +53,7 @@ export class AnalysisOrthopantographyComponent implements OnInit {
   //Define la imagen final con los trazos
   public imageFinalLines: any;
   //Constructor
-  constructor(private appService: AppService, private aoImageGifService: AoImageGifService) { }
+  constructor(private ao: AnalysisOrthopantomography, private appService: AppService, private aoImageGifService: AoImageGifService) { }
   //Al inicializarse el componente
   ngOnInit() {
     //Incializa la imagen gif indicativa
@@ -62,7 +63,7 @@ export class AnalysisOrthopantographyComponent implements OnInit {
       pointDescription: null
     }
     //Establece el formulario Analisis de la Ortopantomografia
-    this.aoForm = new FormGroup({});
+    this.aoForm = this.ao.form;
     //Establece el gif por defecto
     this.nextGif();
     //Define los puntos y colores para el analisis fotografico
@@ -238,6 +239,8 @@ export class AnalysisOrthopantographyComponent implements OnInit {
     this.fillPoint();
     this.setImageFromCanvas();
     this.clearCanva();
+    this.aoForm.get('imageAO').setValue(true); //seteo true como valor para habilitar el linestep
+
   }
   //Dibuja y pinta los puntos
   public fillPoint() {

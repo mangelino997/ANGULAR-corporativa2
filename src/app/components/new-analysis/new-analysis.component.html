@@ -1,5 +1,5 @@
 <!-- NUEVO ANALISIS -->
-<mat-horizontal-stepper labelPosition="bottom" #stepper>
+<mat-horizontal-stepper labelPosition="bottom" #stepper linear  (click)="onStepChange($event)">
     <!-- DATOS DEL PACIENTE -->
     <mat-step [stepControl]="analysisForm">
         <ng-template matStepLabel>Datos del Paciente</ng-template>

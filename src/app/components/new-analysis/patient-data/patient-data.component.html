@@ -24,7 +24,7 @@
       <div class="col-md-4">
         <div class="form-group">
           <label for="idDNI">Número de Documento de Identidad</label>
-          <input type="text" class="form-control form-control-sm" id="idDNI" placeholder="Número de Documento de Identidad"
+          <input type="number" class="form-control form-control-sm" id="idDNI" placeholder="Número de Documento de Identidad"
             formControlName="documentNumber" autocomplete="off">
         </div>
       </div>
@@ -117,5 +117,5 @@
     </div>
   </div>
   <button mat-raised-button>Historia Clínica</button>
-  <button class="btn-left-5" mat-raised-button color="primary" matStepperNext (click)="sendData()">Siguiente</button>
+  <button class="btn-left-5" mat-raised-button color="primary" matStepperNext [disabled]="!analysisForm.valid" (click)="sendData()">Siguiente</button>
 </form>

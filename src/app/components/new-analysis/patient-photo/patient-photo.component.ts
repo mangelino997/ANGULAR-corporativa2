@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AppService } from 'src/app/services/app.service';
+import { PatientPhoto } from 'src/app/modules/patiente-photo';
 
 @Component({
   selector: 'app-patient-photo',
@@ -19,7 +20,7 @@ export class PatientPhotoComponent implements OnInit {
   //Define la imagen para hombre
   public maleImage:string;
   //Constructor
-  constructor(private appService: AppService) { }
+  constructor(private patientPhoto: PatientPhoto, private appService: AppService) { }
   //Al inicializarse el componente
   ngOnInit() {
     //Establece la imagen de mujer
@@ -29,12 +30,8 @@ export class PatientPhotoComponent implements OnInit {
     //Establece la imagen por defecto en imagen real del paciente
     this.sexSelectedImage = this.femaleImage;
     //Crea el formulario
-    this.patientPhotoForm = new FormGroup({
-      female: new FormControl(),
-      male: new FormControl(),
-      image: new FormControl(),
-      indicativeImage: new FormControl()
-    });
+    //this.patientPhotoForm = new FormGroup({});
+    this.patientPhotoForm = this.patientPhoto.form;
   }
   //Envia el formulario a Nuevo Analisis
   public sendData(): void {
