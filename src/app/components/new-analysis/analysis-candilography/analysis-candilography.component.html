@@ -64,6 +64,6 @@
   <br>
   <div>
     <button mat-raised-button matStepperPrevious>Atrás</button>
-    <button class="btn-left-5" mat-raised-button color="primary" matStepperNext (click)="sendDataAC()">Siguiente</button>
+    <button class="btn-left-5" mat-raised-button color="primary" matStepperNext [disabled]="!acForm.valid" (click)="sendDataAC()">Siguiente</button>
   </div>
 </form>

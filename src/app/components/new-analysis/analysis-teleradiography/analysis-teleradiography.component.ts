@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { AppService } from 'src/app/services/app.service';
 import { AtImageGifService } from 'src/app/services/at-image-gif.service';
 import { fromEvent } from 'rxjs';
+import { AnalysisTeleradiography } from 'src/app/modules/analysis-teleradiography';
 
 @Component({
   selector: 'app-analysis-teleradiography',
@@ -52,7 +53,7 @@ export class AnalysisTeleradiographyComponent implements OnInit {
   //Define la imagen final con los trazos
   public imageFinalLines: any;
   //Constructor
-  constructor(private appService: AppService, private atImageGifService: AtImageGifService) { }
+  constructor(private at: AnalysisTeleradiography, private appService: AppService, private atImageGifService: AtImageGifService) { }
   //Al inicializarse el componente
   ngOnInit() {
     //Incializa la imagen gif indicativa
@@ -62,7 +63,7 @@ export class AnalysisTeleradiographyComponent implements OnInit {
       pointDescription: null
     }
     //Establece el formulario Analisis de la Telerradiografia
-    this.atForm = new FormGroup({});
+    this.atForm = this.at.form;
     //Establece el gif por defecto
     this.nextGif();
     //Define los puntos y colores para el analisis fotografico
@@ -242,6 +243,7 @@ export class AnalysisTeleradiographyComponent implements OnInit {
     this.fillPoint();
     this.setImageFromCanvas();
     this.clearCanva();
+    this.atForm.get('imageAT').setValue(true); //seteo true como valor para habilitar el linestep
   }
   //Dibuja y pinta los puntos
   public fillPoint() {

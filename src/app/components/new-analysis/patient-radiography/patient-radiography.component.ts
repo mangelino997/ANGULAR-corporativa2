@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AppService } from 'src/app/services/app.service';
+import { PatientRadiography } from 'src/app/modules/patient-radiography';
 
 @Component({
   selector: 'app-patient-radiography',
@@ -19,7 +20,7 @@ export class PatientRadiographyComponent implements OnInit {
   //Define la imagen de condilography
   public condilographyImage:string;
   //Constructor
-  constructor(private appService: AppService) {}
+  constructor(private pr: PatientRadiography, private appService: AppService) {}
   //Al inicializarse el componente
   ngOnInit() {
     //Establece la teleradiografia
@@ -29,11 +30,7 @@ export class PatientRadiographyComponent implements OnInit {
     //Establece la condilografia
     this.condilographyImage = this.appService.getUrlBase() + '/indicativeImage/getById/5';
     //Crea el formulario
-    this.radiographyForm = new FormGroup({
-      imageOrthopantomography: new FormControl(),
-      imageTeleradiography: new FormControl(),
-      imageCondilography: new FormControl(),
-    });
+    this.radiographyForm = this.pr.form;
   }
   //Envia el formulario a Nuevo Analisis
   public sendDataPR(): void {
@@ -58,6 +55,7 @@ export class PatientRadiographyComponent implements OnInit {
           reader.readAsDataURL(file);
           break;
       }
+      
     }
   }
 }
