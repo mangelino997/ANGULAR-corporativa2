@@ -49,6 +49,6 @@ export class SidenavComponent implements OnInit {
     pag = pag.replace(new RegExp(/[.]/g), "");
     pag = pag.replace(new RegExp(/[/]/g), "");
     console.log(pag);
-    // this.router.navigate([pag]);
+    this.router.navigate([pag]);
   }
 }
