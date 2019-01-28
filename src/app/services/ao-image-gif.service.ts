@@ -58,9 +58,9 @@ export class AoImageGifService {
   }
   //Agrega un registro
   public add(image){
-		const formData = new FormData(); 
-		formData.append('archive', image, image.name); 
-		return this.http.post(this.url, formData);
+		let formData = new FormData(); 
+		formData.append('file', image); 
+		return this.http.post(this.url, formData, this.options);
 	}
   //Actualiza un registro
   public update(elemento) {

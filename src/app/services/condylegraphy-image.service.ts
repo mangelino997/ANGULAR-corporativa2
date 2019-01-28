@@ -49,16 +49,16 @@ export class CondylegraphyImageService {
     return this.http.get(this.url, this.options);
   }
   //Agrega un registro
-  public add(imagenParaSubir: File){    
-    var blob = new Blob([imagenParaSubir], {type : 'image/svg+xml'});
-    const formData = new FormData(); 
-		formData.append('archive', blob, 'analysisResult'); 
-		return this.http.post(this.url, formData);
+  public add(image: File){    
+    let blob = new Blob([image], {type : 'image/svg+xml'});
+    let formData = new FormData(); 
+		formData.append('file', blob, 'analysisResult'); 
+		return this.http.post(this.url, formData, this.options);
   }
   //
   //Obtiene la lista de registros
   public getById(id) {
-    return this.http.get(this.url + '/getById/' + id);
+    return this.http.get(this.url + '/getById/' + id, this.options);
   }
   //Actualiza un registro
   public update(elemento) {

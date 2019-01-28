@@ -1,147 +1,143 @@
 <form [formGroup]="form">
-
-<mat-horizontal-stepper labelPosition="bottom" #stepper>
-
-  <mat-step [stepControl]="form">
-    <ng-template matStepLabel>Datos del Paciente</ng-template>
-        <div class="form-group has-float-label">
-          <label for="idAutocompletado" class="tamanio-label">Buscar</label>
-          <input id="idAutocompletado" class="form-control form-control-sm color-busqueda"
-            type="text" matInput [formControl]="autocompletado" [matAutocomplete]="auto" autocomplete="off">
-          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
-              <mat-option *ngFor="let item of resultados" [value]="item"
-              (onSelectionChange)="cambioAutocompletado(item)">
-              {{item.alias}}
-            </mat-option>
-          </mat-autocomplete>
-        </div>
-        <div class="title-block">
-          <h4 class="title">
-            Datos del Paciente
-          </h4>
-        </div>
-        <hr style="margin-top: 0px;">
-        <div formGroupName="patient">
-          <div class="row">
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="idNombre">Nombres</label>
-                <input type="text" class="form-control form-control-sm" id="idNombre" placeholder="Nombres" formControlName="firstname"
-                  autocomplete="off" readonly>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="idApellido">Apellidos</label>
-                <input type="text" class="form-control form-control-sm" id="idApellido" placeholder="Apellidos"
-                  formControlName="lastname" autocomplete="off" readonly>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="idDNI">Número de Documento de Identidad</label>
-                <input type="text" class="form-control form-control-sm" id="idDNI" placeholder="Número de Documento de Identidad"
-                  formControlName="documentNumber" autocomplete="off" readonly>
-              </div>
-            </div>
-            <div class="col-md-1">
-              <div class="form-group">
-                <label for="idEdad">Edad</label>
-                <input type="number" class="form-control form-control-sm" id="idEdad" placeholder="Edad" formControlName="age"
-                  autocomplete="off" readonly>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="idFechaNacimiento">Fecha de Nacimiento</label>
-                <input type="date" class="form-control form-control-sm" id="idFechaNacimiento" placeholder="Fecha de Nacimiento"
-                  formControlName="birthdate" autocomplete="off" readonly>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="idLugarNacimiento">Lugar de Nacimiento</label>
-                <input type="text" class="form-control form-control-sm" id="idLugarNacimiento" placeholder="Lugar de Nacimiento"
-                  formControlName="placebirth" autocomplete="off" readonly>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="idDireccionActual">Dirección Actual</label>
-                <input type="text" class="form-control form-control-sm" id="idDireccionActual" placeholder="Dirección Actual"
-                  formControlName="address" autocomplete="off" readonly>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="idCorreoElectronico">Correo Electrónico</label>
-                <input type="email" class="form-control form-control-sm" id="idCorreoElectronico" placeholder="Correo Electrónico"
-                  formControlName="email" autocomplete="off" readonly>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-3">
-            <div class="form-group">
-              <label for="idProfesionalTratante">Profesional Tratante: Dr./Dra.</label>
-              <input type="text" class="form-control form-control-sm" id="idProfesionalTratante" placeholder="Dr./Dra."
-                formControlName="nameUser" readonly autocomplete="off" readonly>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="form-group">
-              <label for="idMatriculaProfesional">Matrícula Profesional</label>
-              <input type="text" class="form-control form-control-sm" id="idMatriculaProfesional" placeholder="Matrícula Profesional"
-                formControlName="enrollmentUser" readonly autocomplete="off" readonly>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="idDiagnostico">Diagnóstico Clínico</label>
-              <textarea type="text" class="form-control form-control-sm" id="idDiagnostico" placeholder="Diagnóstico Clínico"
-                rows="2" formControlName="diagnostic" autocomplete="off" readonly></textarea>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-5">
-            <div class="form-group">
-              <label for="idTipoRehabilitacion">Tipo de Rehabilitación</label>
-              <mat-select id="idTipoRehabilitacion" class="form-control form-control-sm" formControlName="typeRehabilitation"
-                placeholder="Tipo de Rehabilitación" [compareWith]="compareFn">
-                <mat-option *ngFor="let itemTypeRehabilitation of typesRehabilitations" [value]="itemTypeRehabilitation" [disabled]="true">
-                  {{itemTypeRehabilitation.name}}
-                </mat-option>
-              </mat-select>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="form-group">
-              <label for="idTipo">Tipo</label>
-              <mat-select id="idTipo" class="form-control form-control-sm" formControlName="type" placeholder="Superior/Inferior" [disabled]="true">
-                <mat-option [value]="false">Inferior</mat-option>
-                <mat-option [value]="true">Superior</mat-option>
-              </mat-select>
-            </div>
-          </div>
-        </div>
-        <button mat-raised-button>Historia Clínica</button>
-        <button class="btn-left-5" mat-raised-button color="primary" matStepperNext >Siguiente</button>
-  </mat-step>
-  <mat-step [stepControl]="result">
-    <ng-template matStepLabel>Resultados</ng-template>
-    <div class="title-block">
+  <mat-horizontal-stepper labelPosition="bottom" #stepper>
+    <mat-step [stepControl]="form">
+      <ng-template matStepLabel>Datos del Paciente</ng-template>
+      <div class="form-group has-float-label">
+        <label for="idAutocomplete" class="tamanio-label">Buscar Paciente</label>
+        <input id="idAutocomplete" class="form-control form-control-sm" type="text" matInput
+          [formControl]="autocomplete" [matAutocomplete]="auto" autocomplete="off" placeholder="Buscar por nombre, documento o código de prótesis">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
+          <mat-option *ngFor="let item of results" [value]="item" (onSelectionChange)="changeAutocomplete(item)">
+            {{item.alias}}
+          </mat-option>
+        </mat-autocomplete>
+      </div>
+      <div class="title-block">
         <h4 class="title">
-            Resultados del Análisis
+          Datos del Paciente
         </h4>
-        <button class="btn-left-5" mat-raised-button color="primary" (click)="mostrar()" >Siguiente</button>
+      </div>
+      <hr style="margin-top: 0px;">
+      <div formGroupName="patient">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="idNombre">Nombres</label>
+              <input type="text" class="form-control form-control-sm" id="idNombre" placeholder="Nombres"
+                formControlName="firstname" autocomplete="off" readonly>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="idApellido">Apellidos</label>
+              <input type="text" class="form-control form-control-sm" id="idApellido" placeholder="Apellidos"
+                formControlName="lastname" autocomplete="off" readonly>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="idDNI">Número de Documento de Identidad</label>
+              <input type="text" class="form-control form-control-sm" id="idDNI" placeholder="Número de Documento de Identidad"
+                formControlName="documentNumber" autocomplete="off" readonly>
+            </div>
+          </div>
+          <div class="col-md-1">
+            <div class="form-group">
+              <label for="idEdad">Edad</label>
+              <input type="number" class="form-control form-control-sm" id="idEdad" placeholder="Edad" formControlName="age"
+                autocomplete="off" readonly>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="idFechaNacimiento">Fecha de Nacimiento</label>
+              <input type="date" class="form-control form-control-sm" id="idFechaNacimiento" placeholder="Fecha de Nacimiento"
+                formControlName="birthdate" autocomplete="off" readonly>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="idLugarNacimiento">Lugar de Nacimiento</label>
+              <input type="text" class="form-control form-control-sm" id="idLugarNacimiento" placeholder="Lugar de Nacimiento"
+                formControlName="placebirth" autocomplete="off" readonly>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="idDireccionActual">Dirección Actual</label>
+              <input type="text" class="form-control form-control-sm" id="idDireccionActual" placeholder="Dirección Actual"
+                formControlName="address" autocomplete="off" readonly>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="idCorreoElectronico">Correo Electrónico</label>
+              <input type="email" class="form-control form-control-sm" id="idCorreoElectronico" placeholder="Correo Electrónico"
+                formControlName="email" autocomplete="off" readonly>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="idProfesionalTratante">Profesional Tratante: Dr./Dra.</label>
+            <input type="text" class="form-control form-control-sm" id="idProfesionalTratante" placeholder="Dr./Dra."
+              formControlName="nameUser" readonly autocomplete="off" readonly>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="idMatriculaProfesional">Matrícula Profesional</label>
+            <input type="text" class="form-control form-control-sm" id="idMatriculaProfesional" placeholder="Matrícula Profesional"
+              formControlName="enrollmentUser" readonly autocomplete="off" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="idDiagnostico">Diagnóstico Clínico</label>
+            <textarea type="text" class="form-control form-control-sm" id="idDiagnostico" placeholder="Diagnóstico Clínico"
+              rows="2" formControlName="diagnostic" autocomplete="off" readonly></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-5">
+          <div class="form-group">
+            <label for="idTipoRehabilitacion">Tipo de Rehabilitación</label>
+            <mat-select id="idTipoRehabilitacion" class="form-control form-control-sm" formControlName="typeRehabilitation"
+              placeholder="Tipo de Rehabilitación" [compareWith]="compareFn">
+              <mat-option *ngFor="let itemTypeRehabilitation of typesRehabilitations" [value]="itemTypeRehabilitation">
+                {{itemTypeRehabilitation.name}}
+              </mat-option>
+            </mat-select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="idTipo">Tipo</label>
+            <mat-select id="idTipo" class="form-control form-control-sm" formControlName="type" placeholder="Superior/Inferior" [compareWith]="compareFn">
+              <mat-option [value]="false">Inferior</mat-option>
+              <mat-option [value]="true">Superior</mat-option>
+            </mat-select>
+          </div>
+        </div>
+      </div>
+      <button mat-raised-button>Historia Clínica</button>
+      <button class="btn-left-5" mat-raised-button color="primary" matStepperNext>Siguiente</button>
+    </mat-step>
+    <mat-step [stepControl]="result">
+      <ng-template matStepLabel>Resultados</ng-template>
+      <div class="title-block">
+        <h4 class="title">
+          Resultados del Análisis
+        </h4>
       </div>
       <div class="row justify-content-center">
         <div class="col-md-12">
@@ -158,19 +154,19 @@
             <div class="row">
               <div class="col-md-3 text-center">
                 <h6>Análisis Fotográfico</h6>
-                <!-- <img id="resultAPhotograpphy" [src]="form.get('photographyImage').value.data"> -->
+                <img [src]="photographyImage">
               </div>
               <div class="col-md-3 text-center">
                 <h6>Análisis de la Telerradiografía</h6>
-                <!-- <img id="resultATeleradiography" [src]="form.get('teleradiographyImage').value.data"> -->
+                <img [src]="teleradiographyImage">
               </div>
               <div class="col-md-3 text-center">
                 <h6>Análisis de la Ortopantomografía</h6>
-                <!-- <img id="resultAOrthopantomography" [src]="form.get('orthopantomographyImage').value.data"> -->
+                <img [src]="orthopantomographyImage">
               </div>
               <div class="col-md-3 text-center">
                 <h6>Análisis de la Condilografía</h6>
-                <img id="resultACandilography" [src]="form.get('condylegraphyImage').value">
+                <img [src]="condylegraphyImage">
               </div>
             </div>
             <br>
@@ -194,7 +190,6 @@
       <div>
         <button mat-raised-button matStepperPrevious>Atrás</button>
       </div>
-  </mat-step>
-
-</mat-horizontal-stepper>
+    </mat-step>
+  </mat-horizontal-stepper>
 </form>

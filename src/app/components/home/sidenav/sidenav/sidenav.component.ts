@@ -21,7 +21,6 @@ export class SidenavComponent implements OnInit {
     //Obtiene el menu
     this.moduleService.getMenu(1).subscribe(res => {
       this.menu = res.json();
-      console.log(this.menu);
     });
   }
   //Recibe los datos del componente Toolbar

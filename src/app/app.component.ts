@@ -9,8 +9,22 @@ import 'rxjs/Rx';
 export class AppComponent {
   //Define si se muestra el login o home
   public showLogin:boolean = true;
+  //Define el usuario
+  public user:any = null;
   //Constructor
   constructor() {}
+  //Obtiene el usuario
+  public getUser() {
+    return this.user;
+  }
+  //Establece el usuario
+  public setUser(user): void {
+    this.user = user;
+  }
+  //Obtiene si el usuario esta logueado
+  public getLogged() {
+    return this.showLogin;
+  }
   //Recibe los datos del componente login
   public receiveDataFromLogin($event) {
     this.showLogin = $event ? false : true;
@@ -18,7 +32,5 @@ export class AppComponent {
   //Recibe los datos del componente sidenav
   public receiveDataFromSidenav($event) {
     this.showLogin = $event ? false : true;
-    console.log($event);
-
   }
 }

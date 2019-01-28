@@ -61,12 +61,12 @@ export class IndicativeImageService {
     })
   }
   //Agrega un registro
-  public add(elemento) {
-    return this.http.post(this.url, elemento, this.options);
+  public add(element) {
+    return this.http.post(this.url, element, this.options);
   }
   //Actualiza un registro
-  public update(elemento) {
-    return this.http.put(this.url, elemento, this.options);
+  public update(element) {
+    return this.http.put(this.url, element, this.options);
   }
   //Elimina un registro
   public delete(id) {

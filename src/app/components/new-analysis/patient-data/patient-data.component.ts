@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Analysis } from 'src/app/modules/analysis';
 import { TypeRehabilitationService } from 'src/app/services/type-rehabilitation.service';
-import { Patient } from 'src/app/modules/patient';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-patient-data',
@@ -17,16 +17,27 @@ export class PatientDataComponent implements OnInit {
   //Define la lista de tipos de rehabilitaciones
   public typesRehabilitations:Array<any> = [];
   //Constructor
-  constructor(private analysisModule: Analysis, private typeRehabilitationService: TypeRehabilitationService) { }
+  constructor(private analysisModule: Analysis, private typeRehabilitationService: TypeRehabilitationService,
+    private appComponent: AppComponent) { }
   //Al inicializarse el componente
   ngOnInit() {
     //Establece el formulario analisis
     this.analysisForm = this.analysisModule.form;
+    this.analysisForm.reset();
+    //Defiene y establece el usuario logueado
+    let user = this.appComponent.getUser();
     //Establece el nombre y matricula del usuario
-    this.analysisForm.get('nameUser').setValue('Bravo Blas');
-    this.analysisForm.get('enrollmentUser').setValue('AS343SD');
+    this.analysisForm.get('nameUser').setValue(user.name);
+    this.analysisForm.get('enrollmentUser').setValue(user.enrollment);
     //Obtiene la lista de tipos de rehabilitacion
     this.listTypeRehabilitation();
+    //Habilita los campos select
+    this.analysisForm.get('typeRehabilitation').enable();
+    this.analysisForm.get('type').enable();
+    //Establece el foco en nombre
+    setTimeout(function() {
+      document.getElementById('idFirstname').focus();
+    }, 20);
   }
   //Obtiene la lista de tipos de rehabilitaciones
   private listTypeRehabilitation(): void {

@@ -66,9 +66,9 @@ export class AfImageGifService {
   }
   //Agrega un registro
   public add(image){
-		const formData = new FormData(); 
+		let formData = new FormData(); 
 		formData.append('file', image); 
-		return this.http.post(this.url, formData);
+		return this.http.post(this.url, formData, this.options);
 	}
   //Actualiza un registro
   public update(elemento) {

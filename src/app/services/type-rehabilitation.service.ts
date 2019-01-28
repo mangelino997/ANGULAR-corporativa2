@@ -16,7 +16,7 @@ export class TypeRehabilitationService {
   //Define el headers y token de autenticacion
   private options = null;
   //Define la subcripcion
-  private subcripcion: Subscription;
+  private subscription: Subscription;
   //Define el mensaje de respuesta a la subcripcion
   private message: Observable<Message>;
   //Define la lista completa
@@ -34,10 +34,10 @@ export class TypeRehabilitationService {
     this.options = new RequestOptions({headers: headers});
     //Subcribe al usuario a la lista completa
     this.message = this.stompService.subscribe(this.topic + this.route + '/list');
-    this.subcripcion = this.message.subscribe(this.subscribirse);
+    this.subscription = this.message.subscribe(this.subs);
   }
   //Resfresca la lista completa si hay cambios
-  public subscribirse = (m: Message) => {
+  public subs = (m: Message) => {
     this.completeList.next(JSON.parse(m.body));
   }
   //Obtiene el siguiente id
@@ -57,12 +57,12 @@ export class TypeRehabilitationService {
     })
   }
   //Agrega un registro
-  public add(elemento) {
-    return this.http.post(this.url, elemento, this.options);
+  public add(element) {
+    return this.http.post(this.url, element, this.options);
   }
   //Actualiza un registro
-  public update(elemento) {
-    return this.http.put(this.url, elemento, this.options);
+  public update(element) {
+    return this.http.put(this.url, element, this.options);
   }
   //Elimina un registro
   public delete(id) {

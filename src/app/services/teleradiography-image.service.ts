@@ -16,7 +16,7 @@ export class TeleradiographyImageService {
   //Define el headers y token de autenticacion
   private options = null;
   //Define la subcripcion
-  private subcripcion: Subscription;
+  private subscription: Subscription;
   //Define el mensaje de respuesta a la subcripcion
   private message: Observable<Message>;
   //Define la lista completa
@@ -34,10 +34,10 @@ export class TeleradiographyImageService {
     this.options = new RequestOptions({headers: headers});
     //Subcribe al usuario a la lista completa
     this.message = this.stompService.subscribe(this.topic + this.route + '/list');
-    this.subcripcion = this.message.subscribe(this.subscribirse);
+    this.subscription = this.message.subscribe(this.subs);
   }
   //Resfresca la lista completa si hay cambios
-  public subscribirse = (m: Message) => {
+  public subs = (m: Message) => {
     this.completeList.next(JSON.parse(m.body));
   }
   //Obtiene el siguiente id
@@ -49,11 +49,11 @@ export class TeleradiographyImageService {
     return this.http.get(this.url, this.options);
   }
   //Agrega un registro
-  public add(imagenParaSubir: File){
-		var blob = new Blob([imagenParaSubir], {type : 'image/svg+xml'});
+  public add(image: File){
+		var blob = new Blob([image], {type : 'image/jpeg'});
     const formData = new FormData(); 
-		formData.append('archive', blob, 'analysisResult'); 
-		return this.http.post(this.url, formData);
+		formData.append('file', blob, 'analysisResult'); 
+		return this.http.post(this.url, formData, this.options);
 	}
   //Actualiza un registro
   public update(elemento) {

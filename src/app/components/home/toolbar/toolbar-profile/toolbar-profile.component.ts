@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-toolbar-profile',
@@ -8,10 +9,14 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class ToolbarProfileComponent implements OnInit {
   //Evento que envia los datos del formulario al componente padre
   @Output() dataEvent = new EventEmitter<any>();
+  //Define el usuario
+  public user:any = null;
   //Constructor
-  constructor() { }
+  constructor(private appComponent: AppComponent) { }
   //Al inicializarse el componente
   ngOnInit() {
+    //Establece el usuario
+    this.user = this.appComponent.getUser();
   }
   //Envia los datos al componente padre
   public sendData(state): void {

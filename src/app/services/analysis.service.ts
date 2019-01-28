@@ -8,11 +8,11 @@ import { StompService } from '@stomp/ng2-stompjs';
 @Injectable()
 export class AnalysisService {
   //Define la ruta al servicio web
-  private route:string = "/analysis";
+  private route: string = "/analysis";
   //Define la url base
-  private url:string = null;
+  private url: string = null;
   //Define la url para subcripcion a socket
-  private topic:string = null;
+  private topic: string = null;
   //Define el headers y token de autenticacion
   private options = null;
   //Define la subcripcion
@@ -20,7 +20,7 @@ export class AnalysisService {
   //Define el mensaje de respuesta a la subcripcion
   private message: Observable<Message>;
   //Define la lista completa
-  public completeList:Subject<any> = new Subject<any>();
+  public completeList: Subject<any> = new Subject<any>();
   //Constructor
   constructor(private http: Http, private appService: AppService, private stompService: StompService) {
     //Establece la url base
@@ -31,7 +31,7 @@ export class AnalysisService {
     const headers: Headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', localStorage.getItem('token'));
-    this.options = new RequestOptions({headers: headers});
+    this.options = new RequestOptions({ headers: headers });
     //Subcribe al usuario a la lista completa
     this.message = this.stompService.subscribe(this.topic + this.route + '/list');
     this.subcripcion = this.message.subscribe(this.subscribirse);
@@ -58,7 +58,8 @@ export class AnalysisService {
   }
   //Obtiene un listado por alias
   public listByAlias(alias) {
-      return this.http.get(this.url + '/listByAlias/'+alias);
+
+    return this.http.get(this.url + '/listByAlias/' + alias, this.options);
   }
   //Obtiene los analisis de las ultimas semanas 
   public getTotalByLastWeeks(id, id2) {
@@ -82,26 +83,26 @@ export class AnalysisService {
   }
   //Obtiene Paciente y Protesis por codigo
   public listPatientsAndProthesisCodes(code) {
-    return this.http.get(this.url + '/listPatientsAndProthesisCodes/' + code , this.options);
+    return this.http.get(this.url + '/listPatientsAndProthesisCodes/' + code, this.options);
   }
   //Obtiene usuarios 
   public listUsersDescAnalysis(code) {
-    return this.http.get(this.url + '/listUsersDescAnalysis/' + code , this.options);
+    return this.http.get(this.url + '/listUsersDescAnalysis/' + code, this.options);
   }
   //Agrega las imagenes del analisis
   public addAnalysis(pImage, apImage, atImage, aoImage, acImage) {
-    const formData = new FormData(); 
-    let pi = new Blob([pImage], {type : 'image/jpg'});
-    let ap = new Blob([apImage], {type : 'image/jpg'});
-    let at = new Blob([atImage], {type : 'image/jpg'});
-    let ao = new Blob([aoImage], {type : 'image/jpg'});
-    let ac = new Blob([acImage], {type : 'image/jpg'});
+    const formData = new FormData();
+    let pi = new Blob([pImage], { type: 'image/jpg' });
+    let ap = new Blob([apImage], { type: 'image/jpg' });
+    let at = new Blob([atImage], { type: 'image/jpg' });
+    let ao = new Blob([aoImage], { type: 'image/jpg' });
+    let ac = new Blob([acImage], { type: 'image/jpg' });
     formData.append('patientImage', pi);
     formData.append('photographyImage', ap);
     formData.append('teleradiographyImage', at);
     formData.append('orthopantomographyImage', ao);
     formData.append('condylegraphyImage', ac);
-		return this.http.post(this.url + '/addImages', formData);
+    return this.http.post(this.url + '/addImages', formData, this.options);
   }
   //Agrega un registro
   public add(element) {

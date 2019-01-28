@@ -9,15 +9,15 @@
     <div class="row">
       <div class="col-md-3">
         <div class="form-group">
-          <label for="idNombre">Nombres</label>
-          <input type="text" class="form-control form-control-sm" id="idNombre" placeholder="Nombres" formControlName="firstname"
+          <label for="idFirstname">Nombres</label>
+          <input type="text" class="form-control form-control-sm" id="idFirstname" placeholder="Nombres" formControlName="firstname"
             autocomplete="off" required>
         </div>
       </div>
       <div class="col-md-3">
         <div class="form-group">
-          <label for="idApellido">Apellidos</label>
-          <input type="text" class="form-control form-control-sm" id="idApellido" placeholder="Apellidos"
+          <label for="idLastname">Apellidos</label>
+          <input type="text" class="form-control form-control-sm" id="idLastname" placeholder="Apellidos"
             formControlName="lastname" autocomplete="off">
         </div>
       </div>
@@ -30,8 +30,8 @@
       </div>
       <div class="col-md-1">
         <div class="form-group">
-          <label for="idEdad">Edad</label>
-          <input type="number" class="form-control form-control-sm" id="idEdad" placeholder="Edad" formControlName="age"
+          <label for="idAge">Edad</label>
+          <input type="number" class="form-control form-control-sm" id="idAge" placeholder="Edad" formControlName="age"
             autocomplete="off">
         </div>
       </div>
@@ -39,22 +39,22 @@
     <div class="row">
       <div class="col-md-3">
         <div class="form-group">
-          <label for="idFechaNacimiento">Fecha de Nacimiento</label>
-          <input type="date" class="form-control form-control-sm" id="idFechaNacimiento" placeholder="Fecha de Nacimiento"
+          <label for="idBirthdate">Fecha de Nacimiento</label>
+          <input type="date" class="form-control form-control-sm" id="idBirthdate" placeholder="Fecha de Nacimiento"
             formControlName="birthdate" autocomplete="off">
         </div>
       </div>
       <div class="col-md-3">
         <div class="form-group">
-          <label for="idLugarNacimiento">Lugar de Nacimiento</label>
-          <input type="text" class="form-control form-control-sm" id="idLugarNacimiento" placeholder="Lugar de Nacimiento"
+          <label for="idPlacebirth">Lugar de Nacimiento</label>
+          <input type="text" class="form-control form-control-sm" id="idPlacebirth" placeholder="Lugar de Nacimiento"
             formControlName="placebirth" autocomplete="off">
         </div>
       </div>
       <div class="col-md-3">
         <div class="form-group">
-          <label for="idDireccionActual">Dirección Actual</label>
-          <input type="text" class="form-control form-control-sm" id="idDireccionActual" placeholder="Dirección Actual"
+          <label for="idAddress">Dirección Actual</label>
+          <input type="text" class="form-control form-control-sm" id="idAddress" placeholder="Dirección Actual"
             formControlName="address" autocomplete="off">
         </div>
       </div>
@@ -62,8 +62,8 @@
     <div class="row">
       <div class="col-md-3">
         <div class="form-group">
-          <label for="idCorreoElectronico">Correo Electrónico</label>
-          <input type="email" class="form-control form-control-sm" id="idCorreoElectronico" placeholder="Correo Electrónico"
+          <label for="idEmail">Correo Electrónico</label>
+          <input type="email" class="form-control form-control-sm" id="idEmail" placeholder="Correo Electrónico"
             formControlName="email" autocomplete="off">
         </div>
       </div>
@@ -72,15 +72,15 @@
   <div class="row">
     <div class="col-md-3">
       <div class="form-group">
-        <label for="idProfesionalTratante">Profesional Tratante: Dr./Dra.</label>
-        <input type="text" class="form-control form-control-sm" id="idProfesionalTratante" placeholder="Dr./Dra."
+        <label for="idProfessionalName">Profesional Tratante: Dr./Dra.</label>
+        <input type="text" class="form-control form-control-sm" id="idProfessionalName" placeholder="Dr./Dra."
           formControlName="nameUser" readonly autocomplete="off">
       </div>
     </div>
     <div class="col-md-3">
       <div class="form-group">
-        <label for="idMatriculaProfesional">Matrícula Profesional</label>
-        <input type="text" class="form-control form-control-sm" id="idMatriculaProfesional" placeholder="Matrícula Profesional"
+        <label for="idProfessionalEnrollment">Matrícula Profesional</label>
+        <input type="text" class="form-control form-control-sm" id="idProfessionalEnrollment" placeholder="Matrícula Profesional"
           formControlName="enrollmentUser" readonly autocomplete="off">
       </div>
     </div>
@@ -88,8 +88,8 @@
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
-        <label for="idDiagnostico">Diagnóstico Clínico</label>
-        <textarea type="text" class="form-control form-control-sm" id="idDiagnostico" placeholder="Diagnóstico Clínico"
+        <label for="idDiagnostic">Diagnóstico Clínico</label>
+        <textarea type="text" class="form-control form-control-sm" id="idDiagnostic" placeholder="Diagnóstico Clínico"
           rows="2" formControlName="diagnostic" autocomplete="off"></textarea>
       </div>
     </div>
@@ -97,8 +97,8 @@
   <div class="row">
     <div class="col-md-5">
       <div class="form-group">
-        <label for="idTipoRehabilitacion">Tipo de Rehabilitación</label>
-        <mat-select id="idTipoRehabilitacion" class="form-control form-control-sm" formControlName="typeRehabilitation"
+        <label for="idTypeRehabilitation">Tipo de Rehabilitación</label>
+        <mat-select id="idTypeRehabilitation" class="form-control form-control-sm" formControlName="typeRehabilitation"
           placeholder="Tipo de Rehabilitación" [compareWith]="compareFn">
           <mat-option *ngFor="let itemTypeRehabilitation of typesRehabilitations" [value]="itemTypeRehabilitation">
             {{itemTypeRehabilitation.name}}
@@ -108,8 +108,8 @@
     </div>
     <div class="col-md-3">
       <div class="form-group">
-        <label for="idTipo">Tipo</label>
-        <mat-select id="idTipo" class="form-control form-control-sm" formControlName="type" placeholder="Superior/Inferior">
+        <label for="idType">Tipo</label>
+        <mat-select id="idType" class="form-control form-control-sm" formControlName="type" placeholder="Superior/Inferior">
           <mat-option [value]="false">Inferior</mat-option>
           <mat-option [value]="true">Superior</mat-option>
         </mat-select>

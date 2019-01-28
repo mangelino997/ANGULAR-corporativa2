@@ -6,9 +6,9 @@ import { Message } from '@stomp/stompjs';
 import { StompService } from '@stomp/ng2-stompjs';
 
 @Injectable()
-export class ModuleService {
+export class UserService {
   //Define la ruta al servicio web
-  private route:string = "/module";
+  private route:string = "/user";
   //Define la url base
   private url:string = null;
   //Define la url para subcripcion a socket
@@ -48,9 +48,21 @@ export class ModuleService {
   public list() {
     return this.http.get(this.url, this.options);
   }
-  //Obtiene el menu
-  public getMenu(idRol) {
-    return this.http.get(this.url + '/getMenu/' + idRol, this.options);
+  //Obtiene por username
+  public getByUsername(username) {
+    return this.http.get(this.url + '/getByUsername/' + username, this.options);
+  }
+  //Obtiene un listado por nombre
+  public listByName(nombre) {
+    return this.http.get(this.url + '/listByName/' + nombre, this.options).map(res => {
+      return res.json().map(data => {
+        return data;
+      })
+    })
+  }
+  //Obtiene una lista por rol
+  public listByRol(idRol) {
+    return this.http.get(this.url + '/listByRol/' + idRol, this.options);
   }
   //Agrega un registro
   public add(element) {

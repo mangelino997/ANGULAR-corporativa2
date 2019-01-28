@@ -19,6 +19,15 @@ import { IndicativeImageService } from './services/indicative-image.service';
 import { AtImageGifService } from './services/at-image-gif.service';
 import { AoImageGifService } from './services/ao-image-gif.service';
 import { ModuleService } from './services/module.service';
+import { LoginService } from './services/login.service';
+import { UserService } from './services/user.service';
+import { GuardService } from './services/guard.service';
+import { PhotographyImageService } from './services/photography-image.service';
+import { OrthopantomographyImageService } from './services/orthopantomography-image.service';
+import { CondylegraphyImageService } from './services/condylegraphy-image.service';
+import { TeleradiographyImageService } from './services/teleradiography-image.service';
+import { DateService } from './services/date.service';
+import { AnalysisService } from './services/analysis.service';
 
 //Modelos
 import { Analysis } from './modules/analysis';
@@ -45,16 +54,10 @@ import { AnalysisCandilographyComponent } from './components/new-analysis/analys
 import { LoginComponent } from './components/login/login.component';
 import { ProfessionalDataComponent } from './components/new-analysis/professional-data/professional-data.component';
 import { ResultsComponent } from './components/new-analysis/results/results.component';
-import { PhotographyImageService } from './services/photography-image.service';
-import { OrthopantomographyImageService } from './services/orthopantomography-image.service';
-import { CondylegraphyImageService } from './services/condylegraphy-image.service';
-import { TeleradiographyImageService } from './services/teleradiography-image.service';
-import { DateService } from './services/date.service';
-import { AnalysisService } from './services/analysis.service';
 import { MyAnalysisComponent } from './components/my-analysis/my-analysis.component';
 
 const stompConfig: StompConfig = {
-  url: 'ws://192.168.0.32:8084/meserws/socket',
+  url: 'ws://localhost:8084/meserws/socket',
   headers: {},
   heartbeat_in: 0,
   heartbeat_out: 20000,
@@ -134,6 +137,9 @@ const stompConfig: StompConfig = {
     DateService,
     AnalysisService,
     ModuleService,
+    LoginService,
+    UserService,
+    GuardService,
     StompService,
     {
       provide: StompConfig,

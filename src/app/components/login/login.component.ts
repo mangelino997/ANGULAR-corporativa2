@@ -1,5 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { LoginService } from 'src/app/services/login.service';
+import { UserService } from 'src/app/services/user.service';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +15,8 @@ export class LoginComponent implements OnInit {
   //Define el formulario
   public form:FormGroup;
   //Constructo
-  constructor() { }
+  constructor(private loginService: LoginService, private userService: UserService,
+    private appComponent: AppComponent) { }
   //Al inicializarse el componente
   ngOnInit() {
     //Crea el formulario
@@ -27,6 +31,21 @@ export class LoginComponent implements OnInit {
   }
   //Verifica credenciales del usuario
   public login(): void {
-    this.sendData(true);
+    this.loginService.login(this.form.value.username, this.form.value.password).subscribe(res => {
+      if(res.headers.get('authorization')) {
+        //Almacena el token en el local storage
+        localStorage.setItem('token', res.headers.get('authorization'));
+        //Obtiene el usuario por username
+        this.userService.getByUsername(this.form.value.username).subscribe(
+          res => {
+            this.appComponent.setUser(res.json());
+            this.sendData(true);
+          },
+          err => {
+            console.log(err);
+          }
+        );
+      }
+    });
   }
 }
