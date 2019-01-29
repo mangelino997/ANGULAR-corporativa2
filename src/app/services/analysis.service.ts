@@ -91,6 +91,7 @@ export class AnalysisService {
   }
   //Agrega las imagenes del analisis
   public addAnalysis(pImage, apImage, atImage, aoImage, acImage) {
+    console.log(pImage);
     const formData = new FormData();
     let pi = new Blob([pImage], { type: 'image/jpg' });
     let ap = new Blob([apImage], { type: 'image/jpg' });
@@ -102,7 +103,7 @@ export class AnalysisService {
     formData.append('teleradiographyImage', at);
     formData.append('orthopantomographyImage', ao);
     formData.append('condylegraphyImage', ac);
-    return this.http.post(this.url + '/addImages', formData, this.options);
+    return this.http.post(this.url + '/addImages', formData);
   }
   //Agrega un registro
   public add(element) {

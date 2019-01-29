@@ -28,6 +28,8 @@ import { CondylegraphyImageService } from './services/condylegraphy-image.servic
 import { TeleradiographyImageService } from './services/teleradiography-image.service';
 import { DateService } from './services/date.service';
 import { AnalysisService } from './services/analysis.service';
+import { TypeAnalysisService } from './services/type-analysis.service';
+
 
 //Modelos
 import { Analysis } from './modules/analysis';
@@ -63,9 +65,15 @@ import { PatientRadiography } from './modules/patient-radiography';
 import { AnalysisTeleradiography } from './modules/analysis-teleradiography';
 import { AnalysisOrthopantomography } from './modules/analysis-orthopantomography';
 import { AnalysisCondylegraphy } from './modules/analysis-condylegraphy';
+import { IndicativeImageComponent } from './components/indicative-image/indicative-image.component';
+import { PhotographyGifComponent } from './components/photography-gif/photography-gif.component';
+import { TeleradiographyGifComponent } from './components/teleradiography-gif/teleradiography-gif.component';
+import { CondylegraphyGifComponent } from './components/condylegraphy-gif/condylegraphy-gif.component';
+import { OrthopantomographyGifComponent } from './components/orthopantomography-gif/orthopantomography-gif.component';
+import { AcImageGifService } from './services/ac-image-gif.service';
 
 const stompConfig: StompConfig = {
-  url: 'ws://localhost:8084/meserws/socket',
+  url: 'ws://192.168.0.32:8084/meserws/socket',
   headers: {},
   heartbeat_in: 0,
   heartbeat_out: 20000,
@@ -95,7 +103,12 @@ const stompConfig: StompConfig = {
     LoginComponent,
     ProfessionalDataComponent,
     ResultsComponent,
-    MyAnalysisComponent
+    MyAnalysisComponent,
+    IndicativeImageComponent,
+    PhotographyGifComponent,
+    TeleradiographyGifComponent,
+    CondylegraphyGifComponent,
+    OrthopantomographyGifComponent
   ],
   imports: [
     BrowserModule,
@@ -142,6 +155,7 @@ const stompConfig: StompConfig = {
     AfImageGifService,
     AtImageGifService,
     AoImageGifService,
+    AcImageGifService,
     AnalysisOrthopantomography,
     AnalysisCondylegraphy,
     IndicativeImageService,
@@ -149,6 +163,7 @@ const stompConfig: StompConfig = {
     TeleradiographyImageService,
     OrthopantomographyImageService,
     CondylegraphyImageService,
+    TypeAnalysisService,
     DateService,
     AnalysisService,
     ModuleService,

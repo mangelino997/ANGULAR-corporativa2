@@ -6,9 +6,9 @@ import { Message } from '@stomp/stompjs';
 import { StompService } from '@stomp/ng2-stompjs';
 
 @Injectable()
-export class AfImageGifService {
+export class TypeAnalysisService {
   //Define la ruta al servicio web
-  private route:string = "/afImageGif";
+  private route:string = "/typeAnalysis";
   //Define la url base
   private url:string = null;
   //Define la url para subcripcion a socket
@@ -16,7 +16,7 @@ export class AfImageGifService {
   //Define el headers y token de autenticacion
   private options = null;
   //Define la subcripcion
-  private subcripcion: Subscription;
+  private subscription: Subscription;
   //Define el mensaje de respuesta a la subcripcion
   private message: Observable<Message>;
   //Define la lista completa
@@ -34,19 +34,11 @@ export class AfImageGifService {
     this.options = new RequestOptions({headers: headers});
     //Subcribe al usuario a la lista completa
     this.message = this.stompService.subscribe(this.topic + this.route + '/list');
-    this.subcripcion = this.message.subscribe(this.subscribirse);
+    this.subscription = this.message.subscribe(this.subs);
   }
   //Resfresca la lista completa si hay cambios
-  public subscribirse = (m: Message) => {
+  public subs = (m: Message) => {
     this.completeList.next(JSON.parse(m.body));
-  }
-  //Obtiene un gif por posicion y sexo
-  public getImageByPositionAndSex(position, idSex) {
-    return this.http.get(this.url + '/getImageByPositionAndSex/' + position + '/' + idSex, this.options);
-  }
-  //Obtiene un registro por posicion y sexo
-  public getByPositionAndSex(position, idSex) {
-    return this.http.get(this.url + '/getByPositionAndSex/' + position + '/' + idSex, this.options);
   }
   //Obtiene el siguiente id
   public getNextId() {
@@ -65,16 +57,12 @@ export class AfImageGifService {
     })
   }
   //Agrega un registro
-  public add(image: File, sex){
-		var blob = new Blob([image], {type : 'image/gif'});
-    const formData = new FormData(); 
-    formData.append('file', blob);
-    formData.append('idSex', sex);
-		return this.http.post(this.url, formData);
-	}
+  public add(element) {
+    return this.http.post(this.url, element);
+  }
   //Actualiza un registro
-  public update(elemento) {
-    return this.http.put(this.url, elemento, this.options);
+  public update(element) {
+    return this.http.put(this.url, element, this.options);
   }
   //Elimina un registro
   public delete(id) {

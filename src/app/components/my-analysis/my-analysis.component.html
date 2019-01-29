@@ -1,5 +1,5 @@
 <form [formGroup]="form">
-  <mat-horizontal-stepper labelPosition="bottom" #stepper>
+  <mat-horizontal-stepper labelPosition="bottom" linear #stepper>
     <mat-step [stepControl]="form">
       <ng-template matStepLabel>Datos del Paciente</ng-template>
       <div class="form-group has-float-label">
@@ -130,7 +130,7 @@
         </div>
       </div>
       <button mat-raised-button>Historia Clínica</button>
-      <button class="btn-left-5" mat-raised-button color="primary" matStepperNext>Siguiente</button>
+      <button class="btn-left-5" mat-raised-button color="primary" matStepperNext [disabled]="!form.valid">Siguiente</button>
     </mat-step>
     <mat-step [stepControl]="result">
       <ng-template matStepLabel>Resultados</ng-template>

@@ -77,7 +77,10 @@ export class AnalysisOrthopantographyComponent implements OnInit {
   private nextGif(): void {
     this.aoImageGifService.getByPosition(this.count + 1).subscribe(res => {
       let data = res.json();
-      this.indicativeImage.image = this.appService.getUrlBase() + '/aoImageGif/getImageByPosition/' + data.position;
+      this.aoImageGifService.getImageByPosition(data.position).subscribe(res=>{
+        console.log(res);
+        this.indicativeImage.image = res;
+      });
       this.indicativeImage.pointName = data.pointName;
       this.indicativeImage.pointDescription = data.pointDescription;
     });

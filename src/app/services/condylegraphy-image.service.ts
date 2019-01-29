@@ -53,7 +53,7 @@ export class CondylegraphyImageService {
     let blob = new Blob([image], {type : 'image/svg+xml'});
     let formData = new FormData(); 
 		formData.append('file', blob, 'analysisResult'); 
-		return this.http.post(this.url, formData, this.options);
+		return this.http.post(this.url, formData);
   }
   //
   //Obtiene la lista de registros

@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AppService } from 'src/app/services/app.service';
 import { PatientPhoto } from 'src/app/modules/patiente-photo';
+import { IndicativeImageService } from 'src/app/services/indicative-image.service';
 
 @Component({
   selector: 'app-patient-photo',
@@ -16,21 +17,27 @@ export class PatientPhotoComponent implements OnInit {
   //Define la imagen del sexo por defecto
   public sexSelectedImage:string;
   //Define la imagen para mujer
-  public femaleImage:string;
+  public femaleImage:any;
   //Define la imagen para hombre
-  public maleImage:string;
+  public maleImage:any;
   //Constructor
-  constructor(private patientPhoto: PatientPhoto, private appService: AppService) { }
+  constructor(private indicativeImageService: IndicativeImageService, private patientPhoto: PatientPhoto, private appService: AppService) { }
   //Al inicializarse el componente
   ngOnInit() {
-    //Establece la imagen de mujer
-    this.femaleImage = this.appService.getUrlBase() + '/indicativeImage/getById/1';
+    //Establece la imagen de mujer atob(this.form.get('photographyImage').value.data);
+    this.indicativeImageService.getById(1).subscribe(res=>{
+      var img=res.json();
+      console.log(img);
+      this.femaleImage = atob(img.data);
+      console.log(this.femaleImage);
+    });
     //Establece la imagen de hombre
-    this.maleImage = this.appService.getUrlBase() + '/indicativeImage/getById/2';
+    this.indicativeImageService.getById(2).subscribe(res=>{
+      this.maleImage = res.json().data;
+    });
     //Establece la imagen por defecto en imagen real del paciente
     this.sexSelectedImage = this.femaleImage;
     //Crea el formulario
-    //this.patientPhotoForm = new FormGroup({});
     this.patientPhotoForm = this.patientPhoto.form;
   }
   //Envia el formulario a Nuevo Analisis
