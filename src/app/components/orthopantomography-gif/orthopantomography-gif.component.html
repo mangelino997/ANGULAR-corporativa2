@@ -1,0 +1,30 @@
+<div class="container-fluid padding-content">
+  <form [formGroup]="gifForm">
+    <div class="title-block">
+      <h4 class="title">
+        Gif para Análisis Ortopantomografía
+      </h4>
+    </div>
+    <hr style="margin-top: 0px;">
+    <div class="row justify-content-center">
+      <div class="col-md-4">
+        <mat-card>
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <h5>Cargue un Gif</h5><br>
+              <div>
+                <img [src]="this.gifForm.get('image').value" />
+              </div>
+              <div>
+                <input style="display: none;" type="file" (change)="readURL($event)" #fileInput />
+                <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="fileInput.click()">Seleccionar Imagen</button>
+              </div>
+            </div>
+          </div>
+          <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="save()" [disabled]="!gifForm.valid">Guardar</button>
+        </mat-card>
+      </div>
+    </div>
+    <br>
+  </form>
+  </div>

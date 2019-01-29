@@ -28,6 +28,7 @@ import { CondylegraphyImageService } from './services/condylegraphy-image.servic
 import { TeleradiographyImageService } from './services/teleradiography-image.service';
 import { DateService } from './services/date.service';
 import { AnalysisService } from './services/analysis.service';
+import { TypeAnalysisService } from './services/type-analysis.service';
 
 //Modelos
 import { Analysis } from './modules/analysis';
@@ -55,8 +56,6 @@ import { LoginComponent } from './components/login/login.component';
 import { ProfessionalDataComponent } from './components/new-analysis/professional-data/professional-data.component';
 import { ResultsComponent } from './components/new-analysis/results/results.component';
 import { MyAnalysisComponent } from './components/my-analysis/my-analysis.component';
-import { MatStepper } from '@angular/material';
-import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import { PatientPhoto } from './modules/patiente-photo';
 import { AnalysisPhotography } from './modules/analysisPhotography';
 import { PatientRadiography } from './modules/patient-radiography';
@@ -64,9 +63,15 @@ import { AnalysisTeleradiography } from './modules/analysis-teleradiography';
 import { AnalysisOrthopantomography } from './modules/analysis-orthopantomography';
 import { AnalysisCondylegraphy } from './modules/analysis-condylegraphy';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { IndicativeImageComponent } from './components/indicative-image/indicative-image.component';
+import { PhotographyGifComponent } from './components/photography-gif/photography-gif.component';
+import { TeleradiographyGifComponent } from './components/teleradiography-gif/teleradiography-gif.component';
+import { CondylegraphyGifComponent } from './components/condylegraphy-gif/condylegraphy-gif.component';
+import { OrthopantomographyGifComponent } from './components/orthopantomography-gif/orthopantomography-gif.component';
+import { AcImageGifService } from './services/ac-image-gif.service';
 
 const stompConfig: StompConfig = {
-  url: 'ws://localhost:8084/meserws/socket',
+  url: 'ws://192.168.0.32:8084/meserws/socket',
   headers: {},
   heartbeat_in: 0,
   heartbeat_out: 20000,
@@ -97,7 +102,12 @@ const stompConfig: StompConfig = {
     ProfessionalDataComponent,
     ResultsComponent,
     MyAnalysisComponent,
-    DashboardComponent
+    DashboardComponent,
+    IndicativeImageComponent,
+    PhotographyGifComponent,
+    TeleradiographyGifComponent,
+    CondylegraphyGifComponent,
+    OrthopantomographyGifComponent
   ],
   imports: [
     BrowserModule,
@@ -144,6 +154,7 @@ const stompConfig: StompConfig = {
     AfImageGifService,
     AtImageGifService,
     AoImageGifService,
+    AcImageGifService,
     AnalysisOrthopantomography,
     AnalysisCondylegraphy,
     IndicativeImageService,
@@ -151,6 +162,7 @@ const stompConfig: StompConfig = {
     TeleradiographyImageService,
     OrthopantomographyImageService,
     CondylegraphyImageService,
+    TypeAnalysisService,
     DateService,
     AnalysisService,
     ModuleService,

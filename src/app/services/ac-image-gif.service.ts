@@ -6,9 +6,9 @@ import { Message } from '@stomp/stompjs';
 import { StompService } from '@stomp/ng2-stompjs';
 
 @Injectable()
-export class AfImageGifService {
+export class AcImageGifService {
   //Define la ruta al servicio web
-  private route:string = "/afImageGif";
+  private route:string = "/acImageGif";
   //Define la url base
   private url:string = null;
   //Define la url para subcripcion a socket
@@ -41,12 +41,12 @@ export class AfImageGifService {
     this.completeList.next(JSON.parse(m.body));
   }
   //Obtiene un gif por posicion y sexo
-  public getImageByPositionAndSex(position, idSex) {
-    return this.http.get(this.url + '/getImageByPositionAndSex/' + position + '/' + idSex, this.options);
+  public getImageByPosition(position) {
+    return this.http.get(this.url + '/getImageByPosition/' + position, this.options);
   }
   //Obtiene un registro por posicion y sexo
-  public getByPositionAndSex(position, idSex) {
-    return this.http.get(this.url + '/getByPositionAndSex/' + position + '/' + idSex, this.options);
+  public getByPosition(position) {
+    return this.http.get(this.url + '/getByPosition/' + position, this.options);
   }
   //Obtiene el siguiente id
   public getNextId() {
@@ -65,11 +65,10 @@ export class AfImageGifService {
     })
   }
   //Agrega un registro
-  public add(image: File, sex){
+  public add(image: File){
 		var blob = new Blob([image], {type : 'image/gif'});
     const formData = new FormData(); 
     formData.append('file', blob);
-    formData.append('idSex', sex);
 		return this.http.post(this.url, formData);
 	}
   //Actualiza un registro

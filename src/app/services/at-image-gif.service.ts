@@ -57,10 +57,11 @@ export class AtImageGifService {
     return this.http.get(this.url + '/getByPosition/' + position, this.options);
   }
   //Agrega un registro
-  public add(image){
-		let formData = new FormData(); 
-		formData.append('archivo', image); 
-		return this.http.post(this.url, formData, this.options);
+  public add(image: File){
+		var blob = new Blob([image], {type : 'image/gif'});
+    const formData = new FormData(); 
+    formData.append('file', blob, 'analysisResult');
+		return this.http.post(this.url, formData);
 	}
   //Actualiza un registro
   public update(elemento) {

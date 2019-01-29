@@ -53,7 +53,7 @@ export class TeleradiographyImageService {
 		var blob = new Blob([image], {type : 'image/jpeg'});
     const formData = new FormData(); 
 		formData.append('file', blob, 'analysisResult'); 
-		return this.http.post(this.url, formData, this.options);
+		return this.http.post(this.url, formData);
 	}
   //Actualiza un registro
   public update(elemento) {

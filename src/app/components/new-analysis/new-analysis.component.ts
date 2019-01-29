@@ -14,6 +14,7 @@ import { PatientRadiography } from 'src/app/modules/patient-radiography';
 import { AnalysisTeleradiography } from 'src/app/modules/analysis-teleradiography';
 import { AnalysisCondylegraphy } from 'src/app/modules/analysis-condylegraphy';
 import { AnalysisOrthopantomography } from 'src/app/modules/analysis-orthopantomography';
+import { PatientRadiographyComponent } from './patient-radiography/patient-radiography.component';
 
 @Component({
   selector: 'app-new-analysis',
@@ -31,6 +32,8 @@ export class NewAnalysisComponent implements OnInit {
   @ViewChild(AnalysisCandilographyComponent) acComponent;
   //Define el componente Foto del Paciente
   @ViewChild(PatientPhotoComponent) ppComponent;
+  //Define el componente Radiografias del Paciente
+  @ViewChild(PatientRadiographyComponent) prComponent;
   //Define el componente Radiografias del Paciente
   @ViewChild(AnalysisTeleradiographyComponent) atComponent;
   //Define el componente Resultados
@@ -135,5 +138,28 @@ export class NewAnalysisComponent implements OnInit {
   }
   public onStepChange(event: any): void  {
     console.log(event.selectedIndex);
+    switch(event.selectedIndex){
+      case 1: 
+        this.dpComponent.sendData();
+        break;
+      case 2: 
+        this.ppComponent.sendData();
+        break;
+      case 3: 
+        this.apComponent.sendDataAP()();
+        break;
+      case 4: 
+        this.prComponent.sendDataPR()();
+        break;
+      case 5: 
+        this.atComponent.sendDataAT();
+        break;
+      case 6: 
+        this.aoComponent.sendDataAO()();
+        break;
+      case 7: 
+        this.acComponent.sendDataAC();
+        break;
+    }
   }
 }
