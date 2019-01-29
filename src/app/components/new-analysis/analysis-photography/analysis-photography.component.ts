@@ -4,6 +4,7 @@ import { fromEvent } from 'rxjs';
 import { AfImageGifService } from 'src/app/services/af-image-gif.service';
 import { AppService } from 'src/app/services/app.service';
 import { AnalysisPhotography } from 'src/app/modules/analysisPhotography';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-analysis-photography',
@@ -53,7 +54,7 @@ export class AnalysisPhotographyComponent implements OnInit {
   //Define la imagen final con los trazos
   public imageFinalLines:any;
   //Constructor
-  constructor(private ap: AnalysisPhotography ,private appService: AppService, private afImageGifService: AfImageGifService) { }
+  constructor(private ap: AnalysisPhotography ,private appService: AppService, private afImageGifService: AfImageGifService, private toast: ToastrService) { }
   //Al inicializarse el componente
   ngOnInit() {
     //Incializa la imagen gif indicativa
@@ -118,10 +119,10 @@ export class AnalysisPhotographyComponent implements OnInit {
           }
         }
         else if(this.pointsGlobal.length == this.points[this.count].cantidad){
-          console.log("Debe presionar Listo para marcar mas puntos");
+          this.toast.success("Debe presionar Listo para marcar mas puntos");
         }
         else {
-          console.log("Debe marcar todos los puntos");
+          this.toast.error("Debe marcar todos los puntos requeridos");
         }
       });
   }
@@ -159,7 +160,7 @@ export class AnalysisPhotographyComponent implements OnInit {
         this.nextGif();
       }
     } else {
-      console.log("Debe marcar todos los puntos solicitados");
+      this.toast.error("Debe marcar todos los puntos requeridos");
     }
   }
   //Reestablece el canvas y los gifs

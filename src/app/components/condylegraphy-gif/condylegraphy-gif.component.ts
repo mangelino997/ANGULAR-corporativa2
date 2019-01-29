@@ -39,7 +39,7 @@ public save(){
     this.reestablishForm();
   },
   err=>{
-    this.toast.success("Error al agregar el Gif");
+    this.toast.error("Error al agregar el Gif");
   });
 }
 //Formatea el valor del autocompletado

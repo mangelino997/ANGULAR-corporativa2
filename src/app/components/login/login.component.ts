@@ -4,6 +4,8 @@ import { LoginService } from 'src/app/services/login.service';
 import { UserService } from 'src/app/services/user.service';
 import { AppComponent } from 'src/app/app.component';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-login',
@@ -19,7 +21,7 @@ export class LoginComponent implements OnInit {
   public incorrectLogin:string = null;
   //Constructo
   constructor(private loginService: LoginService, private userService: UserService,
-    private appComponent: AppComponent, private router: Router) { }
+    private appComponent: AppComponent, private router: Router, private toast: ToastrService) { }
   //Al inicializarse el componente
   ngOnInit() {
     //Crea el formulario
@@ -42,12 +44,12 @@ export class LoginComponent implements OnInit {
           //Obtiene el usuario por username
           this.userService.getByUsername(this.form.value.username).subscribe(
             res => {
-              this.appComponent.setUser(res.json());
+              //this.appComponent.setUser(res.json());
               this.sendData(true);
               this.router.navigate(['dashboard']);
             },
             err => {
-              console.log(err);
+              this.toast.success("No se puede obtener datos del Usuario");
             }
           );
         } else {
