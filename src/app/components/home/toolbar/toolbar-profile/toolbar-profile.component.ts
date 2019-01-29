@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AppComponent } from 'src/app/app.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-toolbar-profile',
@@ -12,7 +13,7 @@ export class ToolbarProfileComponent implements OnInit {
   //Define el usuario
   public user:any = null;
   //Constructor
-  constructor(private appComponent: AppComponent) { }
+  constructor(private appComponent: AppComponent, private router: Router) { }
   //Al inicializarse el componente
   ngOnInit() {
     //Establece el usuario
@@ -25,5 +26,6 @@ export class ToolbarProfileComponent implements OnInit {
   //Logout
   public logout(): void {
     this.sendData(false);
+    this.router.navigate(['']);
   }
 }

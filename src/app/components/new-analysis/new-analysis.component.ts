@@ -57,7 +57,7 @@ export class NewAnalysisComponent implements OnInit {
   constructor(
     private ac: AnalysisCondylegraphy, private at: AnalysisTeleradiography, private pr: PatientRadiography, 
     private ao: AnalysisOrthopantomography, private ap: AnalysisPhotography, private patientPhoto: PatientPhoto, 
-    private analysisModule: Analysis, ) { }
+    private analysisModule: Analysis) { }
   //Al inicializarse el componente
   ngOnInit() {
     //Inicializa el formulario de datos del paciente

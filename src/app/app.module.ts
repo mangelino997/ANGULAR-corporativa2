@@ -63,6 +63,7 @@ import { PatientRadiography } from './modules/patient-radiography';
 import { AnalysisTeleradiography } from './modules/analysis-teleradiography';
 import { AnalysisOrthopantomography } from './modules/analysis-orthopantomography';
 import { AnalysisCondylegraphy } from './modules/analysis-condylegraphy';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const stompConfig: StompConfig = {
   url: 'ws://localhost:8084/meserws/socket',
@@ -95,7 +96,8 @@ const stompConfig: StompConfig = {
     LoginComponent,
     ProfessionalDataComponent,
     ResultsComponent,
-    MyAnalysisComponent
+    MyAnalysisComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

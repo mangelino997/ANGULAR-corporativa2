@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import 'rxjs/Rx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,9 @@ export class AppComponent {
   //Define el usuario
   public user:any = null;
   //Constructor
-  constructor() {}
+  constructor(private router: Router) {
+    this.router.navigate(['']);
+  }
   //Obtiene el usuario
   public getUser() {
     return this.user;

@@ -14,13 +14,14 @@
                 <div id="divUsername" class="form-group">
                   <label id="labelUsername" for="idUsername">Usuario *</label>
                   <input id="idUsername" type="text" formControlName="username" autocomplete="off"
-                  class="form-control" required autofocus>
+                  class="form-control" required autofocus (ngModelChange)="removeMessage()">
                 </div>
                 <div id="divPassword" class="form-group">
                   <label id="labelPassword" for="idPassword">Contraseña *</label>
                   <input id="idPassword" type="password" formControlName="password" autocomplete="off"
-                  class="form-control" required>
+                  class="form-control" required (ngModelChange)="removeMessage()">
                 </div>
+                <h6 class="incorrect-login text-center">{{incorrectLogin}}</h6>
                 <div class="row">
                   <div class="col text-center">
                       <button mat-raised-button color="primary" (click)="login()" [disabled]="!form.valid">Iniciar Sesión</button>
