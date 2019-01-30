@@ -61,11 +61,10 @@ export class IndicativeImageService {
     })
   }
   //Agrega un registro
-  public add(image, typeAnalysis){
-    console.log(image, typeAnalysis);
-		let blob = new Blob([image], {type : 'image/jpeg'});
+  public add(image, typeAnalysis) {
+    let blob = new Blob([image.data], {type : 'image/jpeg'});
     const formData = new FormData(); 
-    formData.append('file', blob);
+    formData.append('file', blob, image.name);
     formData.append('idTypeAnalysis', typeAnalysis); 
 		return this.http.post(this.url, formData);
 	}

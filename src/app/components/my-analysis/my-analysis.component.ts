@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AnalysisService } from 'src/app/services/analysis.service';
 import { Analysis } from 'src/app/modules/analysis';
-import { CondylegraphyImageService } from 'src/app/services/condylegraphy-image.service';
 import { TypeRehabilitationService } from 'src/app/services/type-rehabilitation.service';
 
 @Component({

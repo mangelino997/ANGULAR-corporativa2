@@ -1,43 +1,44 @@
 <div class="container-fluid padding-content">
-<form [formGroup]="indicativeImageForm">
-  <div class="title-block">
-    <h4 class="title">
-      Imágen Indicativa
-    </h4>
-  </div>
-  <hr style="margin-top: 0px;">
-  <div class="row justify-content-center">
-    <div class="col-md-4">
-      <mat-card>
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <h5>Cargue una Imagen</h5><br>
-            <div>
-              <img [src]="this.indicativeImageForm.get('image').value" />
-            </div>
-            <div>
-              <input style="display: none;" type="file" (change)="readURL($event)" #fileInput />
-              <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="fileInput.click()">Seleccionar Imagen</button>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <label for="idTypeAnalysis">Tipo de Análisis</label>
-              <mat-select id="idTypeAnalysis" class="form-control form-control-sm" formControlName="idTypeAnalysis"
-                placeholder="Tipo de Rehabilitación" [compareWith]="compareFn">
-                <mat-option *ngFor="let analysis of typesAnalysis" [value]="analysis">
-                  {{analysis.name}}
-                </mat-option>
-              </mat-select>
-            </div>
-          </div>
-        </div>
-        <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="save()" [disabled]="!indicativeImageForm.valid">Guardar</button>
-      </mat-card>
+  <form [formGroup]="indicativeImageForm">
+    <div class="title-block">
+      <h4 class="title">
+        Imágen Indicativa
+      </h4>
     </div>
-  </div>
-  <br>
-</form>
+    <hr style="margin-top: 0px;">
+    <div class="row justify-content-center">
+      <div class="col-md-4">
+        <mat-card>
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <h5>Cargue una Imagen</h5><br>
+              <div>
+                <img [src]="this.indicativeImageForm.value.image.data" />
+              </div>
+              <div>
+                <input style="display: none;" type="file" (change)="readURL($event)" #fileInput />
+                <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="fileInput.click()">Seleccionar
+                  Imagen</button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="idTypeAnalysis">Tipo de Análisis</label>
+                <mat-select id="idTypeAnalysis" class="form-control form-control-sm" formControlName="idTypeAnalysis"
+                  placeholder="Tipo de Rehabilitación" [compareWith]="compareFn">
+                  <mat-option *ngFor="let analysis of typesAnalysis" [value]="analysis">
+                    {{analysis.name}}
+                  </mat-option>
+                </mat-select>
+              </div>
+            </div>
+          </div>
+          <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="save()" [disabled]="!indicativeImageForm.valid">Guardar</button>
+        </mat-card>
+      </div>
+    </div>
+    <br>
+  </form>
 </div>

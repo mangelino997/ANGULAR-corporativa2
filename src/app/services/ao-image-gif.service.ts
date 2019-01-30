@@ -57,10 +57,10 @@ export class AoImageGifService {
     return this.http.get(this.url + '/getByPosition/' + position, this.options);
   }
   //Agrega un registro
-  public add(image: File){
-		var blob = new Blob([image], {type : 'image/gif'});
+  public add(image){
+		let blob = new Blob([image.data], {type : 'image/gif'});
     const formData = new FormData(); 
-    formData.append('file', blob, 'analysisResult');
+    formData.append('file', blob, image.name);
 		return this.http.post(this.url, formData);
 	}
   //Actualiza un registro
