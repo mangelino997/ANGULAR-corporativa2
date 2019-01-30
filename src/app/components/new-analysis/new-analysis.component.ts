@@ -137,7 +137,6 @@ export class NewAnalysisComponent implements OnInit {
 
   }
   public onStepChange(event: any): void  {
-    console.log(event.selectedIndex);
     switch(event.selectedIndex){
       case 1: 
         this.dpComponent.sendData();

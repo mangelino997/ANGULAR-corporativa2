@@ -14,7 +14,7 @@ export class CondylegraphyGifComponent implements OnInit {
   //Define la lista de tipos de analisis
   public typesAnalysis: Array<any> = [];
   //Constructor
-  constructor(private acImageGifService: AcImageGifService, private toast: ToastrService) {}
+  constructor(private acImageGifService: AcImageGifService, private toast: ToastrService) { }
   ngOnInit() {
     //Inicializa el Formulario
     this.gifForm = new FormGroup({

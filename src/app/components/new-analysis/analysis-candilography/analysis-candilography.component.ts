@@ -4,6 +4,7 @@ import { AppService } from 'src/app/services/app.service';
 import { AtImageGifService } from 'src/app/services/at-image-gif.service';
 import { fromEvent } from 'rxjs';
 import { AnalysisCondylegraphy } from 'src/app/modules/analysis-condylegraphy';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-analysis-candilography',
@@ -53,7 +54,7 @@ export class AnalysisCandilographyComponent implements OnInit {
   //Define la imagen final con los trazos
   public imageFinalLines: any;
   //Constructor
-  constructor(private ac: AnalysisCondylegraphy, private appService: AppService, private atImageGifService: AtImageGifService) {}
+  constructor(private ac: AnalysisCondylegraphy, private appService: AppService, private atImageGifService: AtImageGifService, private toast: ToastrService) {}
   //Al inicializarse el componente
   //Al inicializarse el componente
   ngOnInit() {
@@ -123,11 +124,10 @@ export class AnalysisCandilographyComponent implements OnInit {
           }
         }
         else if (this.pointsGlobal.length == this.points[this.count].cantidad) {
-          console.log("Debe presionar Listo para marcar mas puntos");
-
+          this.toast.success("Debe presionar Listo para marcar mas puntos");
         }
         else {
-          console.log("Debe marcar todos los puntos");
+          this.toast.error("Debe marcar todos los puntos requeridos");
         }
       });
   }
@@ -168,7 +168,7 @@ export class AnalysisCandilographyComponent implements OnInit {
         this.nextGif();
       }
     } else {
-      console.log("Debe marcar todos los puntos solicitados");
+      this.toast.error("Debe marcar todos los puntos requeridos");
     }
   }
   //Reestablece el canvas y los gifs

@@ -4,6 +4,7 @@ import { AppService } from 'src/app/services/app.service';
 import { AtImageGifService } from 'src/app/services/at-image-gif.service';
 import { fromEvent } from 'rxjs';
 import { AnalysisTeleradiography } from 'src/app/modules/analysis-teleradiography';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-analysis-teleradiography',
@@ -53,7 +54,7 @@ export class AnalysisTeleradiographyComponent implements OnInit {
   //Define la imagen final con los trazos
   public imageFinalLines: any;
   //Constructor
-  constructor(private at: AnalysisTeleradiography, private appService: AppService, private atImageGifService: AtImageGifService) { }
+  constructor(private at: AnalysisTeleradiography, private appService: AppService, private atImageGifService: AtImageGifService, private toast: ToastrService) { }
   //Al inicializarse el componente
   ngOnInit() {
     //Incializa la imagen gif indicativa
@@ -120,9 +121,9 @@ export class AnalysisTeleradiographyComponent implements OnInit {
             this.flag = true;
           }
         } else if (this.pointsGlobal.length == this.points[this.count].cantidad) {
-          console.log("Debe presionar Listo para marcar mas puntos");
+          this.toast.success("Debe presionar Listo para marcar mas puntos");
         } else {
-          console.log("Debe marcar todos los puntos");
+          this.toast.error("Debe marcar todos los puntos requeridos");
         }
       });
   }
@@ -160,7 +161,7 @@ export class AnalysisTeleradiographyComponent implements OnInit {
         this.nextGif();
       }
     } else {
-      console.log("Debe marcar todos los puntos solicitados");
+      this.toast.error("Debe marcar todos los puntos requeridos");
     }
   }
   //Reestablece el canvas y los gifs

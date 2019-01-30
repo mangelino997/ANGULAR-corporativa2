@@ -91,7 +91,6 @@ export class AnalysisService {
   }
   //Agrega las imagenes del analisis
   public addAnalysis(pImage, apImage, atImage, aoImage, acImage) {
-    console.log(pImage);
     const formData = new FormData();
     let pi = new Blob([pImage], { type: 'image/jpg' });
     let ap = new Blob([apImage], { type: 'image/jpg' });

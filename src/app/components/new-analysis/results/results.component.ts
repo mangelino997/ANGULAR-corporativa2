@@ -94,6 +94,7 @@ export class ResultsComponent implements OnInit {
             res => {
               let response = res.json();
               this.toastr.success(response.mensaje);
+              this.reestablishForm();
             },
             err => {
               var response = err.json();
@@ -105,4 +106,8 @@ export class ResultsComponent implements OnInit {
         }
       );
   }
+//Reestablece los campos del formulario
+private reestablishForm() {
+  this.analysisForm.reset();
+}
 }

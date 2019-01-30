@@ -4,6 +4,7 @@ import { AppService } from 'src/app/services/app.service';
 import { AoImageGifService } from 'src/app/services/ao-image-gif.service';
 import { fromEvent } from 'rxjs';
 import { AnalysisOrthopantomography } from 'src/app/modules/analysis-orthopantomography';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-analysis-orthopantography',
@@ -53,7 +54,7 @@ export class AnalysisOrthopantographyComponent implements OnInit {
   //Define la imagen final con los trazos
   public imageFinalLines: any;
   //Constructor
-  constructor(private ao: AnalysisOrthopantomography, private appService: AppService, private aoImageGifService: AoImageGifService) { }
+  constructor(private ao: AnalysisOrthopantomography, private appService: AppService, private aoImageGifService: AoImageGifService, private toast: ToastrService) { }
   //Al inicializarse el componente
   ngOnInit() {
     //Incializa la imagen gif indicativa
@@ -78,7 +79,6 @@ export class AnalysisOrthopantographyComponent implements OnInit {
     this.aoImageGifService.getByPosition(this.count + 1).subscribe(res => {
       let data = res.json();
       this.aoImageGifService.getImageByPosition(data.position).subscribe(res=>{
-        console.log(res);
         this.indicativeImage.image = res;
       });
       this.indicativeImage.pointName = data.pointName;
@@ -122,9 +122,9 @@ export class AnalysisOrthopantographyComponent implements OnInit {
             this.flag = true;
           }
         } else if (this.pointsGlobal.length == this.points[this.count].cantidad) {
-          console.log("Debe presionar Listo para marcar mas puntos");
+          this.toast.success("Debe presionar Listo para marcar mas puntos");
         } else {
-          console.log("Debe marcar todos los puntos");
+          this.toast.error("Debe marcar todos los puntos");
         }
       });
   }
@@ -165,7 +165,7 @@ export class AnalysisOrthopantographyComponent implements OnInit {
         this.nextGif();
       }
     } else {
-      console.log("Debe marcar todos los puntos solicitados");
+      this.toast.error("Debe marcar todos los puntos solicitados");
     }
   }
   //Reestablece el canvas y los gifs

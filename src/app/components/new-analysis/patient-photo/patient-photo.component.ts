@@ -27,9 +27,7 @@ export class PatientPhotoComponent implements OnInit {
     //Establece la imagen de mujer atob(this.form.get('photographyImage').value.data);
     this.indicativeImageService.getById(1).subscribe(res=>{
       var img=res.json();
-      console.log(img);
       this.femaleImage = atob(img.data);
-      console.log(this.femaleImage);
     });
     //Establece la imagen de hombre
     this.indicativeImageService.getById(2).subscribe(res=>{
