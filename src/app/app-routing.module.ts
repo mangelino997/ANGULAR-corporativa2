@@ -11,6 +11,7 @@ import { PhotographyGifComponent } from './components/photography-gif/photograph
 import { TeleradiographyGifComponent } from './components/teleradiography-gif/teleradiography-gif.component';
 import { OrthopantomographyGifComponent } from './components/orthopantomography-gif/orthopantomography-gif.component';
 import { CondylegraphyGifComponent } from './components/condylegraphy-gif/condylegraphy-gif.component';
+import { UsersComponent } from './components/users/users.component';
 
 const routes: Routes = [
   {path: '', component: AppComponent},
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'newanalysis', component: NewAnalysisComponent},
   {path: 'myanalysis', component: MyAnalysisComponent},
   {path: 'profile', component: ProfileComponent},
+  {path: 'users', component: UsersComponent},
   {path: 'indicativeimage', component: IndicativeImageComponent},
   {path: 'gifphotography', component: PhotographyGifComponent},
   {path: 'gifteleradiography', component: TeleradiographyGifComponent},

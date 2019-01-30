@@ -78,7 +78,7 @@ export class AnalysisPhotographyComponent implements OnInit {
   private nextGif(): void {
     this.afImageGifService.getByPositionAndSex(this.count+1, 1).subscribe(res => {
       let data = res.json();
-      this.indicativeImage.image = this.appService.getUrlBase() + '/afImageGif/getImageByPositionAndSex/' + data.position + '/' + data.sex.id;
+      this.indicativeImage.image = atob(data.data);
       this.indicativeImage.pointName = data.pointName;
       this.indicativeImage.pointDescription = data.pointDescription;
     });

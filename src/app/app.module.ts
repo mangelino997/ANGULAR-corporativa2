@@ -69,6 +69,7 @@ import { TeleradiographyGifComponent } from './components/teleradiography-gif/te
 import { CondylegraphyGifComponent } from './components/condylegraphy-gif/condylegraphy-gif.component';
 import { OrthopantomographyGifComponent } from './components/orthopantomography-gif/orthopantomography-gif.component';
 import { AcImageGifService } from './services/ac-image-gif.service';
+import { UsersComponent } from './components/users/users.component';
 
 const stompConfig: StompConfig = {
   url: 'ws://192.168.0.32:8084/meserws/socket',
@@ -107,7 +108,8 @@ const stompConfig: StompConfig = {
     PhotographyGifComponent,
     TeleradiographyGifComponent,
     CondylegraphyGifComponent,
-    OrthopantomographyGifComponent
+    OrthopantomographyGifComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,

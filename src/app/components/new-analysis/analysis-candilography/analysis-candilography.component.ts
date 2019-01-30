@@ -5,6 +5,7 @@ import { AtImageGifService } from 'src/app/services/at-image-gif.service';
 import { fromEvent } from 'rxjs';
 import { AnalysisCondylegraphy } from 'src/app/modules/analysis-condylegraphy';
 import { ToastrService } from 'ngx-toastr';
+import { AcImageGifService } from 'src/app/services/ac-image-gif.service';
 
 @Component({
   selector: 'app-analysis-candilography',
@@ -54,7 +55,7 @@ export class AnalysisCandilographyComponent implements OnInit {
   //Define la imagen final con los trazos
   public imageFinalLines: any;
   //Constructor
-  constructor(private ac: AnalysisCondylegraphy, private appService: AppService, private atImageGifService: AtImageGifService, private toast: ToastrService) {}
+  constructor(private ac: AnalysisCondylegraphy, private appService: AppService, private acImageGifService: AcImageGifService, private atImageGifService: AtImageGifService, private toast: ToastrService) {}
   //Al inicializarse el componente
   //Al inicializarse el componente
   ngOnInit() {
@@ -79,12 +80,12 @@ export class AnalysisCandilographyComponent implements OnInit {
   }
   //Establece el gif correspondiente
   private nextGif(): void {
-    this.atImageGifService.getByPosition(this.count + 1).subscribe(res => {
-      let data = res.json();
-      this.indicativeImage.image = this.appService.getUrlBase() + '/acImageGif/getImageByPosition/' + data.position;
-      this.indicativeImage.pointName = data.pointName;
-      this.indicativeImage.pointDescription = data.pointDescription;
-    });
+    this.acImageGifService.getByPosition(this.count + 1).subscribe(res => {
+        let data = res.json();
+        this.indicativeImage.image = atob(data.data);
+        this.indicativeImage.pointName = data.pointName;
+        this.indicativeImage.pointDescription = data.pointDescription;
+      });
   }
   //Establece la imagen indicativa
   public setIndicativeImage(indicativeImage): void {

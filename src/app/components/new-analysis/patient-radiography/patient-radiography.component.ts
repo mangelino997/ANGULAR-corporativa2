@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AppService } from 'src/app/services/app.service';
 import { PatientRadiography } from 'src/app/modules/patient-radiography';
+import { IndicativeImageService } from 'src/app/services/indicative-image.service';
 
 @Component({
   selector: 'app-patient-radiography',
@@ -20,15 +21,24 @@ export class PatientRadiographyComponent implements OnInit {
   //Define la imagen de condilography
   public condilographyImage:string;
   //Constructor
-  constructor(private pr: PatientRadiography, private appService: AppService) {}
+  constructor(private pr: PatientRadiography, private appService: AppService, private indicativeImageService: IndicativeImageService) {}
   //Al inicializarse el componente
   ngOnInit() {
     //Establece la teleradiografia
-    this.teleradiographyImage = this.appService.getUrlBase() + '/indicativeImage/getById/3';
+    this.indicativeImageService.getById(3).subscribe(res=>{
+      var data= res.json();
+      this.teleradiographyImage = atob(data.data);
+    });
     //Establece la ortopantomografia
-    this.orthopantomographyImage = this.appService.getUrlBase() + '/indicativeImage/getById/4';
+    this.indicativeImageService.getById(4).subscribe(res=>{
+      var data= res.json();
+      this.orthopantomographyImage = atob(data.data);
+    });
     //Establece la condilografia
-    this.condilographyImage = this.appService.getUrlBase() + '/indicativeImage/getById/5';
+    this.indicativeImageService.getById(5).subscribe(res=>{
+      var data= res.json();
+      this.condilographyImage = atob(data.data);
+    });
     //Crea el formulario
     this.radiographyForm = this.pr.form;
   }

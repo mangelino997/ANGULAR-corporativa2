@@ -79,7 +79,7 @@ export class AnalysisTeleradiographyComponent implements OnInit {
   private nextGif(): void {
     this.atImageGifService.getByPosition(this.count + 1).subscribe(res => {
       let data = res.json();
-      this.indicativeImage.image = this.appService.getUrlBase() + '/atImageGif/getImageByPosition/' + data.position;
+      this.indicativeImage.image = atob(data.data);
       this.indicativeImage.pointName = data.pointName;
       this.indicativeImage.pointDescription = data.pointDescription;
     });

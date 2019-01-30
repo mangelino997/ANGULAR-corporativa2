@@ -31,7 +31,8 @@ export class PatientPhotoComponent implements OnInit {
     });
     //Establece la imagen de hombre
     this.indicativeImageService.getById(2).subscribe(res=>{
-      this.maleImage = res.json().data;
+      var img=res.json();
+      this.maleImage = atob(img.data);
     });
     //Establece la imagen por defecto en imagen real del paciente
     this.sexSelectedImage = this.femaleImage;
