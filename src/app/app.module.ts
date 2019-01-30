@@ -29,6 +29,10 @@ import { TeleradiographyImageService } from './services/teleradiography-image.se
 import { DateService } from './services/date.service';
 import { AnalysisService } from './services/analysis.service';
 import { TypeAnalysisService } from './services/type-analysis.service';
+import { AcImageGifService } from './services/ac-image-gif.service';
+import { TabService } from './services/tab.service';
+import { RolService } from './services/rol.service';
+import { UserImageService } from './services/user-image.service';
 
 //Modelos
 import { Analysis } from './modules/analysis';
@@ -68,8 +72,10 @@ import { PhotographyGifComponent } from './components/photography-gif/photograph
 import { TeleradiographyGifComponent } from './components/teleradiography-gif/teleradiography-gif.component';
 import { CondylegraphyGifComponent } from './components/condylegraphy-gif/condylegraphy-gif.component';
 import { OrthopantomographyGifComponent } from './components/orthopantomography-gif/orthopantomography-gif.component';
-import { AcImageGifService } from './services/ac-image-gif.service';
 import { UsersComponent } from './components/users/users.component';
+import { Users } from './modules/users';
+
+
 
 const stompConfig: StompConfig = {
   url: 'ws://192.168.0.32:8084/meserws/socket',
@@ -146,6 +152,7 @@ const stompConfig: StompConfig = {
   providers: [
     Analysis,
     Patient,
+    Users,
     PatientPhoto,
     AnalysisPhotography,
     PatientRadiography,
@@ -170,7 +177,10 @@ const stompConfig: StompConfig = {
     ModuleService,
     LoginService,
     UserService,
+    UserImageService,
     GuardService,
+    TabService,
+    RolService,
     StompService,
     {
       provide: StompConfig,
