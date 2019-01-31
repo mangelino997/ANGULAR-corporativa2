@@ -6,6 +6,7 @@ import { fromEvent } from 'rxjs';
 import { AnalysisCondylegraphy } from 'src/app/modules/analysis-condylegraphy';
 import { ToastrService } from 'ngx-toastr';
 import { AcImageGifService } from 'src/app/services/ac-image-gif.service';
+import { AnalysisPlanService } from 'src/app/services/analysis-plan.service';
 
 @Component({
   selector: 'app-analysis-candilography',
@@ -38,6 +39,8 @@ export class AnalysisCandilographyComponent implements OnInit {
   public pointsGlobal: Array<any> = [];
   //Difine la lista de puntos que se van marcando
   public points: Array<any> = [];
+  //Define los datos a mostrar del tipo de Analisis
+  public typeAnalysis: Array<any> = [];
   //Define un contador que se incrementara en 1
   public count: number = 0;
   //Define una lista que determina las lineas a marcar segun el analisis que se procesa
@@ -54,9 +57,11 @@ export class AnalysisCandilographyComponent implements OnInit {
   public flag: boolean = false;
   //Define la imagen final con los trazos
   public imageFinalLines: any = null;
+  //Define la bandera, si ya se activo el evento para evitar que se dupliquen los eventos y los puntos
+  public flagEvent:boolean = false;
   //Constructor
   constructor(private ac: AnalysisCondylegraphy, private appService: AppService, private acImageGifService: AcImageGifService, 
-    private atImageGifService: AtImageGifService, private toast: ToastrService) {}
+    private atImageGifService: AtImageGifService, private toast: ToastrService, private analysisPlanService: AnalysisPlanService) {}
   //Al inicializarse el componente
   //Al inicializarse el componente
   ngOnInit() {
@@ -78,6 +83,11 @@ export class AnalysisCandilographyComponent implements OnInit {
     this.pointsGlobal = [{ cantidad: 4, color: '#C20017', colorLine: '#ECEC1C' }, { cantidad: 8, color: '#6E3B8B', colorLine: '#ECEC1C' },
     { cantidad: 12, color: '#6EA63B', colorLine: '#ECEC1C' }, { cantidad: 16, color: '#0397D5', colorLine: '#ECEC1C' }, { cantidad: 20, color: '#FBEB03', colorLine: '#ECEC1C' }]
     this.totalCount = 5;
+    // Carga los datos del Tipo de Analisis
+    this.analysisPlanService.listByTypeAnalysis(4).subscribe(res=>{
+      var response= res.json();
+      this.typeAnalysis=response;
+    });
   }
   //Establece el gif correspondiente
   private nextGif(): void {
@@ -291,5 +301,6 @@ export class AnalysisCandilographyComponent implements OnInit {
   //Envia el formulario a Nuevo Analisis luego a Resultados
   public sendDataAC(): void {
     this.dataEvent.emit(this.imageFinalLines);
+    this.flagEvent=true;
   }
 }

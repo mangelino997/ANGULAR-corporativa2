@@ -5,6 +5,7 @@ import { AfImageGifService } from 'src/app/services/af-image-gif.service';
 import { AppService } from 'src/app/services/app.service';
 import { AnalysisPhotography } from 'src/app/modules/analysisPhotography';
 import { ToastrService } from 'ngx-toastr';
+import { AnalysisPlanService } from 'src/app/services/analysis-plan.service';
 
 @Component({
   selector: 'app-analysis-photography',
@@ -33,10 +34,12 @@ export class AnalysisPhotographyComponent implements OnInit {
   @ViewChild('canvas') public canvas: ElementRef;
   //Define cx
   private cx: CanvasRenderingContext2D;
-  //Difine la lista de puntos que se van marcando
+  //Define la lista de puntos que se van marcando
   private pointsGlobal: Array<any> = [];
-  //Difine la lista de puntos que se van marcando
+  //Define la lista de puntos que se van marcando
   private points: Array<any> = [];
+  //Define los datos a mostrar del tipo de Analisis
+  private typeAnalysis: Array<any> = [];
   //Define un contador que se incrementara en 1
   public count: number = 0;
   //Define una lista que determina las lineas a marcar segun el analisis que se procesa
@@ -51,10 +54,12 @@ export class AnalysisPhotographyComponent implements OnInit {
   public indicativeImageSex: any;
   //Define un booleano para controlar la visualizacion de boton Listo
   public flag:boolean = false;
+  //Define la bandera, si ya se activo el evento para evitar que se dupliquen los eventos y los puntos
+  public flagEvent:boolean = false;
   //Define la imagen final con los trazos
   public imageFinalLines:any = null;
   //Constructor
-  constructor(private ap: AnalysisPhotography ,private appService: AppService, 
+  constructor(private ap: AnalysisPhotography ,private appService: AppService, private analysisPlanService: AnalysisPlanService,
     private afImageGifService: AfImageGifService, private toast: ToastrService) {}
   //Al inicializarse el componente
   ngOnInit() {
@@ -74,6 +79,11 @@ export class AnalysisPhotographyComponent implements OnInit {
     this.pointsGlobal = [{cantidad: 2, color: '#FF001D'}, {cantidad: 4, color: '#FEFE47'}, 
       {cantidad: 5, color: '#007F21'}, {cantidad: 6, color: '#007F21'}, {cantidad: 8, color: '#A7D7E4'}]
     this.totalCount = 5;
+    // Carga los datos del Tipo de Analisis
+    this.analysisPlanService.listByTypeAnalysis(1).subscribe(res=>{
+      var response= res.json();
+      this.typeAnalysis=response;
+    });
   }
   //Establece el gif correspondiente
   private nextGif(): void {
@@ -107,10 +117,14 @@ export class AnalysisPhotographyComponent implements OnInit {
         let point = { x: null, y: null, color: null };
         let x = r.clientX - rect.left;
         let y = r.clientY - rect.top;
-        let color = this.pointsGlobal[this.count].color
+        let color = this.pointsGlobal[this.count].color;
         point.x = x;
         point.y = y;
         point.color = color;
+
+        console.log(this.points.length);
+        console.log(point);
+
         //Controla si permite marcar mas puntos, segun si se hizo click en el boton "listo"
         if (this.points.length < this.pointsGlobal[this.count].cantidad) {
           this.points.push(point);
@@ -265,5 +279,6 @@ export class AnalysisPhotographyComponent implements OnInit {
   //Envia el formulario a Nuevo Analisis luego a Resultados
   public sendDataAP(): void {
     this.dataEvent.emit(this.imageFinalLines)
+    this.flagEvent=true;
   }
 }

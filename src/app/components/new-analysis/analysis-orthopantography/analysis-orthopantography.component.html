@@ -44,12 +44,7 @@
             <h6 class="text-center">Planos del Análisis</h6>
             <div class="row">
               <div class="col" style="height: 300px; overflow-y: scroll;">
-                <div class="li-blue">Plano bicondilar: se forma uniendo los Puntos TG.</div>
-                <div class="li-lightgreen">Plano de Línea Media: Se forma pasando un perpendicular al Plano bicondilar
-                  por el punto interincisivo superior.</div>
-                <div class="li-board">Plano de oclusión: Se forma al trazar una línea tangente a las cúspides oclusales
-                  más elevadas.</div>
-                <div class="li-violet">Plano vertical: se forma uniendo los Puntos TG con el Punto Mentoniano.</div>
+                  <div *ngFor="let plano of typeAnalysis; let i of index" class="li-plane-black" [ngStyle]="{'background-color': plano.color}" >{{plano.name}}: {{plano.description}}</div>
               </div>
             </div>
             <br><br>

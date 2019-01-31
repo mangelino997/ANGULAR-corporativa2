@@ -44,10 +44,7 @@
             <h6 class="text-center">Planos del Análisis</h6>
             <div class="row">
               <div class="col" style="height: 280px; overflow-y: scroll;">
-                <div class="li-blue">Perpendicular articular: Plano que parte de TG perpendicular al Plano Articular(
-                  P-TG).</div>
-                <div class="li-lightgreen">Plano Articular: se forma uniendo los puntos P-TG.</div>
-                <div class="li-board">Plano Condilar: se forma uniendo los puntos C-R.</div>
+                <div *ngFor="let plano of typeAnalysis; let i of index" class="li-plane-black" [ngStyle]="{'background-color': plano.color}" >{{plano.name}}: {{plano.description}}</div>
               </div>
             </div>
             <br><br>

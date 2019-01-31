@@ -5,6 +5,7 @@ import { AtImageGifService } from 'src/app/services/at-image-gif.service';
 import { fromEvent } from 'rxjs';
 import { AnalysisTeleradiography } from 'src/app/modules/analysis-teleradiography';
 import { ToastrService } from 'ngx-toastr';
+import { AnalysisPlanService } from 'src/app/services/analysis-plan.service';
 
 @Component({
   selector: 'app-analysis-teleradiography',
@@ -37,6 +38,8 @@ export class AnalysisTeleradiographyComponent implements OnInit {
   private pointsGlobal: Array<any> = [];
   //Difine la lista de puntos que se van marcando
   private points: Array<any> = [];
+  //Define los datos a mostrar del tipo de Analisis
+  public typeAnalysis: Array<any> = [];
   //Define un contador que se incrementara en 1
   public count: number = 0;
   //Define una lista que determina las lineas a marcar segun el analisis que se procesa
@@ -53,8 +56,10 @@ export class AnalysisTeleradiographyComponent implements OnInit {
   public flag: boolean = false;
   //Define la imagen final con los trazos
   public imageFinalLines: any = null;
+  //Define la bandera, si ya se activo el evento para evitar que se dupliquen los eventos y los puntos
+  public flagEvent:boolean = false;
   //Constructor
-  constructor(private at: AnalysisTeleradiography, private appService: AppService, 
+  constructor(private at: AnalysisTeleradiography, private appService: AppService, private analysisPlanService: AnalysisPlanService,
     private atImageGifService: AtImageGifService, private toast: ToastrService) {}
   //Al inicializarse el componente
   ngOnInit() {
@@ -75,6 +80,11 @@ export class AnalysisTeleradiographyComponent implements OnInit {
     { cantidad: 5, color: '#007F21', colorLine: '#ECEC1C' }, { cantidad: 6, color: '#f0f0ed', colorLine: '#C00000' }, { cantidad: 7, color: '#ca0018', colorLine: '#ECEC1C' }, { cantidad: 8, color: '#0c0c0c', colorLine: '#00B050' }, { cantidad: 9, color: '#ff82f6', colorLine: '#ECEC1C' },
     { cantidad: 10, color: '#102277', colorLine: '#ECEC1C' }]
     this.totalCount = 10;
+    // Carga los datos del Tipo de Analisis
+    this.analysisPlanService.listByTypeAnalysis(2).subscribe(res=>{
+      var response= res.json();
+      this.typeAnalysis=response;
+    });
   }
   //Establece el gif correspondiente
   private nextGif(): void {
@@ -124,7 +134,7 @@ export class AnalysisTeleradiographyComponent implements OnInit {
         } else if (this.pointsGlobal.length == this.points[this.count].cantidad) {
           this.toast.success("Debe presionar Listo para marcar mas puntos");
         } else {
-          this.toast.error("Debe marcar todos los puntos requeridos");
+          this.toast.error("Debe presionar Listo para marcar mas puntos");
         }
       });
   }
@@ -286,5 +296,6 @@ export class AnalysisTeleradiographyComponent implements OnInit {
   //Envia el formulario a Nuevo Analisis luego a Resultados
   public sendDataAT(): void {
     this.dataEvent.emit(this.imageFinalLines);
+    this.flagEvent=true;
   }
 }

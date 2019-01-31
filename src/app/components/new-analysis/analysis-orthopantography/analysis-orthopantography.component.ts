@@ -5,6 +5,7 @@ import { AoImageGifService } from 'src/app/services/ao-image-gif.service';
 import { fromEvent } from 'rxjs';
 import { AnalysisOrthopantomography } from 'src/app/modules/analysis-orthopantomography';
 import { ToastrService } from 'ngx-toastr';
+import { AnalysisPlanService } from 'src/app/services/analysis-plan.service';
 
 @Component({
   selector: 'app-analysis-orthopantography',
@@ -37,6 +38,8 @@ export class AnalysisOrthopantographyComponent implements OnInit {
   private pointsGlobal: Array<any> = [];
   //Difine la lista de puntos que se van marcando
   private points: Array<any> = [];
+  //Define los datos a mostrar del tipo de Analisis
+  public typeAnalysis: Array<any> = [];
   //Define un contador que se incrementara en 1
   public count: number = 0;
   //Define una lista que determina las lineas a marcar segun el analisis que se procesa
@@ -53,8 +56,10 @@ export class AnalysisOrthopantographyComponent implements OnInit {
   public flag: boolean = false;
   //Define la imagen final con los trazos
   public imageFinalLines: any = null;
+  //Define la bandera, si ya se activo el evento para evitar que se dupliquen los eventos y los puntos
+  public flagEvent:boolean = false;
   //Constructor
-  constructor(private ao: AnalysisOrthopantomography, private appService: AppService, 
+  constructor(private ao: AnalysisOrthopantomography, private appService: AppService, private analysisPlanService: AnalysisPlanService,
     private aoImageGifService: AoImageGifService, private toast: ToastrService) {}
   //Al inicializarse el componente
   ngOnInit() {
@@ -74,6 +79,11 @@ export class AnalysisOrthopantographyComponent implements OnInit {
     this.pointsGlobal = [{ cantidad: 2, color: '#C20017', colorLine: '#ECEC1C' }, { cantidad: 3, color: '#FF80F5', colorLine: '#ECEC1C' },
     { cantidad: 4, color: '#FBEA43', colorLine: '#ECEC1C' }, { cantidad: 5, color: '#009AD9', colorLine: '#ECEC1C' }]
     this.totalCount = 4;
+    // Carga los datos del Tipo de Analisis
+    this.analysisPlanService.listByTypeAnalysis(3).subscribe(res=>{
+      var response= res.json();
+      this.typeAnalysis=response;
+    });
   }
   //Establece el gif correspondiente
   private nextGif(): void {
@@ -294,5 +304,6 @@ export class AnalysisOrthopantographyComponent implements OnInit {
   //Envia el formulario a Nuevo Analisis luego a Resultados
   public sendDataAO(): void {
     this.dataEvent.emit(this.imageFinalLines);
+    this.flagEvent=true;
   }
 }

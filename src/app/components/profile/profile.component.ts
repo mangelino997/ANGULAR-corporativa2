@@ -20,34 +20,46 @@ export class ProfileComponent implements OnInit {
   public listRoles:Array<any> = [];
   //Define el usuario
   public user:any = null;
+  //Define una bandera por si cambia la foto
+  public flag: boolean= false;
+  //Id de la imagen de Perfil
+  public idImage: number;
   constructor(private appComponent: AppComponent, private userImageService: UserImageService, private rolService: RolService, private users: Users, private userService: UserService, private toastr: ToastrService ) {
     
    }
 
   ngOnInit() {
+    //Establece el usuario
+    this.user = this.appComponent.getUser();
     //inicializa el formulario y sus elementos
     this.form= this.users.form;
     //Obtiene la lista completa de registros (los muestra en la pestaña Listar)
     this.list();
     //Obtiene la lista completa de Roles
     this.listRol();
-    //Establece valores por defecto
-    this.setDefaultValues();
-    //Establece el usuario
-    this.user = this.appComponent.getUser();
     //Muestra los datos del usuario en el formulario
     this.loadDataUser(this.user);
+    //Establece valores por defecto
+    this.setDefaultValues();
+    
+    
   }
   //Establece valores por defecto
   private setDefaultValues(){
+    this.idImage= this.form.get('userImage').value.id;
     //Crea un json img vacio
-    let img = { name: null, data: 'assets/user.png' };
+    let img = { name: null, data: this.form.get('userImage').value.data, id: this.idImage };
     //Establece el json vacio a imagen
     this.form.get('userImage').setValue(img);
+    console.log(this.form.value);
   }
   //Establece el formulario 
   public loadDataUser(elemento) {
-    this.form.patchValue(elemento);
+    this.form.reset();
+    this.userService.getByUsername(elemento.username).subscribe(res=>{
+      this.user= res.json();
+    });
+    this.form.patchValue(this.user);
     this.form.get('userImage').value.data=atob(this.form.get('userImage').value.data);
   }
   //Formatea el valor del autocompletado
@@ -86,41 +98,36 @@ private list(){
   }
   //Actualiza un registro
   private update(){
-    this.userImageService.add(this.form.value.userImage).subscribe(
-      res=>{
-        var idImage= res.json().id - 1;
-        this.form.get('userImage').setValue({id: idImage});
-        this.form.get('rol').setValue({id: this.form.get('rol').value.id});
-        console.log(this.form.value);
+    this.userImageService.update(this.form.value.userImage).subscribe(
+      res => {
+        let img= this.form.get('userImage').value;
+        this.form.get('userImage').setValue({ id: this.form.value.userImage.id });
+        this.form.get('rol').setValue({ id: this.form.get('rol').value.id });
         this.userService.update(this.form.value).subscribe(
           res => {
             var respuesta = res.json();
-            if(respuesta.codigo == 200) {
-              this.reestablishForm(undefined);
-              setTimeout(function() {
+            if (respuesta.codigo == 200) {
+              setTimeout(function () {
                 document.getElementById('idFirstname').focus();
               }, 20);
               this.toastr.success(respuesta.mensaje);
+              this.form.get('userImage').setValue(img);
             }
           },
           err => {
             var respuesta = err.json();
-            if(respuesta.codigo == 11002) {
-              document.getElementById("labelNombre").classList.add('label-error');
-              document.getElementById("idFirstname").classList.add('is-invalid');
-              document.getElementById("idFirstname").focus();
-              this.toastr.error(respuesta.mensaje);
-            }
+            this.toastr.error(respuesta.mensaje);
           }
         );
-    },
-    err=>{
-      var response = err.json();
-      this.toastr.error(response.mensaje);
-    });
+      },
+      err => {
+        var response = err.json();
+        this.toastr.error(response.mensaje);
+      });
   }
   //Reestablece los campos formularios
   private reestablishForm(id) {
+    this.flag=false;
     this.setDefaultValues();
     this.loadDataUser(this.user);   
   }
@@ -144,7 +151,8 @@ private list(){
       reader.onload = e =>{
         let image = {
           name: file.name,
-          data: reader.result
+          data: reader.result,
+          id: this.idImage
         }
         this.form.get('userImage').setValue(image);
       }

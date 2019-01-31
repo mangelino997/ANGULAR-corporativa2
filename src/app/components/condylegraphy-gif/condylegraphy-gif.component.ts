@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AcImageGifService } from 'src/app/services/ac-image-gif.service';
 import { ToastrService } from 'ngx-toastr';
+import { AnalysisPlanService } from 'src/app/services/analysis-plan.service';
 
 @Component({
   selector: 'app-condylegraphy-gif',
@@ -22,6 +23,7 @@ export class CondylegraphyGifComponent implements OnInit {
     });
     //Establece valores por defecto
     this.setDefaultValues();
+    
   }
   //Establece valores por defecto
   private setDefaultValues(): void {

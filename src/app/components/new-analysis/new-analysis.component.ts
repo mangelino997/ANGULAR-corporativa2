@@ -139,21 +139,27 @@ export class NewAnalysisComponent implements OnInit {
         this.dpComponent.sendData();
         break;
       case 2: 
+        if(this.ppComponent.flagEvent==false)
         this.ppComponent.sendData();
         break;
       case 3: 
-        this.apComponent.sendDataAP()();
+      if(this.apComponent.flagEvent==false)
+        this.apComponent.sendDataAP();
         break;
       case 4: 
-        this.prComponent.sendDataPR()();
+      if(this.prComponent.flagEvent==false)
+        this.prComponent.sendDataPR();
         break;
       case 5: 
+      if(this.atComponent.flagEvent==false)
         this.atComponent.sendDataAT();
         break;
       case 6: 
-        this.aoComponent.sendDataAO()();
+      if(this.aoComponent.flagEvent==false)
+        this.aoComponent.sendDataAO();
         break;
       case 7: 
+      if(this.acComponent.flagEvent==false)
         this.acComponent.sendDataAC();
         break;
     }

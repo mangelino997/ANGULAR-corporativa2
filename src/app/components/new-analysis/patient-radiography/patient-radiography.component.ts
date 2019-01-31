@@ -20,6 +20,8 @@ export class PatientRadiographyComponent implements OnInit {
   public teleradiographyImage:any = null;
   //Define la imagen de condilography
   public condilographyImage:any = null;
+  //Define la bandera, si ya se activo el evento para evitar que se dupliquen los eventos y los puntos
+  public flagEvent:boolean = false;
   //Constructor
   constructor(private pr: PatientRadiography, private appService: AppService, private indicativeImageService: IndicativeImageService) {}
   //Al inicializarse el componente
@@ -45,6 +47,8 @@ export class PatientRadiographyComponent implements OnInit {
   //Envia el formulario a Nuevo Analisis
   public sendDataPR(): void {
     this.dataEvent.emit(this.radiographyForm.value);
+    this.flagEvent=true;
+
   }
   //Metodo cargar imagen
   public readURL(event, image): void {

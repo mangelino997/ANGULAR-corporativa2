@@ -20,6 +20,8 @@ export class PatientPhotoComponent implements OnInit {
   public femaleImage:any = null;
   //Define la imagen para hombre
   public maleImage:any = null;
+  //Define la bandera, si ya se activo el evento para evitar que se dupliquen los eventos y los puntos
+  public flagEvent:boolean = false;
   //Constructor
   constructor(private indicativeImageService: IndicativeImageService, private patientPhoto: PatientPhoto, private appService: AppService) {}
   //Al inicializarse el componente
@@ -43,6 +45,7 @@ export class PatientPhotoComponent implements OnInit {
   public sendData(): void {
     this.patientPhotoForm.get('indicativeImage').setValue(this.sexSelectedImage);
     this.dataEvent.emit(this.patientPhotoForm.value);
+    this.flagEvent=true;
   }
   //Determina la seleccion del sexo del paciente
   public sexSelected(card) {

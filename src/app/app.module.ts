@@ -74,9 +74,10 @@ import { CondylegraphyGifComponent } from './components/condylegraphy-gif/condyl
 import { OrthopantomographyGifComponent } from './components/orthopantomography-gif/orthopantomography-gif.component';
 import { UsersComponent } from './components/users/users.component';
 import { Users } from './modules/users';
+import { AnalysisPlanService } from './services/analysis-plan.service';
 
 const stompConfig: StompConfig = {
-  url: 'ws://localhost:8084/meserws/socket',
+  url: 'ws://192.168.0.32:8084/meserws/socket',
   headers: {},
   heartbeat_in: 0,
   heartbeat_out: 20000,
@@ -149,6 +150,7 @@ const stompConfig: StompConfig = {
   ],
   providers: [
     Analysis,
+    AnalysisPlanService,
     Patient,
     Users,
     PatientPhoto,

@@ -44,15 +44,7 @@
             <h6 class="text-center">Planos del Análisis</h6>
             <div class="row">
               <div class="col" style="height: 500px; overflow-y: scroll;">
-                <div class="li-blue">Plano de Frankfort: Unión de Porion-Sub-orbitario.</div>
-                <div class="li-lightgreen">Plano Basion-Nasión: Unión de ambos puntos.</div>
-                <div class="li-board">Plano XI: unión del punto condilar con el punto XI.</div>
-                <div class="li-violet">Plano ENA-XI: unión de dichos puntos.</div>
-                <div class="li-green">Plano XI-mentoniano: Unión de dichos puntos.</div>
-                <div class="li-lightblue">Vertical Pterigoidea: Plano perpendicular al plano de Frackfort, que parte del punto Pterigoideo.</div>
-                <div class="li-cyan">Altura facial inferior: Ángulo formado entre los planos ENA-XI y Mentoniano-XI.</div>
-                <div class="li-black">Plano ENA- Mentoniano: Unión de ambos puntos.</div>
-                <div class="li-pink">Plano Articular Funcional: Unión de Porion con Mentoniano.</div>
+                  <div *ngFor="let plano of typeAnalysis; let i of index" class="li-plane-black" [ngStyle]="{'background-color': plano.color}" >{{plano.name}}: {{plano.description}}</div>
               </div>
             </div>
             <br><br>

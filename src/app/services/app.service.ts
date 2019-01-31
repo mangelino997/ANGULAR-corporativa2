@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class AppService {
   //Define la IP
-  private IP = 'http://localhost:8084'; //http://localhost:8080 -------http://192.168.0.32:8080
+  private IP = 'http://192.168.0.32:8084'; //http://localhost:8080 -------http://192.168.0.32:8080
   //Define la url base
   private URL_BASE = this.IP + '/meserws/auth';
   //Define la url de subcripcion a socket
