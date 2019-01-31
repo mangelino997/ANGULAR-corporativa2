@@ -1,143 +1,138 @@
-<div class="container-fluid padding-content" (window:keydown)="manageEvent($event.keyCode)">
+<div class="container-fluid padding-content">
   <div class="row">
-    <div class="container text-center">
+    <div class="center">
       <nav mat-tab-nav-bar>
-          <a mat-tab-link disabled>Usuario</a>
-          <a mat-tab-link
-             *ngFor="let tab of tabs"
-             [active]="activeLink== tab.name"
-             (click)="selectTab(tab.id, tab.name)">
-            {{tab.name}}
-          </a>
-        </nav>
+        <a mat-tab-link disabled>Usuario</a>
+        <a mat-tab-link *ngFor="let tab of tabs" [active]="activeLink == tab.name" (click)="selectTab(tab.id, tab.name)">
+          {{tab.name}}
+        </a>
+      </nav>
     </div>
   </div>
-
-  <div class="row  contenedor" *ngIf="selectedIndex < 5">
-  <div class="col-md-12 ">
-    <h5 class="text-center">{{currentTab}} Usuario</h5>
-    <form [formGroup]="form" class="contenedor">
-      <div class="row ">
+  <br>
+  <div class="row contenedor" *ngIf="selectedIndex < 5">
+    <div class="col-md-12 ">
+      <h5 class="text-center">{{currentTab}} Usuario</h5>
+      <form [formGroup]="form" class="contenedor">
+        <div class="row ">
           <div class="col-md-3"></div>
           <div class="col-md-6">
-            <div class="form-group has-float-label " *ngIf="mostrarAutocompletado">
-              <label for="idAutocompletado" class="tamanio-label">Buscar Usuario</label>
-              <input id="idAutocompletado" class="form-control form-control-sm color-busqueda"
-                type="text" matInput [formControl]="autocompletado" [matAutocomplete]="auto" autocomplete="off">
-              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
-                <mat-option *ngFor="let user of resultUsers" [value]="item"
-                  (onSelectionChange)="autocompleteChange(user)">
-                  {{user.firstname}}
+            <div class="form-group has-float-label " *ngIf="showAutocomplete">
+              <label for="idAutocomplete" class="tamanio-label">Buscar Usuario</label>
+              <input id="idAutocomplete" class="form-control form-control-sm color-busqueda" type="text" matInput
+                [formControl]="autocomplete" [matAutocomplete]="auto" autocomplete="off" placeholder="Buscar por nombre">
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)" (optionSelected)="autocompleteChange()">
+                <mat-option *ngFor="let user of resultUsers" [value]="user">
+                  {{user.name}}
                 </mat-option>
               </mat-autocomplete>
             </div>
           </div>
         </div>
-      <div class="row">
-        <div class="col-md-3">
-          <div>
-            <img [src]="form.value.userImage.data" />          
+        <div class="row">
+          <div class="col-md-3 text-center">
+            <div>
+              <img [src]="form.value.userImage.data || ''" />
+            </div>
+            <div>
+              <input style="display: none;" type="file" (change)="readURL($event)" #fileInput />
+              <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="fileInput.click()">Subir Foto</button>
+            </div>
           </div>
-          <div>
-            <input style="display: none;" type="file" (change)="readURL($event)" #fileInput  />
-            <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="fileInput.click()" >Subir Foto</button>
+          <div class="col-md-9">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="idFirstname">Nombre</label>
+                  <input id="idFirstname" type="text" class="form-control" formControlName="firstname" [readonly]="readonly" placeholder="Nombre" autocomplete="off">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="idLastname">Apellido</label>
+                  <input id="idLastname" type="text" class="form-control" formControlName="lastname" [readonly]="readonly" placeholder="Apellido" autocomplete="off">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="idDocumentNumber">Número de Documento de Identidad</label>
+                  <input id="idDocumentNumber" type="number" class="form-control" formControlName="documentNumber"
+                    [readonly]="readonly" placeholder="Número de Documento de Identidad" autocomplete="off">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="idEnrollment">Matricula Profesional</label>
+                  <input id="idEnrollment" type="number" class="form-control" formControlName="enrollment" [readonly]="readonly" placeholder="Matricula Profesional" autocomplete="off">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="idBirthdate">Fecha de Nacimiento</label>
+                  <input id="idBirthdate" type="date" class="form-control" formControlName="birthdate" [readonly]="readonly" placeholder="Fecha de Nacimiento" autocomplete="off">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="idAddress">Domicilio</label>
+                  <input id="idAddress" type="text" class="form-control" formControlName="address" [readonly]="readonly" placeholder="Domicilio" autocomplete="off">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="idCity">Ciudad</label>
+                  <input id="idCity" type="text" class="form-control" formControlName="city" [readonly]="readonly" placeholder="Ciudad" autocomplete="off">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="idState">Provincia/Estado</label>
+                  <input id="idState" type="text" class="form-control" formControlName="state" [readonly]="readonly" placeholder="Provincia/Estado" autocomplete="off">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="idCountry">País</label>
+                  <input id="idCountry" type="text" class="form-control" formControlName="country" [readonly]="readonly" placeholder="País" autocomplete="off">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="idUserName">Nombre de Usuario</label>
+                  <input id="idUserName" type="text" class="form-control" formControlName="username" [readonly]="readonly" placeholder="Nombre de Usuario" autocomplete="off">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="idPassword">Contraseña</label>
+                  <input id="idPassword" type="password" class="form-control" formControlName="password" [readonly]="selectedIndex != 1" placeholder="Contraseña" autocomplete="off">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group has-float-label">
+                  <label for="idRol" class="tamanio-label">Rol</label>
+                  <mat-select id="idRol" class="form-control " formControlName="rol" placeholder="Rol" [compareWith]="compareFn">
+                    <mat-option *ngFor="let rol of listRoles" [value]="rol">
+                      {{rol.name}}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+            </div>
+            <button id="idBoton" *ngIf="showButton" mat-raised-button color="primary" formnovalidate (click)="action(selectedIndex)" [disabled]="!form.valid">
+              {{currentTab}}
+            </button>
           </div>
         </div>
-        <div class="col-md-9">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="idFirstname">Nombre</label>
-                <input id="idFirstname" type="text" class="form-control" formControlName="firstname" [readonly]="soloLectura">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="idLastname">Apellido</label>
-                <input id="idLastname" type="text" class="form-control" formControlName="lastname" [readonly]="soloLectura">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="idDocumentNumber">Número de Documento de Identidad</label>
-                <input id="idDocumentNumber" type="number" class="form-control" formControlName="documentNumber" [readonly]="soloLectura">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="idEnrollment">Matricula Profesional</label>
-                <input id="idEnrollment" type="number" class="form-control" formControlName="enrollment" [readonly]="soloLectura">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="idBirthdate">Fecha de Nacimiento</label>
-                <input id="idBirthdate" type="date" class="form-control" formControlName="birthdate" [readonly]="soloLectura">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="idAddress">Domicilio</label>
-                <input id="idAddress" type="text" class="form-control" formControlName="address" [readonly]="soloLectura">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="idCity">Ciudad</label>
-                <input id="idCity" type="text" class="form-control" formControlName="city" [readonly]="soloLectura">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="idState">Provincia/Estado</label>
-                <input id="idState" type="text" class="form-control" formControlName="state" [readonly]="soloLectura">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="idCountry">País</label>
-                <input id="idCountry" type="text" class="form-control" formControlName="country" [readonly]="soloLectura">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="idUserName">Nombre de Usuario</label>
-                <input id="idUserName" type="text" class="form-control" formControlName="username" [readonly]="soloLectura">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="idPassword">Contraseña</label>
-                <input id="idPassword" type="password" class="form-control" formControlName="password" [readonly]="soloLectura">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group has-float-label">
-                <label for="idRol" class="tamanio-label">Rol</label>
-                <mat-select id="idRol" class="form-control " formControlName="rol"
-                  placeholder="Roles" [compareWith]="compareFn">
-                  <mat-option *ngFor="let rol of listRoles" [value]="rol">
-                    {{rol.name}}
-                  </mat-option>
-                </mat-select>
-              </div>
-            </div>
-          </div>
-          <button id="idBoton" *ngIf="mostrarBoton" class="btn btn-primary" type="button" 
-            formnovalidate (click)="action(selectedIndex)" >
-            {{currentTab}}
-          </button>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-</div>
 </div>

@@ -12,12 +12,16 @@ export class ToolbarProfileComponent implements OnInit {
   @Output() dataEvent = new EventEmitter<any>();
   //Define el usuario
   public user:any = null;
+  //Define la imagen del usuario
+  public userImage:any = null;
   //Constructor
   constructor(private appComponent: AppComponent, private router: Router) { }
   //Al inicializarse el componente
   ngOnInit() {
     //Establece el usuario
     this.user = this.appComponent.getUser();
+    //Establece la imagen del usuario
+    this.userImage = atob(this.user.userImage.data);
   }
   //Envia los datos al componente padre
   public sendData(state): void {

@@ -47,15 +47,16 @@ export class AnalysisCandilographyComponent implements OnInit {
   //Define la imagen gif indicativa
   public indicativeImage: any = {};
   //Define la imagen real del paciente
-  public imageReal: any;
+  public imageReal: any = null;
   //Define la imagen indicative segun el sexo elegido
   public indicativeImageSex: any;
   //Define un booleano para controlar la visualizacion de boton Listo
   public flag: boolean = false;
   //Define la imagen final con los trazos
-  public imageFinalLines: any;
+  public imageFinalLines: any = null;
   //Constructor
-  constructor(private ac: AnalysisCondylegraphy, private appService: AppService, private acImageGifService: AcImageGifService, private atImageGifService: AtImageGifService, private toast: ToastrService) {}
+  constructor(private ac: AnalysisCondylegraphy, private appService: AppService, private acImageGifService: AcImageGifService, 
+    private atImageGifService: AtImageGifService, private toast: ToastrService) {}
   //Al inicializarse el componente
   //Al inicializarse el componente
   ngOnInit() {

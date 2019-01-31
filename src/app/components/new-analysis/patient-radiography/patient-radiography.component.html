@@ -15,7 +15,7 @@
           <div class="col-md-4 text-center">
             <h5>Ortopantomografía</h5>
             <div>
-              <img class="img-a" [src]="radiographyForm.get('imageOrthopantomography').value || orthopantomographyImage" />
+              <img class="img-a" [src]="radiographyForm.get('imageOrthopantomography').value || orthopantomographyImage || ''" />
             </div>
             <div>
               <input style="display: none;" type="file" (change)="readURL($event, 1)" #fileInput1/>
@@ -25,7 +25,7 @@
           <div class="col-md-4 text-center">
             <h5>Telerradiografía</h5>
             <div>
-              <img class="img-b" [src]="radiographyForm.get('imageTeleradiography').value || teleradiographyImage" />
+              <img class="img-b" [src]="radiographyForm.get('imageTeleradiography').value || teleradiographyImage || ''" />
             </div>
             <div>
               <input style="display: none;" type="file" (change)="readURL($event, 2)" #fileInput2/>
@@ -35,7 +35,7 @@
           <div class="col-md-4 text-center">
             <h5>Condilografía</h5>
             <div>
-              <img class="img-a" [src]="radiographyForm.get('imageCondilography').value || condilographyImage" />
+              <img class="img-a" [src]="radiographyForm.get('imageCondilography').value || condilographyImage || ''" />
             </div>
             <div>
               <input style="display: none;" type="file" (change)="readURL($event, 3)" #fileInput3/>

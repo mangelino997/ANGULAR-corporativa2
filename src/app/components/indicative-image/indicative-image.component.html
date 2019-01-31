@@ -13,7 +13,7 @@
             <div class="col-md-12 text-center">
               <h5>Cargue una Imagen</h5><br>
               <div>
-                <img [src]="this.indicativeImageForm.value.image.data" />
+                <img [src]="this.indicativeImageForm.value.image.data || ''" />
               </div>
               <div>
                 <input style="display: none;" type="file" (change)="readURL($event)" #fileInput />

@@ -7,12 +7,13 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./professional-data.component.scss']
 })
 export class ProfessionalDataComponent implements OnInit {
-
+  //Define el evento que envia el formulario
   @Output() dataEvent = new EventEmitter<any>();
   //Define el formulario para la seccion Datos del Paciente
   public professionalForm:FormGroup;
-  constructor() { }
-
+  //Constructor
+  constructor() {}
+  //Al iniciliazarse el componente
   ngOnInit() {
     //Crea el formulario
     this.professionalForm = new FormGroup({
