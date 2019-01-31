@@ -114,7 +114,6 @@ export class UsersComponent implements OnInit {
     this.activeLink = nombre;
     this.list();
     this.setDefaultValues();    
-
     /*
     * Se vacia el formulario solo cuando se cambia de pestania, no cuando
     * cuando se hace click en ver o mod de la pestania lista
@@ -164,13 +163,12 @@ public action(indice) {
   private getNextId(){
     this.userService.getNextId().subscribe(
       res => {
-        console.log(res);
         this.form.get('id').setValue(res.json());
       },
-      err => {
-        console.log(err);
-      }
-    );
+      err=>{
+        var response = err.json();
+        this.toastr.error(response.mensaje);
+      });
   }
   // Carga en listaCompleta todos los registros de la DB
   private list(){
@@ -178,22 +176,21 @@ public action(indice) {
       res => {
         this.listUsers=res.json();
       },
-      err => {
-        console.log(err);
-      }
-    );
+      err=>{
+        var response = err.json();
+        this.toastr.error(response.mensaje);
+      });
   }
   // Carga en listaCompleta todos los registros de la DB
   private listRol(){
     this.rolService.list().subscribe(
       res => {
         this.listRoles=res.json();
-        console.log(this.listRoles);
       },
-      err => {
-        console.log(err);
-      }
-    );
+      err=>{
+        var response = err.json();
+        this.toastr.error(response.mensaje);
+      });
   }
   //Agrega un registro 
   private add(){
@@ -202,7 +199,6 @@ public action(indice) {
         var idImage= res.json().id - 1;
         this.form.get('userImage').setValue({id: idImage});
         this.form.get('rol').setValue({id: this.form.get('rol').value.id});
-        console.log(this.form.value);
         this.userService.add(this.form.value).subscribe(
           res=>{
             var respuesta = res.json();
@@ -224,13 +220,11 @@ public action(indice) {
   }
   //Actualiza un registro
   private update(){
-    console.log(this.form.value);
     this.userImageService.add(this.form.value.userImage).subscribe(
       res=>{
         var idImage= res.json().id - 1;
         this.form.get('userImage').setValue({id: idImage});
         this.form.get('rol').setValue({id: this.form.get('rol').value.id});
-        console.log(this.form.value);
         this.userService.update(this.form.value).subscribe(
           res => {
             var respuesta = res.json();
@@ -327,5 +321,4 @@ public action(indice) {
       reader.readAsDataURL(file);
     }
   }
-  
 }

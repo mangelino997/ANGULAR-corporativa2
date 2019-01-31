@@ -1,14 +1,18 @@
 <div class="container-fluid padding-content">
+  <form [formGroup]="form" class="contenedor">
   <div class="row">
     <div class="col-md-12">
-      <h4>Dr./Dra. Bravo Blas</h4>
+      <h4>Dr./Dra. {{user.firstname}} {{user.lastname}}</h4>
       <mat-divider></mat-divider><br>
       <div class="row">
         <div class="col-md-3 text-center">
           <div>
-            <img src="assets/user.png" alt="user">
+            <img [src]="form.value.userImage.data" /> 
           </div>
-          <button class="btn btn-success btn-sm">Cambiar Foto</button>
+          <div>
+            <input style="display: none;" type="file" (change)="readURL($event)" #fileInput  />
+            <button style="margin-top: 10px;" mat-raised-button color="primary" (click)="fileInput.click()" >Subir Foto</button>
+          </div>
           <div class="card margin-top-10">
             <div class="card-header text-center">Membresía</div>
             <div class="card-body">
@@ -35,20 +39,17 @@
           </div>
         </div>
         <div class="col-md-9">
-          <h5>Datos de Perfil</h5>
-          <mat-divider></mat-divider>
-          <br>
           <div class="row">
             <div class="col-md-4">
               <div class="form-group">
                 <label for="idFirstname">Nombre</label>
-                <input id="idFirstname" type="text" class="form-control">
+                <input id="idFirstname" type="text" class="form-control" formControlName="firstname" [readonly]="soloLectura">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="idLastname">Apellido</label>
-                <input id="idLastname" type="text" class="form-control">
+                <input id="idLastname" type="text" class="form-control" formControlName="lastname" [readonly]="soloLectura">
               </div>
             </div>
           </div>
@@ -56,13 +57,13 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="idDocumentNumber">Número de Documento de Identidad</label>
-                <input id="idDocumentNumber" type="text" class="form-control">
+                <input id="idDocumentNumber" type="number" class="form-control" formControlName="documentNumber" [readonly]="soloLectura">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="idEnrollment">Matricula Profesional</label>
-                <input id="idEnrollment" type="text" class="form-control">
+                <input id="idEnrollment" type="number" class="form-control" formControlName="enrollment" [readonly]="soloLectura">
               </div>
             </div>
           </div>
@@ -70,13 +71,13 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="idBirthdate">Fecha de Nacimiento</label>
-                <input id="idBirthdate" type="text" class="form-control">
+                <input id="idBirthdate" type="date" class="form-control" formControlName="birthdate" [readonly]="soloLectura">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="idAddress">Domicilio</label>
-                <input id="idAddress" type="text" class="form-control">
+                <input id="idAddress" type="text" class="form-control" formControlName="address" [readonly]="soloLectura">
               </div>
             </div>
           </div>
@@ -84,29 +85,55 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="idCity">Ciudad</label>
-                <input id="idCity" type="text" class="form-control">
+                <input id="idCity" type="text" class="form-control" formControlName="city" [readonly]="soloLectura">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="idState">Provincia/Estado</label>
-                <input id="idState" type="text" class="form-control">
+                <input id="idState" type="text" class="form-control" formControlName="state" [readonly]="soloLectura">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="idCountry">País</label>
-                <input id="idCountry" type="text" class="form-control">
+                <input id="idCountry" type="text" class="form-control" formControlName="country" [readonly]="soloLectura">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="idUserName">Nombre de Usuario</label>
+                <input id="idUserName" type="text" class="form-control" formControlName="username" [readonly]="soloLectura">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="idPassword">Contraseña</label>
+                <input id="idPassword" type="password" class="form-control" formControlName="password" [readonly]="soloLectura">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group has-float-label">
+                <label for="idRol" class="tamanio-label">Rol</label>
+                <mat-select id="idRol" class="form-control " formControlName="rol"
+                  placeholder="Roles" [compareWith]="compareFn">
+                  <mat-option *ngFor="let rol of listRoles" [value]="rol">
+                    {{rol.name}}
+                  </mat-option>
+                </mat-select>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
-                <button class="btn btn-success">Guardar</button>
+                <button class="btn btn-success" formnovalidate (click)="action()">Guardar</button>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  </form>
 </div>
