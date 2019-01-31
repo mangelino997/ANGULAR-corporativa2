@@ -75,8 +75,6 @@ import { OrthopantomographyGifComponent } from './components/orthopantomography-
 import { UsersComponent } from './components/users/users.component';
 import { Users } from './modules/users';
 
-
-
 const stompConfig: StompConfig = {
   url: 'ws://localhost:8084/meserws/socket',
   headers: {},

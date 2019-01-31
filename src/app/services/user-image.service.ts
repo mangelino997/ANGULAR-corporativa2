@@ -48,6 +48,10 @@ export class UserImageService {
   public list() {
     return this.http.get(this.url, this.options);
   }
+  //Obtiene un registro por id
+  public getById(id) {
+    return this.http.get(this.url + '/getById/' + id, this.options);
+  }
   //Agrega un registro
   public add(image) {
     let blob = new Blob([image.data], {type : 'image/jpeg'});
@@ -56,8 +60,12 @@ export class UserImageService {
 		return this.http.post(this.url, formData);
 	}
   //Actualiza un registro
-  public update(element) {
-    return this.http.put(this.url, element, this.options);
+  public update(image) {
+    let blob = new Blob([image.data], {type : 'image/jpeg'});
+    const formData = new FormData(); 
+    formData.append('idImage', image.id);
+    formData.append('file', blob, image.name);
+    return this.http.put(this.url, formData);
   }
   //Elimina un registro
   public delete(id) {

@@ -57,10 +57,9 @@ export class NewAnalysisComponent implements OnInit {
   //Define el formulario para la seccion Resultados
   public resultsForm:FormGroup;
   //Constructor
-  constructor(
-    private ac: AnalysisCondylegraphy, private at: AnalysisTeleradiography, private pr: PatientRadiography, 
+  constructor(private ac: AnalysisCondylegraphy, private at: AnalysisTeleradiography, private pr: PatientRadiography, 
     private ao: AnalysisOrthopantomography, private ap: AnalysisPhotography, private patientPhoto: PatientPhoto, 
-    private analysisModule: Analysis) { }
+    private analysisModule: Analysis) {}
   //Al inicializarse el componente
   ngOnInit() {
     //Inicializa el formulario de datos del paciente
@@ -93,7 +92,6 @@ export class NewAnalysisComponent implements OnInit {
     let patientPhotoForm = $event;
     let sex = patientPhotoForm.female ? {id: 1} : {id: 2};
     this.analysisForm.get('patient').get('sex').setValue(sex);
-    // this.analysisForm.get('patient').get('image').setValue(patientPhotoForm.image);
     this.apComponent.initCanvas(patientPhotoForm.image);
     this.apComponent.setIndicativeImage(patientPhotoForm.indicativeImage);
     this.resultsComponent.initResults(patientPhotoForm.image, 'patientImage');
@@ -102,7 +100,6 @@ export class NewAnalysisComponent implements OnInit {
   public receiveAP($event){
     this.apForm = $event;
     this.resultsComponent.initResults($event, 'photography');
-
   }
   //Recibe el formulario de Radiografias
   public receiveRadiography($event): void {

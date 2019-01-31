@@ -13,7 +13,7 @@
             <div class="col-md-12 text-center">
               <h5>Cargue un Gif</h5><br>
               <div>
-                <img [src]="this.gifForm.value.image.data" />
+                <img [src]="this.gifForm.value.image.data || ''" />
               </div>
               <div>
                 <input style="display: none;" type="file" (change)="readURL($event)" #fileInput />

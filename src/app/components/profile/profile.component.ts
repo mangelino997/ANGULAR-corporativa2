@@ -45,7 +45,7 @@ export class ProfileComponent implements OnInit {
     //Establece el json vacio a imagen
     this.form.get('userImage').setValue(img);
   }
-  //Establece el formulario al seleccionar elemento del autocompletado
+  //Establece el formulario 
   public loadDataUser(elemento) {
     this.form.patchValue(elemento);
     this.form.get('userImage').value.data=atob(this.form.get('userImage').value.data);

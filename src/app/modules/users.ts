@@ -13,6 +13,7 @@ export class Users {
             version: new FormControl(),
             firstname: new FormControl('', Validators.required),
             lastname: new FormControl('', Validators.required),
+            name: new FormControl(),
             documentNumber: new FormControl('', Validators.required),
             enrollment: new FormControl('', Validators.required),
             birthdate: new FormControl('', Validators.required),
@@ -24,6 +25,7 @@ export class Users {
             password: new FormControl('', Validators.required),
             rol: new FormControl(),
             registrationDate: new FormControl(),
+            lowDate: new FormControl(),
             userImage: new FormControl(),
             isActive: new FormControl(),
             isOnline: new FormControl()

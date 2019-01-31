@@ -14,7 +14,7 @@
         <div class="row justify-content-center">
           <div class="col-md-5 text-center">
             <h6>Imagen Indicativa</h6>
-            <img src="{{indicativeImage.image}}" alt="Condilografia">
+            <img src="{{indicativeImage.image || ''}}" alt="Condilografia">
             <h5 style="margin-top: 10px;">{{indicativeImage.pointName}}</h5>
             <h6>{{indicativeImage.pointDescription}}</h6>
           </div>
@@ -34,11 +34,11 @@
         <div class="row">
           <div class="col-md-5 text-center">
             <h6>Imagen Real</h6>
-            <img src="{{imageReal}}">
+            <img src="{{imageReal || ''}}">
           </div>
           <div class="col-md-5 text-center">
             <h6>Imagen con Unión de Puntos</h6>
-            <img src="{{imageFinalLines}}">
+            <img src="{{imageFinalLines || ''}}">
           </div>
           <div class="col-md-2 text-center">
             <h6 class="text-center">Planos del Análisis</h6>

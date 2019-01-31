@@ -18,7 +18,7 @@ export class PatientDataComponent implements OnInit {
   public typesRehabilitations:Array<any> = [];
   //Constructor
   constructor(private analysisModule: Analysis, private typeRehabilitationService: TypeRehabilitationService,
-    private appComponent: AppComponent) { }
+    private appComponent: AppComponent) {}
   //Al inicializarse el componente
   ngOnInit() {
     //Establece el formulario analisis

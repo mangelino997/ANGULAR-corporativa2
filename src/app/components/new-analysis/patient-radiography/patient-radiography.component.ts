@@ -15,11 +15,11 @@ export class PatientRadiographyComponent implements OnInit {
   //Define el formulario
   public radiographyForm:FormGroup;
   //Define la imagen de orthopantomography
-  public orthopantomographyImage:string;
+  public orthopantomographyImage:any = null;
   //Define la imagen de teleradiography
-  public teleradiographyImage:string;
+  public teleradiographyImage:any = null;
   //Define la imagen de condilography
-  public condilographyImage:string;
+  public condilographyImage:any = null;
   //Constructor
   constructor(private pr: PatientRadiography, private appService: AppService, private indicativeImageService: IndicativeImageService) {}
   //Al inicializarse el componente

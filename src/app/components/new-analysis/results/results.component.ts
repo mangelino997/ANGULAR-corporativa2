@@ -20,27 +20,22 @@ export class ResultsComponent implements OnInit {
   //Define el formulario Resultados (imagenes de los canvas trazados)
   public analysisForm: FormGroup;
   //Define la imagen del paciente
-  public patientImage:any;
+  public patientImage: any = null;
   //Define la imagen de la fotografia
-  public photographyImage:any;
+  public photographyImage: any = null;
   //Define la imagen de la teleradiografia
-  public teleradiographyImage:any;
+  public teleradiographyImage: any = null;
   //Define la imagen de la ortopantomografia
-  public orthopantomographyImage:any;
+  public orthopantomographyImage: any = null;
   //Define la imagen de la condilografia
-  public condylegraphyImage:any;
+  public condylegraphyImage: any = null;
   //Define la fecha actual
   public date: string = null;
   //Constructor
-  constructor(
-    private analysisModel: Analysis,
-    private photographyService: PhotographyImageService,
-    private teleradiographyService: TeleradiographyImageService,
-    private orthopantomographyService: OrthopantomographyImageService,
-    private condylegraphyService: CondylegraphyImageService,
-    private dateService: DateService,
-    private analysisService: AnalysisService,
-    private toastr: ToastrService) {}
+  constructor(private analysisModel: Analysis, private photographyService: PhotographyImageService,
+    private teleradiographyService: TeleradiographyImageService, private orthopantomographyService: OrthopantomographyImageService,
+    private condylegraphyService: CondylegraphyImageService, private dateService: DateService,
+    private analysisService: AnalysisService, private toastr: ToastrService) {}
   //Al inicializarse el componente
   ngOnInit() {
     //Crea el formulario
@@ -81,15 +76,15 @@ export class ResultsComponent implements OnInit {
   }
   //Guarda los resultados de todo el análisis en la Base de Datos
   public saveAnalysis() {
-    this.analysisService.addAnalysis(this.patientImage, this.photographyImage, 
+    this.analysisService.addAnalysis(this.patientImage, this.photographyImage,
       this.teleradiographyImage, this.orthopantomographyImage, this.condylegraphyImage).subscribe(
         res => {
           let idImages = res.json();
-          this.analysisForm.get('patientImage').setValue({id:idImages[0]});
-          this.analysisForm.get('photographyImage').setValue({id:idImages[1]});
-          this.analysisForm.get('teleradiographyImage').setValue({id:idImages[2]});
-          this.analysisForm.get('orthopantomographyImage').setValue({id:idImages[3]});
-          this.analysisForm.get('condylegraphyImage').setValue({id:idImages[4]});
+          this.analysisForm.get('patientImage').setValue({ id: idImages[0] });
+          this.analysisForm.get('photographyImage').setValue({ id: idImages[1] });
+          this.analysisForm.get('teleradiographyImage').setValue({ id: idImages[2] });
+          this.analysisForm.get('orthopantomographyImage').setValue({ id: idImages[3] });
+          this.analysisForm.get('condylegraphyImage').setValue({ id: idImages[4] });
           this.analysisService.add(this.analysisForm.value).subscribe(
             res => {
               let response = res.json();
@@ -106,8 +101,8 @@ export class ResultsComponent implements OnInit {
         }
       );
   }
-//Reestablece los campos del formulario
-private reestablishForm() {
-  this.analysisForm.reset();
-}
+  //Reestablece los campos del formulario
+  private reestablishForm() {
+    this.analysisForm.reset();
+  }
 }

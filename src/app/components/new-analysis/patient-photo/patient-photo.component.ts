@@ -15,22 +15,22 @@ export class PatientPhotoComponent implements OnInit {
   //Define el formulario
   public patientPhotoForm:FormGroup;
   //Define la imagen del sexo por defecto
-  public sexSelectedImage:string;
+  public sexSelectedImage:string = null;
   //Define la imagen para mujer
-  public femaleImage:any;
+  public femaleImage:any = null;
   //Define la imagen para hombre
-  public maleImage:any;
+  public maleImage:any = null;
   //Constructor
-  constructor(private indicativeImageService: IndicativeImageService, private patientPhoto: PatientPhoto, private appService: AppService) { }
+  constructor(private indicativeImageService: IndicativeImageService, private patientPhoto: PatientPhoto, private appService: AppService) {}
   //Al inicializarse el componente
   ngOnInit() {
     //Establece la imagen de mujer atob(this.form.get('photographyImage').value.data);
-    this.indicativeImageService.getById(1).subscribe(res=>{
+    this.indicativeImageService.getById(1).subscribe(res=> {
       var img=res.json();
       this.femaleImage = atob(img.data);
     });
     //Establece la imagen de hombre
-    this.indicativeImageService.getById(2).subscribe(res=>{
+    this.indicativeImageService.getById(2).subscribe(res=> {
       var img=res.json();
       this.maleImage = atob(img.data);
     });

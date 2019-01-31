@@ -1,4 +1,4 @@
-<img src="assets/user.png" alt="user" width="30" height="30">
+<img src="{{userImage || ''}}" alt="user" width="30" height="30">
 <button mat-button [matMenuTriggerFor]="menu">{{user.name}} <mat-icon>arrow_drop_down</mat-icon></button>
 <mat-menu #menu="matMenu">
   <button mat-menu-item routerLink="profile">
